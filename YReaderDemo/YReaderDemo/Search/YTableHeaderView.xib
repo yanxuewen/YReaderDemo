@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YTableHeaderView">
+            <connections>
+                <outlet property="bgView" destination="7D5-jk-vJe" id="UbK-U1-208"/>
+                <outlet property="imageView" destination="APq-28-sJr" id="agE-o5-C6k"/>
+                <outlet property="rightLabel" destination="td2-Sq-cHx" id="jPV-RT-txE"/>
+                <outlet property="textLabel" destination="Ukl-qD-3LA" id="nid-da-Nh2"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="73"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ukl-qD-3LA">
+                    <rect key="frame" x="20" y="27.5" width="39.5" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7D5-jk-vJe">
+                    <rect key="frame" x="235" y="0.0" width="120" height="73"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_delete" translatesAutoresizingMaskIntoConstraints="NO" id="APq-28-sJr">
+                            <rect key="frame" x="52.5" y="28.5" width="13" height="15"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="td2-Sq-cHx">
+                            <rect key="frame" x="70.5" y="27.5" width="39.5" height="19.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="td2-Sq-cHx" firstAttribute="centerY" secondItem="7D5-jk-vJe" secondAttribute="centerY" id="6wI-20-ZAY"/>
+                        <constraint firstAttribute="width" constant="120" id="DCJ-4f-QsM"/>
+                        <constraint firstItem="APq-28-sJr" firstAttribute="centerY" secondItem="7D5-jk-vJe" secondAttribute="centerY" id="EWg-jb-maZ"/>
+                        <constraint firstItem="td2-Sq-cHx" firstAttribute="centerX" secondItem="7D5-jk-vJe" secondAttribute="centerX" constant="30" id="lM3-dl-Ulx"/>
+                        <constraint firstItem="td2-Sq-cHx" firstAttribute="leading" secondItem="APq-28-sJr" secondAttribute="trailing" constant="5" id="vhh-gh-pdg"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="7D5-jk-vJe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0V3-E6-QHb"/>
+                <constraint firstAttribute="trailing" secondItem="7D5-jk-vJe" secondAttribute="trailing" constant="20" id="F32-7h-sHI"/>
+                <constraint firstItem="Ukl-qD-3LA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="beK-Pi-YIC"/>
+                <constraint firstAttribute="bottom" secondItem="7D5-jk-vJe" secondAttribute="bottom" id="bup-XU-TND"/>
+                <constraint firstItem="Ukl-qD-3LA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="xoe-IV-qYM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-27.5" y="-213.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="search_delete" width="13" height="15"/>
+    </resources>
+</document>

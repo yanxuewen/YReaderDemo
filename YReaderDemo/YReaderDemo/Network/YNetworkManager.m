@@ -1,0 +1,162 @@
+//
+//  YNetworkManager.m
+//  YReaderDemo
+//
+//  Created by yanxuewen on 2016/12/9.
+//  Copyright © 2016年 yxw. All rights reserved.
+//
+
+#import "YNetworkManager.h"
+#import "YBookModel.h"
+#import "YBookDetailModel.h"
+#import "YBookReviewModel.h"
+#import "YRecommendBookModel.h"
+#import "YRecommendBookListModel.h"
+
+@interface YNetworkManager ()
+
+@property (strong, nonatomic) AFURLSessionManager *manager;
+@property (assign, nonatomic) AFNetworkReachabilityStatus networkStatus;
+
+@end
+
+@implementation YNetworkManager
+
++ (instancetype)shareManager {
+    static YNetworkManager *netManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        netManager = [[self alloc] init];
+    });
+    return netManager;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.networkStatus = AFNetworkReachabilityStatusNotReachable;
+        NSURLSessionConfiguration *cfg = [NSURLSessionConfiguration defaultSessionConfiguration];
+        cfg.timeoutIntervalForRequest = 15.0;
+        cfg.timeoutIntervalForResource = 15.0;
+        self.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:cfg];
+        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+        [self monitorNetWork];
+        
+    }
+    return self;
+}
+
+- (NSURLSessionTask *)getWithAPIType:(YAPIType)type parameter:(id)parameter success:(void (^)(id response))success failure:(void (^)(NSError *error))failure {
+    
+    NSURL *url = [YURLManager getURLWith:type parameter:parameter];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15.0];
+    
+    __weak typeof(self) wself = self;
+    NSURLSessionTask *task = [self.manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        DDLogInfo(@"\n---------------------------------------begin---------------------------------------\n请求地址:%@ \n参数:%@ \n返回:%@  \n---------------------------------------end---------------------------------------",url,parameter,responseObject);
+        if (error) {
+            if (failure) {
+                failure([wself formatWithResponseObject:nil error:error]);
+            }
+        } else {
+            id object = [wself parsingResponseObject:responseObject type:type];
+            if (object) {
+                success(object);
+            } else {
+                if (failure) {
+                    failure([wself formatWithResponseObject:nil error:error]);
+                }
+            }
+        }
+    }];
+    [task resume];
+    return task;
+}
+
+- (id)parsingResponseObject:(NSDictionary *)response type:(YAPIType)type{
+    if (response == nil) {
+        return nil;
+    }
+    
+    if (type == YAPITypeBookDetail) {
+        YBookDetailModel *bookD = [YBookDetailModel yy_modelWithJSON:response];
+        return bookD;
+    }
+    
+    NSMutableArray *dataArr = [NSMutableArray new];
+    NSString *key = nil;
+    if (type == YAPITypeAutoCompletion) {
+        key = @"keywords";
+    } else if (type == YAPITypeFuzzySearch || type == YAPITypeRecommendBook) {
+        key = @"books";
+    } else if (type == YAPITypeRecommendBookList) {
+        key = @"booklists";
+    } else if (type == YAPITypeBookReview) {
+        key = @"reviews";
+    }
+    
+    if (type == YAPITypeAutoCompletion) {
+        dataArr = response[key];
+        return dataArr;
+    }
+    
+    NSArray *arr = response[key];
+    NSAssert(arr != nil, @"parsingResponseObject error %@  type %zi",response,type);
+    for (NSInteger i = 0 ; i < arr.count; i++) {
+        YBaseModel *bookM = nil;
+        if (type == YAPITypeFuzzySearch) {
+            bookM = [YBookModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeRecommendBook) {
+            bookM = [YRecommendBookModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeRecommendBookList) {
+            bookM = [YRecommendBookListModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeBookReview) {
+            bookM = [YBookReviewModel yy_modelWithJSON:arr[i]];
+        }
+        
+        if (!bookM) {
+            continue;
+        }
+        [dataArr addObject:bookM];
+    }
+    
+    
+    return dataArr;
+}
+
+- (NSError *)formatWithResponseObject:(id)response error:(NSError *)error {
+    
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:[error userInfo]];
+    if (self.networkStatus == AFNetworkReachabilityStatusNotReachable) {
+        [userInfo setObject:@"网络中断" forKey:NSLocalizedFailureReasonErrorKey];
+    } else if (error.code == kCFURLErrorTimedOut) {
+        [userInfo setObject:@"请求超时" forKey:NSLocalizedFailureReasonErrorKey];
+    } else if (error.code == kCFURLErrorCannotConnectToHost || error.code == kCFURLErrorCannotFindHost || error.code == kCFURLErrorBadURL || error.code == kCFURLErrorNetworkConnectionLost) {
+        [userInfo setObject:@"无法连接服务器" forKey:NSLocalizedFailureReasonErrorKey];
+    }
+    NSError *formattedError = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:error.code userInfo:userInfo];
+    return formattedError;
+}
+
+- (void)monitorNetWork {
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        self.networkStatus = status;
+        DDLogInfo(@"networkStatus %zi",status);
+        switch (status) {
+            case AFNetworkReachabilityStatusNotReachable:
+                
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                
+                break;
+                
+            default:
+                break;
+        }
+    }];
+}
+
+@end

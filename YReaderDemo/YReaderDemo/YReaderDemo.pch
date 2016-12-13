@@ -1,0 +1,39 @@
+//
+//  YReaderDemo.pch
+//  YReaderDemo
+//
+//  Created by yanxuewen on 2016/12/7.
+//  Copyright © 2016年 yxw. All rights reserved.
+//
+
+#ifndef YReaderDemo_pch
+#define YReaderDemo_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+#import <YYModel/YYModel.h>
+#import <YYCache/YYCache.h>
+#import <YYCategories/YYCategories.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <AFNetworking/AFNetworking.h>
+#import <FMDB/FMDB.h>
+
+#import "YBaseViewController.h"
+#import "YUniversal.h"
+#import "YURLManager.h"
+
+
+
+#ifdef DEBUG
+static const int ddLogLevel = DDLogLevelVerbose;
+#else
+static const int ddLogLevel = DDLogLevelWarning;
+#endif
+
+#endif /* YReaderDemo_pch */
+
+
+
