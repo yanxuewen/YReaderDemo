@@ -31,7 +31,6 @@
     self.view.backgroundColor = [UIColor clearColor];
 //    [self setupPageViewController];
     
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _netManager = [YNetworkManager shareManager];
         _readerManager = [YReaderManager shareReaderManager];
@@ -42,8 +41,7 @@
             [self getBookSummary];
         }
     });
-    
-    
+
 }
 
 - (void)getBookSummary {
