@@ -15,15 +15,13 @@
 
 @interface YReaderManager : NSObject
 
-@property (strong, nonatomic, readonly) NSArray *summarysArr;
 @property (strong, nonatomic, readonly) NSMutableArray *chaptersArr;
 @property (strong, nonatomic, readonly) YBookDetailModel *readingBook;
-@property (strong, nonatomic) YChapterContentModel *chapterModel;
-@property (strong, nonatomic) YReaderRecord *record;
-@property (assign, nonatomic) NSUInteger chaptersCount;
-
+@property (strong, nonatomic, readonly) YReaderRecord *record;
+@property (assign, nonatomic, readonly) NSUInteger chaptersCount;
 
 + (instancetype)shareReaderManager;
 - (void)updateReadingBook:(YBookDetailModel *)bookM;
+- (void)updateReadingBookChaptersContent;
 
 @end

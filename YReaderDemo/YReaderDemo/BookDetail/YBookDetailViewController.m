@@ -7,6 +7,7 @@
 //
 
 #import "YBookDetailViewController.h"
+#import "YReaderViewController.h"
 #import "YBookModel.h"
 #import "YBookDetailModel.h"
 #import "YBookReviewModel.h"
@@ -112,6 +113,11 @@
     
 }
 
+- (IBAction)startReading:(id)sender {
+    YReaderViewController *readerVC = [[YReaderViewController alloc] init];
+    readerVC.readingBook = self.bookDetail;
+    [self presentViewController:readerVC animated:YES completion:nil];
+}
 
 - (void)getNetBookDetailData {
     __weak typeof(self) wself = self;

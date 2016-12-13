@@ -10,4 +10,10 @@
 
 @interface YReadPageViewController : YBaseViewController
 
+@property (strong, nonatomic) NSString *booktitle;
+@property (strong, nonatomic) NSAttributedString *pageContent;
+@property (assign, nonatomic) NSUInteger page;
+@property (assign, nonatomic) NSUInteger totalPage;
+@property (assign, nonatomic) NSUInteger chapter;
+
 @end

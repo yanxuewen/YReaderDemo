@@ -11,8 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YReadPageViewController">
             <connections>
+                <outlet property="batteryView" destination="wvw-qY-Tle" id="UCy-cj-f33"/>
                 <outlet property="contentLabel" destination="fsZ-hS-HlG" id="mM1-WJ-Ctc"/>
-                <outlet property="electricView" destination="wvw-qY-Tle" id="FxT-dm-Iw1"/>
                 <outlet property="pageNumberLabel" destination="9q1-hf-Aca" id="N1p-eb-148"/>
                 <outlet property="timeLabel" destination="OfE-H3-4Eq" id="dKE-hP-aLu"/>
                 <outlet property="titleLabel" destination="dHd-up-5C0" id="Sxu-Ia-7Ee"/>
@@ -59,8 +59,8 @@
                     <color key="textColor" red="0.45098039220000002" green="0.43529411759999997" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsZ-hS-HlG">
-                    <rect key="frame" x="20" y="43" width="335" height="583"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsZ-hS-HlG">
+                    <rect key="frame" x="20" y="40" width="335" height="587"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -71,10 +71,11 @@
                 <constraint firstItem="dHd-up-5C0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="1i0-D7-MQ1"/>
                 <constraint firstAttribute="bottom" secondItem="9q1-hf-Aca" secondAttribute="bottom" constant="10" id="2a5-tb-uXp"/>
                 <constraint firstAttribute="bottom" secondItem="GIF-rI-Wj4" secondAttribute="bottom" id="5g8-Ft-boL"/>
+                <constraint firstItem="fsZ-hS-HlG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="7Lp-AQ-ksj"/>
                 <constraint firstItem="OfE-H3-4Eq" firstAttribute="centerY" secondItem="9q1-hf-Aca" secondAttribute="centerY" id="DSc-bm-cPc"/>
                 <constraint firstItem="wvw-qY-Tle" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="OIE-kK-x7g"/>
-                <constraint firstItem="fsZ-hS-HlG" firstAttribute="top" secondItem="dHd-up-5C0" secondAttribute="bottom" constant="15" id="R59-gH-Hgk"/>
                 <constraint firstItem="GIF-rI-Wj4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TR6-ZI-2av"/>
+                <constraint firstAttribute="bottom" secondItem="fsZ-hS-HlG" secondAttribute="bottom" constant="40" id="TSR-p8-cMi"/>
                 <constraint firstItem="GIF-rI-Wj4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="VCG-3f-uZ4"/>
                 <constraint firstItem="OfE-H3-4Eq" firstAttribute="leading" secondItem="wvw-qY-Tle" secondAttribute="trailing" constant="10" id="eAB-kd-qXm"/>
                 <constraint firstAttribute="trailing" secondItem="9q1-hf-Aca" secondAttribute="trailing" constant="20" id="en9-8X-H3w"/>
@@ -83,7 +84,6 @@
                 <constraint firstAttribute="trailing" secondItem="fsZ-hS-HlG" secondAttribute="trailing" constant="20" id="qst-ri-pEW"/>
                 <constraint firstItem="wvw-qY-Tle" firstAttribute="centerY" secondItem="OfE-H3-4Eq" secondAttribute="centerY" id="sf0-7C-Ufq"/>
                 <constraint firstItem="dHd-up-5C0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="u1E-Y2-G7U"/>
-                <constraint firstItem="9q1-hf-Aca" firstAttribute="top" secondItem="fsZ-hS-HlG" secondAttribute="bottom" constant="15" id="zW7-Mp-Moe"/>
             </constraints>
             <point key="canvasLocation" x="38.5" y="108.5"/>
         </view>

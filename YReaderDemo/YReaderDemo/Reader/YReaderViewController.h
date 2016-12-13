@@ -7,7 +7,10 @@
 //
 
 #import "YBaseViewController.h"
+@class YBookDetailModel;
 
 @interface YReaderViewController : YBaseViewController
+
+@property (strong, nonatomic) YBookDetailModel *readingBook;
 
 @end

@@ -12,6 +12,9 @@
 #import "YBookReviewModel.h"
 #import "YRecommendBookModel.h"
 #import "YRecommendBookListModel.h"
+#import "YBookSummaryModel.h"
+#import "YChaptersLinkModel.h"
+#import "YChapterContentModel.h"
 
 @interface YNetworkManager ()
 
@@ -73,7 +76,7 @@
     return task;
 }
 
-- (id)parsingResponseObject:(NSDictionary *)response type:(YAPIType)type{
+- (id)parsingResponseObject:(id)response type:(YAPIType)type{
     if (response == nil) {
         return nil;
     }
@@ -81,6 +84,13 @@
     if (type == YAPITypeBookDetail) {
         YBookDetailModel *bookD = [YBookDetailModel yy_modelWithJSON:response];
         return bookD;
+    }
+    if (type == YAPITypeChapterContent) {
+        if ([response[@"ok"] boolValue]) {
+            YChapterContentModel *chapter = [YChapterContentModel yy_modelWithJSON:response[@"chapter"]];
+            return chapter;
+        }
+        return nil;
     }
     
     NSMutableArray *dataArr = [NSMutableArray new];
@@ -93,6 +103,8 @@
         key = @"booklists";
     } else if (type == YAPITypeBookReview) {
         key = @"reviews";
+    } else if (type == YAPITypeChaptersLink) {
+        key = @"chapters";
     }
     
     if (type == YAPITypeAutoCompletion) {
@@ -100,7 +112,11 @@
         return dataArr;
     }
     
-    NSArray *arr = response[key];
+    NSArray *arr = response;
+    if (key) {
+        arr = response[key];
+    }
+    
     NSAssert(arr != nil, @"parsingResponseObject error %@  type %zi",response,type);
     for (NSInteger i = 0 ; i < arr.count; i++) {
         YBaseModel *bookM = nil;
@@ -112,6 +128,10 @@
             bookM = [YRecommendBookListModel yy_modelWithJSON:arr[i]];
         } else if (type == YAPITypeBookReview) {
             bookM = [YBookReviewModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeBookSummary) {
+            bookM = [YBookSummaryModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeChaptersLink) {
+            bookM = [YChaptersLinkModel yy_modelWithJSON:arr[i]];
         }
         
         if (!bookM) {

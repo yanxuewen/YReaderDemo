@@ -37,6 +37,7 @@
 }
 
 - (NSDate *)dateWithCustomDateFormat:(NSString *)dateStr {
+    self.dateFormat.dateFormat = kYCustomDateFormat;
     return [self.dateFormat dateFromString:dateStr];
 }
 
@@ -67,6 +68,11 @@
         }
         return [NSString stringWithFormat:@"%zi %@前更新",number,unit];
     }
+}
+
+- (NSString *)getTimeString {
+    self.dateFormat.dateFormat = @"HH:mm";
+    return [self.dateFormat stringFromDate:[NSDate date]];
 }
 
 @end

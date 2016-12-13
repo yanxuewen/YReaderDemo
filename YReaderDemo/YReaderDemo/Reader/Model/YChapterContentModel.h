@@ -16,8 +16,8 @@
 @property (nonatomic, assign) BOOL isDownload;
 @property (assign, nonatomic) NSUInteger pageCount;
 
-- (void)pagingWithBounds:(CGRect)bounds;
-
+- (void)updateContentPaging;
+- (NSAttributedString *)getStringWith:(NSUInteger)page;
 + (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link;
 
 @end

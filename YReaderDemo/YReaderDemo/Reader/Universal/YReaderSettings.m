@@ -61,6 +61,7 @@
     }
     NSMutableDictionary *dic = @{}.mutableCopy;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    paragraphStyle.alignment = NSTextAlignmentJustified;
     paragraphStyle.lineSpacing = self.lineSpacing;
     paragraphStyle.firstLineHeadIndent = [@"汉字" boundingRectWithSize:CGSizeMake(200, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:NULL].size.width;
     dic[NSForegroundColorAttributeName] = self.textColor;

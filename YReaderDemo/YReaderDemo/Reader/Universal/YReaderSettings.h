@@ -7,16 +7,7 @@
 //
 
 #import "YBaseModel.h"
-
-typedef NS_ENUM(NSInteger,YReaderTheme) {
-    YReaderThemeOne = 100,
-    YReaderThemeTwo
-};
-
-typedef NS_ENUM(NSInteger,YTurnPageStyle) {
-    YTurnPageStyleSimulated,
-    YTurnPageStyleScroll
-};
+#import "YReaderUniversal.h"
 
 @interface YReaderSettings : YBaseModel
 

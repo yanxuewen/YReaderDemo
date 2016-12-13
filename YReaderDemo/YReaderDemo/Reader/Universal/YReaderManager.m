@@ -8,10 +8,13 @@
 
 #import "YReaderManager.h"
 #import "YSQLiteManager.h"
+#import "YReaderUniversal.h"
 
 @interface YReaderManager ()
 
 @property (strong, nonatomic) YSQLiteManager *sqliteM;
+@property (strong, nonatomic) YReaderRecord *record;
+@property (assign, nonatomic) NSUInteger chaptersCount;
 
 @end
 
@@ -40,19 +43,20 @@
 //    }
     _readingBook = bookM;
     _record = [YReaderRecord recordModelWith:bookM];
+    [self updateReadingBookChaptersContent];
+    
+}
+
+- (void)updateReadingBookChaptersContent {
     if (_record.chaptersLink.count > 0) {
+        _chaptersArr = @[].mutableCopy;
         for (YChaptersLinkModel *linkM in _record.chaptersLink) {
             YChapterContentModel *chapterM = [YChapterContentModel chapterModelWith:linkM.title link:linkM.link];
             [_chaptersArr addObject:chapterM];
         }
-    }
-    if (_record.readingChapter < _chaptersArr.count) {
-        _chapterModel = _chaptersArr[_record.readingChapter];
-        [_chapterModel pagingWithBounds:CGRectMake(20, 30, kScreenWidth-40, kScreenHeight - 60)];
     } else {
-        DDLogError(@"%@ %@ _record.readingChapter >= _chaptersArr.count error",bookM,_record);
-    }
-    
+        DDLogError(@"chaptersLink nil or empty %@",_record);
+    }   
 }
 
 @end

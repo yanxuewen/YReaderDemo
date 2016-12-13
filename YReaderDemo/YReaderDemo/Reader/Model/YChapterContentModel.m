@@ -13,6 +13,7 @@
 @interface YChapterContentModel ()
 
 @property (strong, nonatomic) NSMutableArray *pageArr;
+@property (strong, nonatomic) NSMutableAttributedString *attributedString;
 
 @end
 
@@ -20,6 +21,10 @@
 
 + (NSArray *)modelPropertyWhitelist {
     return @[@"title",@"body"];
+}
+
+- (void)updateContentPaging {
+    [self pagingWithBounds:CGRectMake(kYReaderLeftSpace, kYReaderTopSpace, kScreenWidth - kYReaderLeftSpace - kYReaderRightSpace, kScreenHeight - kYReaderTopSpace - kYReaderBottomSpace)];
 }
 
 - (void)pagingWithBounds:(CGRect)bounds {
@@ -45,7 +50,23 @@
         CFRelease(frameSetter);
     }
     _pageCount = _pageArr.count;
-    NSLog(@"_pageArr %@ %zi",_pageArr,attr.length);
+    _attributedString = attr;
+    NSLog(@"_pageArr %@ %zi %zi",_pageArr,attr.length,_body.length);
+}
+
+- (NSAttributedString *)getStringWith:(NSUInteger)page {
+    if (page < _pageArr.count) {
+        NSUInteger loc = [_pageArr[page] integerValue];
+        NSUInteger len = 0;
+        if (page == _pageArr.count - 1) {
+            len = _attributedString.length - loc;
+        } else {
+            len = [_pageArr[page + 1] integerValue] - loc;
+        }
+        NSLog(@"getStringWithpage  %zi loc %zi  len  %zi",page,loc,len);
+        return [_attributedString attributedSubstringFromRange:NSMakeRange(loc, len)];
+    }
+    return nil;
 }
 
 + (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link {

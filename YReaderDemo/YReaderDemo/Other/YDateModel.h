@@ -14,6 +14,6 @@
 
 - (NSDate *)dateWithCustomDateFormat:(NSString *)dateStr;
 - (NSString *)getUpdateStringWith:(NSDate *)date;
-
+- (NSString *)getTimeString;
 
 @end
