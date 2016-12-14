@@ -51,8 +51,6 @@
         self.documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         self.netManager = [YNetworkManager shareManager];
         self.sqliteM = [YSQLiteManager shareManager];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminateNotification:) name:UIApplicationWillTerminateNotification object:nil];
     }
     return self;
 }
@@ -248,25 +246,13 @@
     
 }
 
-- (void)appDidEnterBackgroundNotification:(NSNotification *)noti {
-    NSLog(@"%s",__func__);
-    if (self.selectSummary) {
-        [self.cache setObject:self.selectSummary forKey:self.summarykey];
-    }
-    if (self.record) {
-        [self.cache setObject:self.record forKey:self.recordKey];
-    }
+- (void)updateReadingChapter:(NSUInteger)chapter page:(NSUInteger)page {
+    self.record.readingChapter = chapter;
+    self.record.readingPage = page;
+    [self.cache setObject:self.selectSummary forKey:self.summarykey];
+    [self.cache setObject:self.record forKey:self.recordKey];
 }
 
-- (void)appWillTerminateNotification:(NSNotification *)noti {
-    NSLog(@"%s",__func__);
-    if (self.selectSummary) {
-        [self.cache setObject:self.selectSummary forKey:self.summarykey];
-    }
-    if (self.record) {
-        [self.cache setObject:self.record forKey:self.recordKey];
-    }
-}
 
 - (NSString *)cachePath {
     return [self.documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_cache",self.selectSummary.idField]];
@@ -280,8 +266,5 @@
     return [NSString stringWithFormat:@"%@_record",self.selectSummary.idField];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 @end

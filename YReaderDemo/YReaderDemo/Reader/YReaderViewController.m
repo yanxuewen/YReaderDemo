@@ -8,8 +8,10 @@
 
 #import "YReaderViewController.h"
 #import "YReadPageViewController.h"
+#import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
+
 
 @interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 
@@ -20,6 +22,7 @@
 @property (assign, nonatomic) NSUInteger page;
 @property (assign, nonatomic) NSUInteger nextChpater;
 @property (assign, nonatomic) NSUInteger nextPage;
+@property (strong, nonatomic) YMenuViewController *menuView;
 
 @end
 
@@ -29,7 +32,6 @@
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.view.backgroundColor = [UIColor whiteColor];
-//    [self setupPageViewController];
     
     _netManager = [YNetworkManager shareManager];
     _readerManager = [YReaderManager shareReaderManager];
@@ -39,11 +41,49 @@
     } failure:^(NSString *msg) {
         DDLogWarn(@"updateReadingBook error msg %@",msg);
     }];
+    
+    self.menuView = [[YMenuViewController alloc] init];
+    [self addChildViewController:self.menuView];
+    self.menuView.view.frame = self.view.bounds;
+    self.menuView.menuTapAction = ^(NSInteger tag) {
+        switch (tag) {
+            case 100:           //换源
+                
+                break;
+            case 101:           //播放
+                
+                break;
+            case 102: {          //关闭
+                [wself dismissViewControllerAnimated:YES completion:^{
+                    [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
+                }];
+            }
+                break;
+            default:
+                break;
+        }
+    };
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+        [wself.view addSubview:wself.menuView.view];
+        [wself.menuView showMenuView];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
+    }]];
+    
+    //Enter Background Notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+}
 
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+}
 
 - (void)setupPageViewController {
     _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -87,9 +127,15 @@
     
     if (_page > 0) {
         _nextPage = _page - 1;
+        _nextChpater = _chapter;
     } else {
         _nextChpater = _chapter - 1;
-        _nextPage = [_readerManager.chaptersArr[_nextChpater] pageCount] - 1;
+        YChapterContentModel *chapterM = _readerManager.chaptersArr[_nextChpater];
+        if (chapterM.pageCount == 0) {
+            NSLog(@"得先加载...");
+            [chapterM updateContentPaging];
+        }
+        _nextPage = chapterM.pageCount - 1;
     }
     
     return [self readPageViewWithChapter:_nextChpater page:_nextPage];
@@ -106,6 +152,7 @@
         _nextChpater++;
     } else {
         _nextPage++;
+        _nextChpater = _chapter;
     }
     
     return [self readPageViewWithChapter:_nextChpater page:_nextPage];
@@ -124,6 +171,16 @@
         _page = readerPageVC.page;
         _chapter = readerPageVC.chapter;
     }
+}
+
+- (void)appDidEnterBackgroundNotification:(NSNotification *)noti {
+    NSLog(@"%s",__func__);
+    [self.readerManager updateReadingChapter:_chapter page:_page];
+}
+
+- (void)dealloc {
+    NSLog(@"%s",__func__);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

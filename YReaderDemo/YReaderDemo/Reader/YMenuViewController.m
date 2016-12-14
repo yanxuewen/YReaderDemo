@@ -11,6 +11,7 @@
 
 @interface YMenuViewController ()
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIView *topView;
 
 @end
 
@@ -18,7 +19,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self setupUI];
+    
+    __weak typeof(self) wself = self;
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+        [wself hideMenuView];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    }]];
+    
 }
 
 - (void)setupUI {
@@ -30,6 +38,32 @@
     }
 }
 
+- (IBAction)handleButton:(id)sender {
+    UIButton *btn = sender;
+    if (self.menuTapAction) {
+        self.menuTapAction(btn.tag);
+    }
+}
+
+
+- (void)showMenuView {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.topView.top = 0;
+        self.bottomView.top = kScreenHeight - self.bottomView.height;
+    } completion:^(BOOL finished) {
+        self.topView.top = 0;
+        self.bottomView.top = kScreenHeight - self.bottomView.height;
+    }];;
+}
+
+- (void)hideMenuView {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.topView.top = -self.topView.height;
+        self.bottomView.top = kScreenHeight ;
+    } completion:^(BOOL finished) {
+        [self.view removeFromSuperview];
+    }];;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -10,4 +10,7 @@
 
 @interface YMenuViewController : YBaseViewController
 
+@property (copy, nonatomic) void(^menuTapAction)(NSInteger);
+- (void)showMenuView;
+
 @end

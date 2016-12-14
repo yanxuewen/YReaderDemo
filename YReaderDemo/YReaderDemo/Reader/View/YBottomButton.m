@@ -19,6 +19,7 @@
 
 + (instancetype)bottonWith:(NSString *)title imageName:(NSString *)imageName tag:(NSInteger)tag {
     YBottomButton *btn = [[self alloc] init];
+    btn.userInteractionEnabled = YES;
     CGFloat width = kScreenWidth/5;
     btn.frame = CGRectMake(tag * width, 0, width, 54);
     btn.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, btn.height/2, width, btn.height/2)];
@@ -36,7 +37,7 @@
     [btn addSubview:btn.imageView];
     [btn addSubview:btn.titleLabel];
     [btn addTarget:btn action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+    NSLog(@"btn  target %@",btn.allTargets);
     return btn;
 }
 
@@ -49,9 +50,11 @@
     }
 }
 
-- (void)buttonAction:(UIButton *)button {
-    
+- (void)buttonAction:(YBottomButton *)button {
+    NSLog(@"%s",__func__);
 }
+
+
 
 - (UIImage *) imageWith:(UIImage *)image TintColor:(UIColor *)tintColor blendMode:(CGBlendMode)blendMode
 {
