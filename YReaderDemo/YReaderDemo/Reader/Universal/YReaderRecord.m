@@ -19,5 +19,14 @@
     return @[@"cover",@"idField"];
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.chaptersLink = @[];
+        self.readingPage = 0;
+        self.readingChapter = 0;
+    }
+    return self;
+}
 
 @end

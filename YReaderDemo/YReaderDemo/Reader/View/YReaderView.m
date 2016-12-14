@@ -24,6 +24,20 @@
     }
 }
 
+- (void)setContent:(NSAttributedString *)content {
+    _content = content;
+    CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)content);
+    CGPathRef pathRef = CGPathCreateWithRect(self.bounds, NULL);
+    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
+    if (setterRef) {
+        CFRelease(setterRef);
+    }
+    if (pathRef) {
+        CFRelease(pathRef);
+    }
+    self.contentFrame = frameRef;
+}
+
 - (void)drawRect:(CGRect)rect {
     if (!_contentFrame) {
         return;

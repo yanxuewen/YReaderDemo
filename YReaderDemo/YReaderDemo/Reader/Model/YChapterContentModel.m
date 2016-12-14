@@ -69,12 +69,13 @@
     return nil;
 }
 
-+ (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link {
++ (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link load:(BOOL)isLoadCache{
     YChapterContentModel *chapterM = [[YChapterContentModel alloc] init];
     chapterM.title = title;
     chapterM.link = link;
+    chapterM.isLoadCache = isLoadCache;
     chapterM.body = @"正在为您加载...";
-    chapterM.isDownload = NO;
+    chapterM.isLoad = NO;
     return chapterM;
 }
 

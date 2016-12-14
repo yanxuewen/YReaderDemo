@@ -10,6 +10,9 @@
 #import "YSQLiteManager.h"
 #import "YReaderUniversal.h"
 #import "YNetworkManager.h"
+#import <UIKit/UIKit.h>
+
+#define kYReaderAutoLoadNumber 10
 
 @interface YReaderManager ()
 
@@ -22,6 +25,12 @@
 @property (strong, nonatomic) YNetworkManager *netManager;
 @property (copy, nonatomic) void(^updateCompletion)();
 @property (copy, nonatomic) void(^updateFailure)(NSString *);
+@property (assign, nonatomic) NSUInteger endLoadIndex;
+@property (strong, nonatomic, readonly) NSString *cachePath;
+@property (strong, nonatomic, readonly) NSString *summarykey;
+@property (strong, nonatomic, readonly) NSString *recordKey;
+@property (assign, atomic) BOOL isAutoLoading;
+
 
 @end
 
@@ -42,6 +51,8 @@
         self.documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         self.netManager = [YNetworkManager shareManager];
         self.sqliteM = [YSQLiteManager shareManager];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminateNotification:) name:UIApplicationWillTerminateNotification object:nil];
     }
     return self;
 }
@@ -58,8 +69,7 @@
     self.updateFailure = failure;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _readingBook = bookM;
-        NSString *summaryKey = [NSString stringWithFormat:@"%@_selectSummary",bookM.idField];
-        self.selectSummary = (YBookSummaryModel *)[self.sqliteM.cache objectForKey:summaryKey];
+        self.selectSummary = (YBookSummaryModel *)[self.sqliteM.cache objectForKey:self.summarykey];
         if (self.selectSummary) {
             [self getBookChaptersLink];
         } else {
@@ -100,17 +110,14 @@
 
 - (void)getBookChaptersLink {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.cache = [[YYDiskCache alloc] initWithPath:[NSString stringWithFormat:@"%@_bookCache",self.selectSummary]];
-        self.record = (YReaderRecord *)[self.cache objectForKey:[NSString stringWithFormat:@"%@_recore",self.selectSummary.idField]];
+        self.cache = [[YYDiskCache alloc] initWithPath:self.cachePath];
+        self.record = (YReaderRecord *)[self.cache objectForKey:self.recordKey];
         if (self.record && self.record.chaptersLink.count > 0) {
             [self updateReadingBookChaptersContent];
-            [self getChapterContentWith:self.record.readingChapter];
+            [self getChapterContentWith:self.record.readingChapter autoLoad:NO];
             return;
         } else {
             self.record = [[YReaderRecord alloc] init];
-            self.record.chaptersLink = @[];
-            self.record.readingPage = 0;
-            self.record.readingChapter = 0;
         }
         __weak typeof(self) wself = self;
         [_netManager getWithAPIType:YAPITypeChaptersLink parameter:_selectSummary.idField success:^(id response) {
@@ -118,7 +125,7 @@
             if (arr.count > 0) {
                 wself.record.chaptersLink = arr;
                 [wself updateReadingBookChaptersContent];
-                [wself getChapterContentWith:0];
+                [wself getChapterContentWith:wself.record.readingChapter autoLoad:NO];
             } else {
                 DDLogWarn(@"本书该来源没有下载地址 %@",wself.selectSummary);
                 [wself updateReadingCompletionWith:@"该来源没有下载地址"];
@@ -130,7 +137,7 @@
     });
 }
 
-- (void)getChapterContentWith:(NSUInteger)chapter {
+- (void)getChapterContentWith:(NSUInteger)chapter autoLoad:(BOOL)isAutoLoad{
     __weak typeof(self) wself = self;
     YChapterContentModel *chapterM = nil;
     if (chapter < self.chaptersArr.count) {
@@ -140,18 +147,49 @@
         [wself updateReadingCompletionWith:@"书籍历史章节记录错误"];
         return;
     }
-    NSString *body = (NSString *)[self.cache objectForKey:chapterM.link];
-    if (body) {
-        chapterM.body = body;
-        [chapterM updateContentPaging];
-        [wself updateReadingCompletionWith:nil];
+    
+    if (chapterM.isLoadCache) {
+        chapterM.body = (NSString *)[self.cache objectForKey:chapterM.link];;
+        chapterM.isLoad = YES;
+        if (isAutoLoad) {
+            if (chapter < self.endLoadIndex) {
+                [self getChapterContentWith:chapter+1 autoLoad:YES];
+            } else {
+                self.isAutoLoading = NO;;
+                DDLogInfo(@"AutoLoad 完成 endLoadIndex:%zi",self.endLoadIndex);
+            }
+        } else {
+            [chapterM updateContentPaging];
+            [wself updateReadingCompletionWith:nil];
+        }
+        if (!chapterM.body) {
+            DDLogError(@"error isLoadCache YES BUT body==nil;chapterM:%@  selectSummary:%@",chapterM,self.selectSummary);
+        }
         return;
     }
     [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
         chapterM.body = ((YChapterContentModel *)response).body;
-        [chapterM updateContentPaging];
-        [wself updateReadingCompletionWith:nil];
-        
+        chapterM.isLoad = YES;
+        [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{
+            chapterM.isLoadCache = YES;
+            if (chapter < wself.record.chaptersLink.count) {
+                YChaptersLinkModel *linkM = wself.record.chaptersLink[chapter];
+                linkM.isLoadCache = YES;
+            } else {
+                DDLogError(@"error cache chapterM.body success but chapterz:%zi < wself.record.chaptersLink.count:%zi",chapter,wself.record.chaptersLink.count);
+            }
+        }];
+        if (isAutoLoad) {
+            if (chapter < self.endLoadIndex) {
+                [wself getChapterContentWith:chapter+1 autoLoad:YES];
+            } else {
+                wself.isAutoLoading = NO;
+                DDLogInfo(@"AutoLoad 完成 endLoadIndex:%zi",self.endLoadIndex);
+            }
+        } else {
+            [chapterM updateContentPaging];
+            [wself updateReadingCompletionWith:nil];
+        }
     } failure:^(NSError *error) {
         DDLogWarn(@"get Chapter Content failure %@",chapterM);
         [wself updateReadingCompletionWith:error.localizedFailureReason];
@@ -179,12 +217,62 @@
     if (_record.chaptersLink.count > 0) {
         _chaptersArr = @[].mutableCopy;
         for (YChaptersLinkModel *linkM in _record.chaptersLink) {
-            YChapterContentModel *chapterM = [YChapterContentModel chapterModelWith:linkM.title link:linkM.link];
+            YChapterContentModel *chapterM = [YChapterContentModel chapterModelWith:linkM.title link:linkM.link load:linkM.isLoadCache];
             [_chaptersArr addObject:chapterM];
         }
     } else {
         DDLogError(@"chaptersLink nil or empty %@",_record);
     }   
+}
+
+- (void)autoLoadNextChapters:(NSUInteger)index {
+    if (self.isAutoLoading) {
+        return;
+    }
+    self.isAutoLoading = YES;
+    if (index < self.chaptersArr.count) {
+        self.endLoadIndex = index + kYReaderAutoLoadNumber < self.chaptersArr.count ? index + kYReaderAutoLoadNumber : self.chaptersArr.count - 1;
+        [self getChapterContentWith:index autoLoad:YES];
+    } else {
+        DDLogInfo(@"加载完成 ? autoLoadNextChapters   index:%zi >= self.chaptersArr.count:%zi",index,self.chaptersArr.count);
+    }
+    
+}
+
+- (void)appDidEnterBackgroundNotification:(NSNotification *)noti {
+    NSLog(@"%s",__func__);
+    if (self.selectSummary) {
+        [self.cache setObject:self.selectSummary forKey:self.summarykey];
+    }
+    if (self.record) {
+        [self.cache setObject:self.record forKey:self.recordKey];
+    }
+}
+
+- (void)appWillTerminateNotification:(NSNotification *)noti {
+    NSLog(@"%s",__func__);
+    if (self.selectSummary) {
+        [self.cache setObject:self.selectSummary forKey:self.summarykey];
+    }
+    if (self.record) {
+        [self.cache setObject:self.record forKey:self.recordKey];
+    }
+}
+
+- (NSString *)cachePath {
+    return [self.documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_cache",self.selectSummary.idField]];
+}
+
+- (NSString *)summarykey {
+    return [NSString stringWithFormat:@"%@_summary",self.readingBook.idField];
+}
+
+- (NSString *)recordKey {
+    return [NSString stringWithFormat:@"%@_record",self.selectSummary.idField];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

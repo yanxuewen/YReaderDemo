@@ -10,6 +10,7 @@
 
 @interface YReaderView : UIView
 
+@property (strong, nonatomic) NSAttributedString *content;
 @property (assign, nonatomic) CTFrameRef contentFrame;
 
 @end

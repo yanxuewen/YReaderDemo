@@ -52,9 +52,12 @@
     _pageViewController.view.frame = self.view.bounds;
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
-    _page = 0;
-    _chapter = 0;
-    [_pageViewController setViewControllers:@[[self readPageViewWithChapter:0 page:0]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    _page = _readerManager.record.readingPage;
+    _chapter = _readerManager.record.readingChapter;
+    [_pageViewController setViewControllers:@[[self readPageViewWithChapter:_chapter page:_page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.readerManager autoLoadNextChapters:self.chapter];
+    });
 }
 
 - (YReadPageViewController *)readPageViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page {
@@ -64,6 +67,9 @@
     YChapterContentModel *chapterM = _readerManager.chaptersArr[chapter];
     if (chapter != _chapter) {
         [chapterM updateContentPaging];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.readerManager autoLoadNextChapters:chapter];
+        });
     }
     readPageVC.pageContent = [chapterM getStringWith:page];
     readPageVC.totalPage = chapterM.pageCount;

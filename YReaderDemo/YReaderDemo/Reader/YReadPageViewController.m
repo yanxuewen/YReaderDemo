@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *pageNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet YBatteryView *batteryView;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (strong, nonatomic) YReaderView *readerView;
 
 @end
@@ -30,24 +29,16 @@
     _readerView = [[YReaderView alloc] initWithFrame:CGRectMake(kYReaderLeftSpace, kYReaderTopSpace, kScreenWidth - kYReaderLeftSpace - kYReaderRightSpace, kScreenHeight - kYReaderTopSpace - kYReaderBottomSpace)];
     _readerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_readerView];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.titleLabel.text = self.booktitle;
-    self.contentLabel.attributedText = self.pageContent;
-    NSLog(@"pageContent %@",self.pageContent);
     self.pageNumberLabel.text = [NSString stringWithFormat:@"第%zi/%zi页",self.page+1,self.totalPage];
     self.timeLabel.text = [[YDateModel shareDateModel] getTimeString];
     [self.batteryView setNeedsDisplay];
-    self.contentLabel.hidden = YES;
-    
-    CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.pageContent);
-    CGPathRef pathRef = CGPathCreateWithRect(self.readerView.bounds, NULL);
-    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, NULL);
-    CFRelease(setterRef);
-    CFRelease(pathRef);
-    self.readerView.contentFrame = frameRef;
+    self.readerView.content = self.pageContent;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,11 +13,12 @@
 @property (nonatomic, strong) NSString * body;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSString *link;
-@property (nonatomic, assign) BOOL isDownload;
+@property (nonatomic, assign) BOOL isLoad;
+@property (assign, nonatomic) BOOL isLoadCache;
 @property (assign, nonatomic) NSUInteger pageCount;
 
 - (void)updateContentPaging;
 - (NSAttributedString *)getStringWith:(NSUInteger)page;
-+ (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link;
++ (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link load:(BOOL)isLoadCache;
 
 @end

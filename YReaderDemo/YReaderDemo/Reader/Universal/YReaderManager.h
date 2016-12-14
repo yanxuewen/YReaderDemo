@@ -24,5 +24,6 @@
 + (instancetype)shareReaderManager;
 - (void)updateReadingBook:(YBookDetailModel *)bookM completion:(void(^)())completion failure:(void (^)(NSString *msg))failure;
 - (void)updateReadingBookChaptersContent;
+- (void)autoLoadNextChapters:(NSUInteger)index;
 
 @end
