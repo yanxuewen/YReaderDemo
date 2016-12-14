@@ -11,8 +11,8 @@
 @interface YTableHeaderView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) NSString *rightTitle;
 
 @property (copy, nonatomic) void(^tapAction)();
 

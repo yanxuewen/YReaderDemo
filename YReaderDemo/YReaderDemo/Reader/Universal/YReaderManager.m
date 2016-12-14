@@ -191,8 +191,17 @@
             [wself updateReadingCompletionWith:nil];
         }
     } failure:^(NSError *error) {
-        DDLogWarn(@"get Chapter Content failure %@",chapterM);
-        [wself updateReadingCompletionWith:error.localizedFailureReason];
+        if (isAutoLoad) {
+            if (chapter < self.endLoadIndex) {
+                [wself getChapterContentWith:chapter+1 autoLoad:YES];
+            } else {
+                wself.isAutoLoading = NO;
+                DDLogInfo(@"AutoLoad 完成 endLoadIndex:%zi",self.endLoadIndex);
+            }
+        } else {
+            DDLogWarn(@"get Chapter Content failure %@",chapterM);
+            [wself updateReadingCompletionWith:error.localizedFailureReason];
+        }
     }];
 }
 

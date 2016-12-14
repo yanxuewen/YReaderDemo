@@ -7,14 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+@class YBookDetailModel;
 
 @interface YSQLiteManager : NSObject
 
 @property (strong, nonatomic, readonly) YYCache *cache;
+@property (copy, nonatomic, readonly) NSArray *userBooks;
 
 + (instancetype)shareManager;
 
 - (NSArray *)getHistorySearchTextArray;
 - (void)updateHistorySearchTextArrayWith:(NSArray *)array;
+
+- (void)addUserBooksWith:(YBookDetailModel *)bookM;
 
 @end

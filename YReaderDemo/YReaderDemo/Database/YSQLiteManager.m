@@ -7,13 +7,16 @@
 //
 
 #import "YSQLiteManager.h"
+#import "YBookDetailModel.h"
 
 #define kYReaderSqliteName @"kYReaderSqliteName"
 #define kYHistorySearchText @"kYHistorySearchText"
+#define kYUesrBooks @"kYUesrBooks"
 
 @interface YSQLiteManager ()
 
 @property (strong, nonatomic) YYCache *cache;
+@property (copy, nonatomic) NSArray *userBooks;
 
 @end
 
@@ -33,8 +36,11 @@
     if (self) {
         NSString *documentFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         NSString *path = [documentFolder stringByAppendingPathComponent:kYReaderSqliteName];
-        NSLog(@"YSQLiteManager path %@",path);
         self.cache = [[YYCache alloc] initWithPath:path];
+        _userBooks = (NSArray *)[self.cache objectForKey:kYUesrBooks];
+        if (!_userBooks) {
+            _userBooks = @[];
+        }
     }
     return self;
 }
@@ -51,6 +57,27 @@
     [self.cache setObject:array forKey:kYHistorySearchText];
 }
 
+- (void)addUserBooksWith:(id)bookM {
+    NSMutableArray *arr = _userBooks.mutableCopy;
+    YBookDetailModel *deleteM = nil;
+    for (YBookDetailModel * book in arr) {
+        if ([book isEqual:bookM]) {
+            deleteM = book;
+            break;
+        }
+    }
+    if ([arr containsObject:bookM]) {
+        NSLog(@"addUserBooksWith containsObject OK");
+    }
+    if (deleteM) {
+        [arr removeObject:deleteM];
+    }
+    [arr insertObject:bookM atIndex:0];
+    self.userBooks = arr.copy;
+    [self.cache setObject:self.userBooks forKey:kYUesrBooks withBlock:^{
+        
+    }];
+}
 
 
 @end

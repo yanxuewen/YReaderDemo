@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 //    [self setupPageViewController];
     
     _netManager = [YNetworkManager shareManager];

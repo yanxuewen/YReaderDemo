@@ -39,6 +39,8 @@
 @property (nonatomic, strong) NSDate * updated;
 @property (nonatomic, assign) NSInteger wordCount;
 
+@property (assign, nonatomic) BOOL hasUpdated;
+
 - (NSString *)getBookWordCount;
 
 @end

@@ -9,6 +9,10 @@
 #import "YBookDetailModel.h"
 #import "YDateModel.h"
 
+@interface YBookDetailModel ()<NSCoding>
+
+@end
+
 @implementation YBookDetailModel
 
 + (NSArray *)modelPropertyBlacklist {
@@ -31,6 +35,17 @@
         return YES;
     }
     return NO;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:self.updated forKey:@"updated"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    self.updated = [aDecoder decodeObjectForKey:@"updated"];
+    return self;
 }
 
 - (NSString *)getBookWordCount {

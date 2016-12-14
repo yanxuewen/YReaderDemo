@@ -64,9 +64,9 @@
             number = interval / 60;
             unit = @"分钟";
         } else {
-            return @"刚刚更新";
+            return @"刚刚";
         }
-        return [NSString stringWithFormat:@"%zi %@前更新",number,unit];
+        return [NSString stringWithFormat:@"%zi%@前",number,unit];
     }
 }
 

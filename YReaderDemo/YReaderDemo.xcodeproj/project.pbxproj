@@ -52,6 +52,8 @@
 		465D42EE1DF9949400ED1D58 /* YCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42ED1DF9949400ED1D58 /* YCollectionViewLayout.m */; };
 		465D42F21DF99E1D00ED1D58 /* YTagViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42F01DF99E1D00ED1D58 /* YTagViewCell.m */; };
 		465D42F31DF99E1D00ED1D58 /* YTagViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 465D42F11DF99E1D00ED1D58 /* YTagViewCell.xib */; };
+		46711E581E0121030051772F /* YBookViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46711E561E0121030051772F /* YBookViewCell.m */; };
+		46711E591E0121030051772F /* YBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46711E571E0121030051772F /* YBookViewCell.xib */; };
 		46A48CB01DFF998900DB58A6 /* YReaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A48CAB1DFF998900DB58A6 /* YReaderManager.m */; };
 		46A48CB11DFF998900DB58A6 /* YReaderRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A48CAD1DFF998900DB58A6 /* YReaderRecord.m */; };
 		46A48CB21DFF998900DB58A6 /* YReaderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A48CAF1DFF998900DB58A6 /* YReaderSettings.m */; };
@@ -145,6 +147,9 @@
 		465D42EF1DF99E1D00ED1D58 /* YTagViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTagViewCell.h; sourceTree = "<group>"; };
 		465D42F01DF99E1D00ED1D58 /* YTagViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTagViewCell.m; sourceTree = "<group>"; };
 		465D42F11DF99E1D00ED1D58 /* YTagViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YTagViewCell.xib; sourceTree = "<group>"; };
+		46711E551E0121030051772F /* YBookViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBookViewCell.h; sourceTree = "<group>"; };
+		46711E561E0121030051772F /* YBookViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBookViewCell.m; sourceTree = "<group>"; };
+		46711E571E0121030051772F /* YBookViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YBookViewCell.xib; sourceTree = "<group>"; };
 		46A48CAA1DFF998900DB58A6 /* YReaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderManager.h; sourceTree = "<group>"; };
 		46A48CAB1DFF998900DB58A6 /* YReaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderManager.m; sourceTree = "<group>"; };
 		46A48CAC1DFF998900DB58A6 /* YReaderRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderRecord.h; sourceTree = "<group>"; };
@@ -311,6 +316,7 @@
 				465D42D41DF932FD00ED1D58 /* YRightViewController.h */,
 				465D42D51DF932FD00ED1D58 /* YRightViewController.m */,
 				465D42D61DF932FD00ED1D58 /* YRightViewController.xib */,
+				46711E5A1E01210A0051772F /* View */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -359,6 +365,16 @@
 				46110D211DFA85EC0012DAD1 /* YBookDetailCell.h */,
 				46110D221DFA85EC0012DAD1 /* YBookDetailCell.m */,
 				46110D231DFA85EC0012DAD1 /* YBookDetailCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		46711E5A1E01210A0051772F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46711E551E0121030051772F /* YBookViewCell.h */,
+				46711E561E0121030051772F /* YBookViewCell.m */,
+				46711E571E0121030051772F /* YBookViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -520,6 +536,7 @@
 				46D5DB1D1DF82AC9009CC6AB /* LaunchScreen.storyboard in Resources */,
 				46D5DB1A1DF82AC9009CC6AB /* Assets.xcassets in Resources */,
 				46110D361DFBACA60012DAD1 /* YBookDetailViewController.xib in Resources */,
+				46711E591E0121030051772F /* YBookViewCell.xib in Resources */,
 				465D42E81DF987DA00ED1D58 /* YTableHeaderView.xib in Resources */,
 				46D5DB181DF82AC9009CC6AB /* Main.storyboard in Resources */,
 				46110D3D1DFBB2C70012DAD1 /* YNavHeaderView.xib in Resources */,
@@ -628,6 +645,7 @@
 				46110D201DFA4CFB0012DAD1 /* YURLManager.m in Sources */,
 				46110D291DFA8BBF0012DAD1 /* YBaseModel.m in Sources */,
 				46110D241DFA85EC0012DAD1 /* YBookDetailCell.m in Sources */,
+				46711E581E0121030051772F /* YBookViewCell.m in Sources */,
 				46110D6C1DFC311B0012DAD1 /* YBookDetailModel.m in Sources */,
 				46A48CB21DFF998900DB58A6 /* YReaderSettings.m in Sources */,
 				465D42CD1DF932DC00ED1D58 /* YCenterViewController.m in Sources */,

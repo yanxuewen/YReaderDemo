@@ -21,6 +21,7 @@
 #import "YBookDetailCell.h"
 #import "YTableHeaderView.h"
 #import "YDateModel.h"
+#import "YSQLiteManager.h"
 
 @interface YBookDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -113,10 +114,13 @@
     
 }
 
+#pragma mark - 开始阅读
 - (IBAction)startReading:(id)sender {
     YReaderViewController *readerVC = [[YReaderViewController alloc] init];
     readerVC.readingBook = self.bookDetail;
-    [self presentViewController:readerVC animated:YES completion:nil];
+    [self presentViewController:readerVC animated:YES completion:^{
+        [[YSQLiteManager shareManager] addUserBooksWith:self.bookDetail];
+    }];;
 }
 
 - (void)getNetBookDetailData {
@@ -169,7 +173,7 @@
     _majorCateLabel.text = _bookDetail.minorCate;
     _wordCountLabel.text = [_bookDetail getBookWordCount];
     if (_bookDetail.isSerial) {
-        _updateLabel.text = [[YDateModel shareDateModel] getUpdateStringWith:_bookDetail.updated];
+        _updateLabel.text = [[[YDateModel shareDateModel] getUpdateStringWith:_bookDetail.updated] stringByAppendingString:@"更新"];
     } else {
         _updateLabel.text = @"已完结";
     }
@@ -332,17 +336,16 @@
     if (section == 0) {
         YTableHeaderView *headerV = [[YTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
         headerV.textLabel.font = [UIFont systemFontOfSize:14];
-        headerV.rightLabel.font = [UIFont systemFontOfSize:14];
-        headerV.imageView.image = nil;
+        
         if ([tableView isEqual:self.reviewTableView]) {
             headerV.textLabel.text = @"热门评价";
-            headerV.rightLabel.text = @"更多";
+            headerV.rightTitle = @"更多";
             headerV.tapAction = ^{
                 NSLog(@"点击更多书评");
             };
         } else if ([tableView isEqual:self.recommendListView]) {
             headerV.textLabel.text = @"推荐书单";
-            headerV.rightLabel.text = nil;
+            headerV.rightTitle = nil;
         }
         
         return headerV;

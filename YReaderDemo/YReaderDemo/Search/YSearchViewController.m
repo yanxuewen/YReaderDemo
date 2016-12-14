@@ -79,8 +79,8 @@
     YTableHeaderView *headerV = ({
         YTableHeaderView *headerV = [[YTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
         headerV.textLabel.text = @"大家都在搜";
-        headerV.rightLabel.text = @"换一批";
-        headerV.imageView.image = [UIImage imageNamed:@"search_refresh"];
+        headerV.rightTitle = @"换一批";
+        headerV.image = [UIImage imageNamed:@"search_refresh"];
         headerV.tapAction = ^{
             wself.tagArr = [wself randomTagArray];
             YCollectionViewLayout *layout = (YCollectionViewLayout *)wself.tagView.collectionViewLayout;
@@ -151,8 +151,8 @@
     if ([tableView isEqual:self.historyTableView]) {
         YTableHeaderView *headerV = [[YTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 44)];
         headerV.textLabel.text = @"搜索历史";
-        headerV.rightLabel.text = @"清空";
-        headerV.imageView.image = [UIImage imageNamed:@"search_delete"];
+        headerV.rightTitle = @"清空";
+        headerV.image = [UIImage imageNamed:@"search_delete"];
         __weak typeof(self) wself = self;
         headerV.tapAction = ^{
             [wself clearHistorySearchTextArray];
