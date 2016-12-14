@@ -31,81 +31,17 @@
     self.view.backgroundColor = [UIColor clearColor];
 //    [self setupPageViewController];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        _netManager = [YNetworkManager shareManager];
-        _readerManager = [YReaderManager shareReaderManager];
-        [_readerManager updateReadingBook:_readingBook];
-        if (_readerManager.record.selectSummary) {
-            [self getBookChaptersLink];
-        } else {
-            [self getBookSummary];
-        }
-    });
-
-}
-
-- (void)getBookSummary {
+    _netManager = [YNetworkManager shareManager];
+    _readerManager = [YReaderManager shareReaderManager];
     __weak typeof(self) wself = self;
-    [_netManager getWithAPIType:YAPITypeBookSummary parameter:_readingBook.idField success:^(id response) {
-        NSArray *arr = (NSArray *)response;
-        if (arr.count > 0) {
-            YBookSummaryModel *selectSummary = nil;
-            for (YBookSummaryModel *summary in arr) {
-                if (![summary.source isEqualToString:@"zhuishuvip"]) {
-                    selectSummary = summary;
-                    break;
-                }
-            }
-            if (selectSummary) {
-                wself.readerManager.record.selectSummary = selectSummary;
-                [wself getBookChaptersLink];
-            } else {
-                DDLogWarn(@"本书没有免费来源 %@",wself.readingBook);
-            }
-        } else {
-            DDLogWarn(@"本书没有来源 %@",wself.readingBook);
-        }
-    } failure:^(NSError *error) {
-        DDLogWarn(@"get Book Summary failure %@",wself.readingBook);
-    }];
-    
-}
-
-- (void)getBookChaptersLink {
-    __weak typeof(self) wself = self;
-    [_netManager getWithAPIType:YAPITypeChaptersLink parameter:_readerManager.record.selectSummary.idField success:^(id response) {
-        NSArray *arr = (NSArray *)response;
-        if (arr.count > 0) {
-            wself.readerManager.record.chaptersLink = arr;
-            [wself.readerManager updateReadingBookChaptersContent];
-            [wself getChapterContentWith:0];
-        } else {
-            DDLogWarn(@"本书该来源没有下载地址 %@",wself.readerManager.record.selectSummary);
-        }
-    } failure:^(NSError *error) {
-        DDLogWarn(@"get Book Chapters Link failure %@",wself.readerManager.record.selectSummary);
-    }];
-}
-
-- (void)getChapterContentWith:(NSUInteger)chapter {
-    __weak typeof(self) wself = self;
-    YChapterContentModel *chapterM = nil;
-    if (chapter < self.readerManager.chaptersArr.count) {
-        chapterM = self.readerManager.chaptersArr[chapter];
-    } else {
-        DDLogWarn(@"get Chapter Content  chapter(%zi) < self.readerManager.chaptersArr.count(%zi)",chapter,self.readerManager.chaptersArr.count);
-        return;
-    }
-    
-    [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
-        chapterM.body = ((YChapterContentModel *)response).body;
-        [chapterM updateContentPaging];
+    [_readerManager updateReadingBook:_readingBook completion:^{
         [wself setupPageViewController];
-        
-    } failure:^(NSError *error) {
-        DDLogWarn(@"get Chapter Content failure %@",chapterM);
+    } failure:^(NSString *msg) {
+        DDLogWarn(@"updateReadingBook error msg %@",msg);
     }];
+
 }
+
 
 
 

@@ -14,10 +14,6 @@
 
 @property (assign, nonatomic) NSUInteger readingChapter;
 @property (assign, nonatomic) NSUInteger readingPage;
-@property (strong, nonatomic) YBookSummaryModel *selectSummary;
 @property (strong, nonatomic) NSArray *chaptersLink;
-
-+ (instancetype)recordModelWith:(YBookDetailModel *)bookM;
-
 
 @end

@@ -17,11 +17,12 @@
 
 @property (strong, nonatomic, readonly) NSMutableArray *chaptersArr;
 @property (strong, nonatomic, readonly) YBookDetailModel *readingBook;
+@property (strong, nonatomic, readonly) YBookSummaryModel *selectSummary;
 @property (strong, nonatomic, readonly) YReaderRecord *record;
 @property (assign, nonatomic, readonly) NSUInteger chaptersCount;
 
 + (instancetype)shareReaderManager;
-- (void)updateReadingBook:(YBookDetailModel *)bookM;
+- (void)updateReadingBook:(YBookDetailModel *)bookM completion:(void(^)())completion failure:(void (^)(NSString *msg))failure;
 - (void)updateReadingBookChaptersContent;
 
 @end

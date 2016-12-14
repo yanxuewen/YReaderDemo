@@ -19,20 +19,5 @@
     return @[@"cover",@"idField"];
 }
 
-+ (instancetype)recordModelWith:(YBookDetailModel *)bookM {
-    YReaderRecord *record = nil;
-    YYCache *cache = [YSQLiteManager shareManager].cache;
-    NSString *recordKey = [NSString stringWithFormat:@"%@_record",bookM.idField];
-    if ([cache containsObjectForKey:recordKey]) {
-        record = (YReaderRecord *)[cache objectForKey:recordKey];
-    } else {
-        record = [[YReaderRecord alloc] init];
-        record.chaptersLink = @[];
-        record.readingPage = 0;
-        record.readingChapter = 0;
-    }
-    DDLogInfo(@"reading book %@ \n record %@  ",bookM,record);
-    return record;
-}
 
 @end
