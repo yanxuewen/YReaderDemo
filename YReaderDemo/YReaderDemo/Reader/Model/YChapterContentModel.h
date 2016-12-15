@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSString *link;
 @property (nonatomic, assign) BOOL isLoad;
-@property (assign, nonatomic) BOOL isLoadCache;
+@property (assign, atomic) BOOL isLoadCache;
 @property (assign, nonatomic) NSUInteger pageCount;
 
 - (void)updateContentPaging;

@@ -136,7 +136,7 @@
 }
 
 - (void)getChapterContentWith:(NSUInteger)chapter autoLoad:(BOOL)isAutoLoad{
-    static YChapterContentModel *chapterM = nil;
+    YChapterContentModel *chapterM = nil;
     if (chapter < self.chaptersArr.count) {
         chapterM = self.chaptersArr[chapter];
     } else {

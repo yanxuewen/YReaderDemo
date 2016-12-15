@@ -15,6 +15,6 @@
 @property (nonatomic, strong) NSString * link;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, assign) BOOL unreadble;
-@property (assign, nonatomic) BOOL isLoadCache;
+@property (assign, atomic) BOOL isLoadCache;
 
 @end
