@@ -56,7 +56,10 @@
     
     __weak typeof(self) wself = self;
     NSURLSessionTask *task = [self.manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        DDLogInfo(@"\n---------------------------------------begin---------------------------------------\n请求地址:%@ \n参数:%@ \n返回:%@  \n---------------------------------------end---------------------------------------",url,parameter,responseObject);
+        if (type != YAPITypeChapterContent) {
+            DDLogInfo(@"\n---------------------------------------begin---------------------------------------\n请求地址:%@ \n参数:%@ \n返回:%@  \n---------------------------------------end---------------------------------------",url,parameter,responseObject);
+        } 
+        
         if (error) {
             if (failure) {
                 failure([wself formatWithResponseObject:nil error:error]);

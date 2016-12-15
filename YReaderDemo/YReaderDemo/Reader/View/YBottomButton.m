@@ -33,28 +33,38 @@
     btn.imageView.center = CGPointMake(width/2, (btn.height-img.size.height)/2);
 
     btn.backgroundColor = YRGBColor(40, 40, 40);
-    btn.tag = 100 + tag;
+    btn.tag = 200 + tag;
     [btn addSubview:btn.imageView];
     [btn addSubview:btn.titleLabel];
-    [btn addTarget:btn action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-    NSLog(@"btn  target %@",btn.allTargets);
+//    [btn addTarget:btn action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:btn action:@selector(buttonAction)]];
     return btn;
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
-    [super setHighlighted:highlighted];
-    if (highlighted) {
-        self.backgroundColor = YRGBColor(20, 20, 20);
-    } else {
-        self.backgroundColor = YRGBColor(40, 40, 40);
+//- (void)setHighlighted:(BOOL)highlighted {
+//    [super setHighlighted:highlighted];
+//    if (highlighted) {
+//        self.backgroundColor = YRGBColor(20, 20, 20);
+//    } else {
+//        self.backgroundColor = YRGBColor(40, 40, 40);
+//    }
+//}
+    
+- (void)buttonAction {
+    NSLog(@"%s  %zi",__func__,self.tag);
+    if (self.tapAction) {
+        self.tapAction(self.tag);
     }
 }
 
-- (void)buttonAction:(YBottomButton *)button {
-    NSLog(@"%s",__func__);
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *result = [super hitTest:point withEvent:event];
+    CGPoint buttonPoint = [self convertPoint:point fromView:self.superview.superview];
+    if ([self pointInside:buttonPoint withEvent:event]) {
+        return self;
+    }
+    return result;
 }
-
-
 
 - (UIImage *) imageWith:(UIImage *)image TintColor:(UIColor *)tintColor blendMode:(CGBlendMode)blendMode
 {

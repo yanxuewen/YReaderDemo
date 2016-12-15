@@ -136,13 +136,15 @@
 }
 
 - (void)getChapterContentWith:(NSUInteger)chapter autoLoad:(BOOL)isAutoLoad{
-    __weak typeof(self) wself = self;
-    YChapterContentModel *chapterM = nil;
+    static YChapterContentModel *chapterM = nil;
     if (chapter < self.chaptersArr.count) {
         chapterM = self.chaptersArr[chapter];
     } else {
         DDLogWarn(@"get Chapter Content  chapter(%zi) < self.chaptersArr.count(%zi)",chapter,self.chaptersArr.count);
-        [wself updateReadingCompletionWith:@"书籍历史章节记录错误"];
+        if (!isAutoLoad) {
+            [self updateReadingCompletionWith:@"书籍历史章节记录错误"];
+        }
+        
         return;
     }
     
@@ -158,18 +160,21 @@
             }
         } else {
             [chapterM updateContentPaging];
-            [wself updateReadingCompletionWith:nil];
+            [self updateReadingCompletionWith:nil];
         }
         if (!chapterM.body) {
             DDLogError(@"error isLoadCache YES BUT body==nil;chapterM:%@  selectSummary:%@",chapterM,self.selectSummary);
         }
         return;
     }
+    __weak typeof(self) wself = self;
     [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
         chapterM.body = ((YChapterContentModel *)response).body;
         chapterM.isLoad = YES;
+        DDLogInfo(@"Load chapter %zi",chapter);
         [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{
             chapterM.isLoadCache = YES;
+            DDLogInfo(@"Load Cache chapter %zi",chapter);
             if (chapter < wself.record.chaptersLink.count) {
                 YChaptersLinkModel *linkM = wself.record.chaptersLink[chapter];
                 linkM.isLoadCache = YES;
@@ -249,7 +254,7 @@
 - (void)updateReadingChapter:(NSUInteger)chapter page:(NSUInteger)page {
     self.record.readingChapter = chapter;
     self.record.readingPage = page;
-    [self.cache setObject:self.selectSummary forKey:self.summarykey];
+    [self.sqliteM.cache setObject:self.selectSummary forKey:self.summarykey];
     [self.cache setObject:self.record forKey:self.recordKey];
 }
 

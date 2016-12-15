@@ -11,7 +11,7 @@
 #import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
-
+#import "YMenuView.h"
 
 @interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 
@@ -42,31 +42,10 @@
         DDLogWarn(@"updateReadingBook error msg %@",msg);
     }];
     
-    self.menuView = [[YMenuViewController alloc] init];
-    [self addChildViewController:self.menuView];
-    self.menuView.view.frame = self.view.bounds;
-    self.menuView.menuTapAction = ^(NSInteger tag) {
-        switch (tag) {
-            case 100:           //换源
-                
-                break;
-            case 101:           //播放
-                
-                break;
-            case 102: {          //关闭
-                [wself dismissViewControllerAnimated:YES completion:^{
-                    [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
-                }];
-            }
-                break;
-            default:
-                break;
-        }
-    };
+    [self setupMenuView];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
-        [wself.view addSubview:wself.menuView.view];
+        
         [wself.menuView showMenuView];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
     }]];
     
@@ -85,6 +64,35 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
+#pragma mark - menu view
+- (void)setupMenuView {
+    __weak typeof(self) wself = self;
+//    self.menuView = [[YMenuView alloc] initWithFrame:self.view.bounds];
+//    [self.view addSubview:self.menuView];
+    self.menuView = [[YMenuViewController alloc] init];
+    self.menuView.view.frame = self.view.bounds;
+    [self.view addSubview:self.menuView.view];
+    self.menuView.view.hidden = YES;
+    self.menuView.menuTapAction = ^(NSInteger tag) {
+        switch (tag) {
+            case 100:           //换源
+                
+                break;
+            case 101:           //播放
+                
+                break;
+            case 102: {          //关闭
+                [wself dismissViewControllerAnimated:YES completion:^{
+                    [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
+                }];
+            }
+                break;
+            default:
+                break;
+        }
+    };
+}
+
 - (void)setupPageViewController {
     _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageViewController.delegate = self;
@@ -92,6 +100,7 @@
     _pageViewController.view.frame = self.view.bounds;
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
+    [self.view insertSubview:_pageViewController.view belowSubview:self.menuView.view];
     _page = _readerManager.record.readingPage;
     _chapter = _readerManager.record.readingChapter;
     [_pageViewController setViewControllers:@[[self readPageViewWithChapter:_chapter page:_page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];

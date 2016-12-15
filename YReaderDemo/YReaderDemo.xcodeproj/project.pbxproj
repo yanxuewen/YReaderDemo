@@ -31,6 +31,8 @@
 		46110D731DFC311B0012DAD1 /* YReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46110D6A1DFC311B0012DAD1 /* YReviewTableViewCell.xib */; };
 		46110D771DFC43590012DAD1 /* YRecommendBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46110D751DFC43590012DAD1 /* YRecommendBookCell.m */; };
 		46110D781DFC43590012DAD1 /* YRecommendBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46110D761DFC43590012DAD1 /* YRecommendBookCell.xib */; };
+		461F21AC1E02200D008F6D06 /* YMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 461F21AB1E02200D008F6D06 /* YMenuView.m */; };
+		461F21AE1E022022008F6D06 /* YMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 461F21AD1E022022008F6D06 /* YMenuView.xib */; };
 		463F5AFB1DFE54E900999A0B /* YBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5AFA1DFE54E900999A0B /* YBottomButton.m */; };
 		463F5AFE1DFE97C400999A0B /* YBookSummaryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5AFD1DFE97C400999A0B /* YBookSummaryModel.m */; };
 		463F5B011DFE992A00999A0B /* YChaptersLinkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B001DFE992A00999A0B /* YChaptersLinkModel.m */; };
@@ -38,6 +40,7 @@
 		463F5B081DFE9CFB00999A0B /* YReadPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B061DFE9CFB00999A0B /* YReadPageViewController.m */; };
 		463F5B091DFE9CFB00999A0B /* YReadPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */; };
 		463F5B121DFEE52200999A0B /* YBatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B111DFEE52200999A0B /* YBatteryView.m */; };
+		464236F21E02AC8A0092F7A7 /* YDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 464236F11E02AC8A0092F7A7 /* YDownloadManager.m */; };
 		465D42CD1DF932DC00ED1D58 /* YCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42CB1DF932DC00ED1D58 /* YCenterViewController.m */; };
 		465D42CE1DF932DC00ED1D58 /* YCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 465D42CC1DF932DC00ED1D58 /* YCenterViewController.xib */; };
 		465D42D21DF932EE00ED1D58 /* YLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42D01DF932EE00ED1D58 /* YLeftViewController.m */; };
@@ -111,6 +114,9 @@
 		46110D741DFC43590012DAD1 /* YRecommendBookCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRecommendBookCell.h; sourceTree = "<group>"; };
 		46110D751DFC43590012DAD1 /* YRecommendBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRecommendBookCell.m; sourceTree = "<group>"; };
 		46110D761DFC43590012DAD1 /* YRecommendBookCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YRecommendBookCell.xib; sourceTree = "<group>"; };
+		461F21AA1E02200D008F6D06 /* YMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMenuView.h; sourceTree = "<group>"; };
+		461F21AB1E02200D008F6D06 /* YMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMenuView.m; sourceTree = "<group>"; };
+		461F21AD1E022022008F6D06 /* YMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YMenuView.xib; sourceTree = "<group>"; };
 		463F5AF91DFE54E900999A0B /* YBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBottomButton.h; sourceTree = "<group>"; };
 		463F5AFA1DFE54E900999A0B /* YBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBottomButton.m; sourceTree = "<group>"; };
 		463F5AFC1DFE97C400999A0B /* YBookSummaryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBookSummaryModel.h; sourceTree = "<group>"; };
@@ -124,6 +130,8 @@
 		463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YReadPageViewController.xib; sourceTree = "<group>"; };
 		463F5B101DFEE52200999A0B /* YBatteryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBatteryView.h; sourceTree = "<group>"; };
 		463F5B111DFEE52200999A0B /* YBatteryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBatteryView.m; sourceTree = "<group>"; };
+		464236F01E02AC8A0092F7A7 /* YDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YDownloadManager.h; sourceTree = "<group>"; };
+		464236F11E02AC8A0092F7A7 /* YDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YDownloadManager.m; sourceTree = "<group>"; };
 		465D42CA1DF932DC00ED1D58 /* YCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCenterViewController.h; sourceTree = "<group>"; };
 		465D42CB1DF932DC00ED1D58 /* YCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCenterViewController.m; sourceTree = "<group>"; };
 		465D42CC1DF932DC00ED1D58 /* YCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YCenterViewController.xib; sourceTree = "<group>"; };
@@ -300,6 +308,9 @@
 				463F5B111DFEE52200999A0B /* YBatteryView.m */,
 				46BC8C4F1E003B5F00B33FA5 /* YReaderView.h */,
 				46BC8C501E003B5F00B33FA5 /* YReaderView.m */,
+				461F21AA1E02200D008F6D06 /* YMenuView.h */,
+				461F21AB1E02200D008F6D06 /* YMenuView.m */,
+				461F21AD1E022022008F6D06 /* YMenuView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -384,6 +395,8 @@
 			children = (
 				46A48CAA1DFF998900DB58A6 /* YReaderManager.h */,
 				46A48CAB1DFF998900DB58A6 /* YReaderManager.m */,
+				464236F01E02AC8A0092F7A7 /* YDownloadManager.h */,
+				464236F11E02AC8A0092F7A7 /* YDownloadManager.m */,
 				46A48CAC1DFF998900DB58A6 /* YReaderRecord.h */,
 				46A48CAD1DFF998900DB58A6 /* YReaderRecord.m */,
 				46A48CAE1DFF998900DB58A6 /* YReaderSettings.h */,
@@ -546,6 +559,7 @@
 				46110D731DFC311B0012DAD1 /* YReviewTableViewCell.xib in Resources */,
 				465D42D81DF932FD00ED1D58 /* YRightViewController.xib in Resources */,
 				46110D781DFC43590012DAD1 /* YRecommendBookCell.xib in Resources */,
+				461F21AE1E022022008F6D06 /* YMenuView.xib in Resources */,
 				463F5B091DFE9CFB00999A0B /* YReadPageViewController.xib in Resources */,
 				465D42E31DF95E3700ED1D58 /* YSearchViewController.xib in Resources */,
 				46BC8C4D1E00157500B33FA5 /* YMenuViewController.xib in Resources */,
@@ -626,12 +640,14 @@
 				46110D6B1DFC311B0012DAD1 /* YBookAuthorModel.m in Sources */,
 				46A48CB11DFF998900DB58A6 /* YReaderRecord.m in Sources */,
 				465D42D21DF932EE00ED1D58 /* YLeftViewController.m in Sources */,
+				461F21AC1E02200D008F6D06 /* YMenuView.m in Sources */,
 				46110D721DFC311B0012DAD1 /* YReviewTableViewCell.m in Sources */,
 				465D42E61DF9879A00ED1D58 /* YTableHeaderView.m in Sources */,
 				46D5DB151DF82AC9009CC6AB /* ViewController.m in Sources */,
 				465D42F21DF99E1D00ED1D58 /* YTagViewCell.m in Sources */,
 				46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */,
 				463F5AFE1DFE97C400999A0B /* YBookSummaryModel.m in Sources */,
+				464236F21E02AC8A0092F7A7 /* YDownloadManager.m in Sources */,
 				46110D2C1DFA8BEA0012DAD1 /* YBookModel.m in Sources */,
 				46110D771DFC43590012DAD1 /* YRecommendBookCell.m in Sources */,
 				46D5DB121DF82AC9009CC6AB /* AppDelegate.m in Sources */,

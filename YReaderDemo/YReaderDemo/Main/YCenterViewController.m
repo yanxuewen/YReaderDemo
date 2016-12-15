@@ -31,6 +31,10 @@
     
 }
 
+- (void)asjdnajnafn {
+    NSLog(@"%s",__func__);
+}
+
 - (void)setupUI {
     [self.booksTableView registerNib:[UINib nibWithNibName:NSStringFromClass([YBookViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([YBookViewCell class])];
 }

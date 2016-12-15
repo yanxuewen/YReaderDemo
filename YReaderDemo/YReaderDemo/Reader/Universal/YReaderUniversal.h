@@ -20,6 +20,12 @@ typedef NS_ENUM(NSInteger,YTurnPageStyle) {
     YTurnPageStyleScroll
 };
 
+typedef NS_ENUM(NSInteger,YDownloadType) {
+    YDownloadTypeAllLoad,
+    YDownloadTypeBehindAll,
+    YDownloadTypeBehindSome
+};
+
 #define kYReaderLeftSpace 20.0
 #define kYReaderRightSpace 20.0
 #define kYReaderTopSpace 40.0

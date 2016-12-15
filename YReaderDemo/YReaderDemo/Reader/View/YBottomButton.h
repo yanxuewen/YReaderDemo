@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YBottomButton : UIControl
+@interface YBottomButton : UIView
 
+@property (copy, nonatomic) void(^tapAction)(NSInteger);
 + (instancetype)bottonWith:(NSString *)title imageName:(NSString *)imageName tag:(NSInteger)tag;
 
 @end

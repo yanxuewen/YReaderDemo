@@ -31,6 +31,9 @@
         YYCache *cache = [YSQLiteManager shareManager].cache;
         if ([cache containsObjectForKey:kYReaderSettings]) {
             setting = (YReaderSettings *)[cache objectForKey:kYReaderSettings];
+            setting.fontSize = 16;
+            setting.font = [UIFont systemFontOfSize:setting.fontSize];
+            setting.lineSpacing = 8;
         } else {
             setting = [[self alloc] init];
             [cache setObject:setting forKey:kYReaderSettings];
@@ -43,9 +46,9 @@
     self = [super init];
     if (self) {
         _brightness = 0.7;
-        _lineSpacing = 5.0;
+        _lineSpacing = 8.0;
         _isTraditional = NO;
-        _fontSize = 14.0;
+        _fontSize = 16.0;
         _font = [UIFont systemFontOfSize:_fontSize];
         _theme = YReaderThemeOne;
         _pageStyle = YTurnPageStyleSimulated;

@@ -51,7 +51,7 @@
     }
     _pageCount = _pageArr.count;
     _attributedString = attr;
-    NSLog(@"_pageArr %@ %zi %zi",_pageArr,attr.length,_body.length);
+//    NSLog(@"_pageArr %@ %zi %zi",_pageArr,attr.length,_body.length);
 }
 
 - (NSAttributedString *)getStringWith:(NSUInteger)page {
