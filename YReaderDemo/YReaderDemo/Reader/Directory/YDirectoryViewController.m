@@ -27,7 +27,7 @@
     
     _firstDisplay = YES;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([YDirectoryViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([YDirectoryViewCell class])];
-    
+    self.tableView.rowHeight = 44;
     
 }
 
@@ -87,6 +87,8 @@
         cell.imageV.image = [UIImage imageNamed:@"directory_not_previewed"];
     }
     cell.numberLabel.text = [NSString stringWithFormat:@"%zi.",count+1];
+    CGSize size = [cell.numberLabel.text boundingRectWithSize:CGSizeMake(100, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:cell.numberLabel.font} context:NULL].size;
+    cell.numberLabelWidth.constant = size.width+2;
     cell.titleLabel.text = chapterM.title;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -100,9 +102,9 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     if (indexPath.row == 0 && _firstDisplay) {
         _firstDisplay = NO;
-        CGFloat offsetY = (_chaptersArr.count - 1 - _readingChapter) * 44 - tableView.height/2;
-        if (offsetY > _chaptersArr.count * 44 - tableView.height) {
-            offsetY = _chaptersArr.count * 44 - tableView.height;
+        CGFloat offsetY = (_chaptersArr.count - 1 - _readingChapter) * tableView.rowHeight - tableView.height/2;
+        if (offsetY > _chaptersArr.count * tableView.rowHeight - tableView.height) {
+            offsetY = _chaptersArr.count * tableView.rowHeight - tableView.height;
         }
         tableView.contentOffset = CGPointMake(0,offsetY);
     }
@@ -116,7 +118,7 @@
     if ([self.goBtn.currentTitle isEqualToString:@"到顶部"]) {
         [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
     } else {
-        [_tableView setContentOffset:CGPointMake(0, (_chaptersArr.count - 1) * 44 - _tableView.height) animated:YES];
+        [_tableView setContentOffset:CGPointMake(0, (_chaptersArr.count - 1) * _tableView.rowHeight - _tableView.height) animated:YES];
     }
 }
 

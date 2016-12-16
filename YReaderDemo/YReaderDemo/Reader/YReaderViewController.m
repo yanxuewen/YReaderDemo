@@ -12,7 +12,7 @@
 #import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
-#import "YMenuView.h"
+
 
 @interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 

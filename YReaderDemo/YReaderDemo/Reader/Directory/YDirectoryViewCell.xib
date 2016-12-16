@@ -41,11 +41,8 @@
                         <color key="textColor" red="0.50980392159999999" green="0.50980392159999999" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G41-hq-gIu">
-                        <rect key="frame" x="69" y="13" width="223" height="17"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="200" id="acQ-6z-CUC"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G41-hq-gIu">
+                        <rect key="frame" x="63" y="12" width="229" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -67,6 +64,7 @@
             <connections>
                 <outlet property="imageV" destination="pZT-h5-Vqp" id="lji-MZ-Psr"/>
                 <outlet property="numberLabel" destination="jww-Cb-iiK" id="uhn-Dl-Twe"/>
+                <outlet property="numberLabelWidth" destination="wP3-Lo-iYZ" id="RuD-nf-m0p"/>
                 <outlet property="titleLabel" destination="G41-hq-gIu" id="utU-4x-Qtd"/>
             </connections>
             <point key="canvasLocation" x="32" y="120.5"/>
