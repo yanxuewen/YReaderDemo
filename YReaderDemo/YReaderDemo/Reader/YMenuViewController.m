@@ -21,6 +21,8 @@
 
 @property (strong, nonatomic) YDownloadManager *downloadManager;
 @property (strong, nonatomic) YBookDetailModel *downloadBook;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewTop;
 
 @end
 
@@ -29,9 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    
-    
-    
+
     __weak typeof(self) wself = self;
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         [wself hideMenuView];
@@ -41,7 +41,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.downloadView.top = kScreenHeight;
+    
 }
 
 - (void)setupUI {
@@ -56,8 +56,11 @@
             case 201:           //反馈
                 
                 break;
-            case 202:           //目录
-                
+            case 202: {          //目录
+                if (self.menuTapAction) {
+                    self.menuTapAction(tag);
+                }
+            }
                 break;
             case 203: {          //下载
 //                [[YReaderManager shareReaderManager] ]
@@ -94,49 +97,32 @@
 }
 
 - (void)downloadChpatersWith:(YDownloadType)type {
-    [self showDownloadView];
+    self.downloadView.hidden = NO;
     self.downloadManager = [YDownloadManager shareManager];
-    
-    __weak typeof(self) wself = self;
-    
-    self.downloadBook = [YReaderManager shareReaderManager].readingBook;
     [self.downloadManager downloadReaderBookWith:self.downloadBook type:type];
-    
+    [self setDownloadBookCallback];
+}
+
+- (void)setDownloadBookCallback {
+    __weak typeof(self) wself = self;
     self.downloadBook.loadProgress = ^(NSUInteger chapter, NSUInteger totalChapters) {
         wself.downloadLabel.text = [NSString stringWithFormat:@"正在缓存中 (%zi/%zi) ...",chapter,totalChapters];
     };
     
     self.downloadBook.loadCompletion = ^ {
         wself.downloadLabel.text = @"缓存完成";
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [wself hideMenuView];
-//        });
+        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //            [wself hideMenuView];
+        //        });
     };
     
     self.downloadBook.loadFailure = ^(NSString *msg) {
-         wself.downloadLabel.text = [NSString stringWithFormat:@"缓存失败: %@",msg];
+        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存失败: %@",msg];
     };
     
     self.downloadBook.loadCancel = ^ {
         wself.downloadLabel.text = [NSString stringWithFormat:@"缓存取消"];
     };
-    
-}
-
-- (void)showDownloadView {
-    if (self.downloadView.top != kScreenHeight - self.bottomView.height - self.downloadView.height) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.downloadView.top = kScreenHeight - self.bottomView.height - self.downloadView.height;
-        }];
-    }
-}
-
-- (void)hideDownloadView {
-    if (self.downloadView.top != kScreenHeight) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.downloadView.top = kScreenHeight;
-        }];
-    }
 }
 
 - (IBAction)handleButton:(id)sender {
@@ -150,18 +136,26 @@
 - (void)showMenuView {
     self.view.hidden = NO;
     [UIView animateWithDuration:0.25 animations:^{
-        self.topView.top = 0;
-        self.bottomView.top = kScreenHeight - self.bottomView.height;
+//        self.topView.top = 0;
+//        self.bottomView.top = kScreenHeight - self.bottomView.height;
+        self.topViewTop.constant = 0;
+        self.bottomViewBottom.constant = 0;
     } completion:^(BOOL finished) {
         
     }];
+    if (self.downloadBook.loadStatus != YDownloadStatusNone) {
+        self.downloadView.hidden = NO;
+        [self setDownloadBookCallback];
+    }
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)hideMenuView {
     [UIView animateWithDuration:0.25 animations:^{
-        self.topView.top = -self.topView.height;
-        self.bottomView.top = kScreenHeight ;
+//        self.topView.top = -self.topView.height;
+//        self.bottomView.top = kScreenHeight + self.downloadView.height;
+        self.topViewTop.constant = -self.topView.height;
+        self.bottomViewBottom.constant = -self.bottomView.height - self.downloadView.height;
     } completion:^(BOOL finished) {
         if (finished) {
 //            self.topView.top = -self.topView.height;
@@ -173,7 +167,12 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
-
+- (YBookDetailModel *)downloadBook {
+    if (!_downloadBook) {
+        _downloadBook = [YReaderManager shareReaderManager].readingBook;
+    }
+    return _downloadBook;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

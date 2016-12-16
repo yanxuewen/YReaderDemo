@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YDirectoryViewController">
+            <connections>
+                <outlet property="goBtn" destination="bnp-Sk-otr" id="z18-4u-e4e"/>
+                <outlet property="tableView" destination="cOo-08-nbC" id="ENa-Oy-JNW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sSC-bt-gqY">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="默认模式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2j-sf-AKa">
+                            <rect key="frame" x="153" y="20" width="69.5" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="02a-Ve-r8I"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bnp-Sk-otr">
+                            <rect key="frame" x="285" y="20" width="90" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="avF-1Z-4oo"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <state key="normal" title="到顶部"/>
+                            <connections>
+                                <action selector="goToAction:" destination="-1" eventType="touchUpInside" id="JhL-cz-1xD"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="RUz-wD-PmN"/>
+                        <constraint firstAttribute="bottom" secondItem="bnp-Sk-otr" secondAttribute="bottom" id="Sxa-gq-7Zk"/>
+                        <constraint firstItem="bnp-Sk-otr" firstAttribute="top" secondItem="sSC-bt-gqY" secondAttribute="top" constant="20" id="TJL-jA-qci"/>
+                        <constraint firstAttribute="trailing" secondItem="bnp-Sk-otr" secondAttribute="trailing" id="XHe-xV-WOs"/>
+                        <constraint firstItem="Q2j-sf-AKa" firstAttribute="centerX" secondItem="sSC-bt-gqY" secondAttribute="centerX" id="wDv-Y7-wcg"/>
+                        <constraint firstItem="Q2j-sf-AKa" firstAttribute="top" secondItem="sSC-bt-gqY" secondAttribute="top" constant="20" id="xhy-57-NiK"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9U-6o-KPX">
+                    <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                    <subviews>
+                        <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMS-sb-q50">
+                            <rect key="frame" x="147.5" y="0.0" width="80" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="43s-2D-l37"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <state key="normal" image="directory_close"/>
+                            <connections>
+                                <action selector="tapAction:" destination="-1" eventType="touchUpInside" id="FmN-ZH-duD"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="1Lt-ex-VRx"/>
+                        <constraint firstItem="SMS-sb-q50" firstAttribute="top" secondItem="d9U-6o-KPX" secondAttribute="top" id="5oi-61-ilO"/>
+                        <constraint firstAttribute="bottom" secondItem="SMS-sb-q50" secondAttribute="bottom" id="bO7-ad-FXd"/>
+                        <constraint firstItem="SMS-sb-q50" firstAttribute="centerX" secondItem="d9U-6o-KPX" secondAttribute="centerX" id="vIU-it-Gi6"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="cOo-08-nbC">
+                    <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="h0X-Hg-LeN"/>
+                        <outlet property="delegate" destination="-1" id="xRJ-Nd-umJ"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="sSC-bt-gqY" secondAttribute="trailing" id="33Y-pz-hgz"/>
+                <constraint firstItem="sSC-bt-gqY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6uE-k4-Xhb"/>
+                <constraint firstAttribute="bottom" secondItem="d9U-6o-KPX" secondAttribute="bottom" id="85d-EX-jFC"/>
+                <constraint firstItem="d9U-6o-KPX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CjL-H2-Jpq"/>
+                <constraint firstItem="cOo-08-nbC" firstAttribute="top" secondItem="sSC-bt-gqY" secondAttribute="bottom" id="E7V-9f-Qpw"/>
+                <constraint firstAttribute="trailing" secondItem="d9U-6o-KPX" secondAttribute="trailing" id="NuI-hM-ZF6"/>
+                <constraint firstItem="cOo-08-nbC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZBO-33-Cs3"/>
+                <constraint firstItem="d9U-6o-KPX" firstAttribute="top" secondItem="cOo-08-nbC" secondAttribute="bottom" id="bFz-8v-OsH"/>
+                <constraint firstAttribute="trailing" secondItem="cOo-08-nbC" secondAttribute="trailing" id="e1K-2x-oSm"/>
+                <constraint firstItem="sSC-bt-gqY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kvd-fc-OxO"/>
+            </constraints>
+            <point key="canvasLocation" x="32.5" y="122.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="directory_close" width="30" height="30"/>
+    </resources>
+</document>

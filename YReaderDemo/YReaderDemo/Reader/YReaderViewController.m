@@ -8,6 +8,7 @@
 
 #import "YReaderViewController.h"
 #import "YReadPageViewController.h"
+#import "YDirectoryViewController.h"
 #import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
@@ -85,6 +86,12 @@
                 [wself dismissViewControllerAnimated:YES completion:^{
                     [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
                 }];
+            }
+            case 202: {          //目录
+                YDirectoryViewController *directoryVC  = [[YDirectoryViewController alloc] init];
+                directoryVC.readingChapter = wself.chapter;
+                directoryVC.chaptersArr = wself.readerManager.chaptersArr;
+                [wself presentViewController:directoryVC animated:YES completion:nil];
             }
                 break;
             default:

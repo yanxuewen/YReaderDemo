@@ -70,12 +70,12 @@
         NSLog(@"addUserBooksWith containsObject OK");
     }
     if (sameM) {
-        [arr setObject:sameM atIndexedSubscript:0];
+        [arr removeObject:sameM];
     } else {
-        [arr insertObject:bookM atIndex:0];
         sameM = bookM;
     }
     
+    [arr insertObject:sameM atIndex:0];
     self.userBooks = arr.copy;
     [self.cache setObject:self.userBooks forKey:kYUesrBooks withBlock:^{
         
