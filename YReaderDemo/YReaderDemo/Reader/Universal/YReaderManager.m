@@ -149,7 +149,9 @@
     }
     
     if (chapterM.isLoadCache) {
-        chapterM.body = (NSString *)[self.cache objectForKey:chapterM.link];;
+        if (!chapterM.isLoad) {
+            chapterM.body = (NSString *)[self.cache objectForKey:chapterM.link];
+        }
         chapterM.isLoad = YES;
         if (isAutoLoad) {
             if (chapter < self.endLoadIndex) {

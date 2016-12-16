@@ -19,6 +19,7 @@
 - (NSArray *)getHistorySearchTextArray;
 - (void)updateHistorySearchTextArrayWith:(NSArray *)array;
 
-- (void)addUserBooksWith:(YBookDetailModel *)bookM;
+- (YBookDetailModel *)addUserBooksWith:(YBookDetailModel *)bookM;
+-(void)saveUserBooksStatus;
 
 @end

@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *downloadLabel;
 
 @property (strong, nonatomic) YDownloadManager *downloadManager;
+@property (strong, nonatomic) YBookDetailModel *downloadBook;
 
 @end
 
@@ -29,13 +30,18 @@
     [super viewDidLoad];
     [self setupUI];
     
-    self.downloadView.top = kScreenHeight;
+    
     
     __weak typeof(self) wself = self;
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         [wself hideMenuView];
     }]];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.downloadView.top = kScreenHeight;
 }
 
 - (void)setupUI {
@@ -55,11 +61,17 @@
                 break;
             case 203: {          //下载
 //                [[YReaderManager shareReaderManager] ]
-                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择缓存章节方式" message:@"meg" preferredStyle:UIAlertControllerStyleActionSheet];
+                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择缓存章节方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-                UIAlertAction *someAction = [UIAlertAction actionWithTitle:@"后面50章" style:UIAlertActionStyleDefault handler:nil];
-                UIAlertAction *behindAction = [UIAlertAction actionWithTitle:@"后面全部" style:UIAlertActionStyleDefault handler:nil];
-                UIAlertAction *allAction = [UIAlertAction actionWithTitle:@"全部章节" style:UIAlertActionStyleDefault handler:nil];
+                UIAlertAction *someAction = [UIAlertAction actionWithTitle:@"后面50章" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self downloadChpatersWith:YDownloadTypeBehindSome];
+                }];
+                UIAlertAction *behindAction = [UIAlertAction actionWithTitle:@"后面全部" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self downloadChpatersWith:YDownloadTypeBehindAll];
+                }];
+                UIAlertAction *allAction = [UIAlertAction actionWithTitle:@"全部章节" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self downloadChpatersWith:YDownloadTypeAllLoad];
+                }];
                 [alertVC addAction:cancelAction];
                 [alertVC addAction:someAction];
                 [alertVC addAction:behindAction];
@@ -86,17 +98,28 @@
     self.downloadManager = [YDownloadManager shareManager];
     
     __weak typeof(self) wself = self;
-    [self.downloadManager downloadReadingBookWith:type progress:^(NSUInteger chapter, NSUInteger totalChapters) {
+    
+    self.downloadBook = [YReaderManager shareReaderManager].readingBook;
+    [self.downloadManager downloadReaderBookWith:self.downloadBook type:type];
+    
+    self.downloadBook.loadProgress = ^(NSUInteger chapter, NSUInteger totalChapters) {
         wself.downloadLabel.text = [NSString stringWithFormat:@"正在缓存中 (%zi/%zi) ...",chapter,totalChapters];
-    } completion:^{
+    };
+    
+    self.downloadBook.loadCompletion = ^ {
         wself.downloadLabel.text = @"缓存完成";
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [wself hideMenuView];
-        });
-    } failure:^(NSString *msg) {
-        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存失败: %@",msg];
-
-    }];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [wself hideMenuView];
+//        });
+    };
+    
+    self.downloadBook.loadFailure = ^(NSString *msg) {
+         wself.downloadLabel.text = [NSString stringWithFormat:@"缓存失败: %@",msg];
+    };
+    
+    self.downloadBook.loadCancel = ^ {
+        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存取消"];
+    };
     
 }
 
@@ -130,10 +153,7 @@
         self.topView.top = 0;
         self.bottomView.top = kScreenHeight - self.bottomView.height;
     } completion:^(BOOL finished) {
-        if (finished) {
-//            self.topView.top = 0;
-//            self.bottomView.top = kScreenHeight - self.bottomView.height;
-        }
+        
     }];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }

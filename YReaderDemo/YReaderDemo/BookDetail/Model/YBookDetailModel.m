@@ -16,7 +16,7 @@
 @implementation YBookDetailModel
 
 + (NSArray *)modelPropertyBlacklist {
-    return @[@"updated"];
+    return @[@"updated",@"loadStatus",@"loadProgress",@"loadCompletion",@"loadFailure",@"loadCancel"];
 }
 
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {

@@ -57,27 +57,36 @@
     [self.cache setObject:array forKey:kYHistorySearchText];
 }
 
-- (void)addUserBooksWith:(id)bookM {
+- (YBookDetailModel *)addUserBooksWith:(YBookDetailModel *)bookM; {
     NSMutableArray *arr = _userBooks.mutableCopy;
-    YBookDetailModel *deleteM = nil;
+    YBookDetailModel *sameM = nil;
     for (YBookDetailModel * book in arr) {
         if ([book isEqual:bookM]) {
-            deleteM = book;
+            sameM = book;
             break;
         }
     }
     if ([arr containsObject:bookM]) {
         NSLog(@"addUserBooksWith containsObject OK");
     }
-    if (deleteM) {
-        [arr removeObject:deleteM];
+    if (sameM) {
+        [arr setObject:sameM atIndexedSubscript:0];
+    } else {
+        [arr insertObject:bookM atIndex:0];
+        sameM = bookM;
     }
-    [arr insertObject:bookM atIndex:0];
+    
     self.userBooks = arr.copy;
     [self.cache setObject:self.userBooks forKey:kYUesrBooks withBlock:^{
         
     }];
+    return sameM;
 }
 
+- (void)saveUserBooksStatus {
+    [self.cache setObject:self.userBooks forKey:kYUesrBooks withBlock:^{
+        NSLog(@"saveUserBooksStatus ok ");
+    }];
+}
 
 @end

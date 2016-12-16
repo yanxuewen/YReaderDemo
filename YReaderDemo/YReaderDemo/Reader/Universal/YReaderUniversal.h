@@ -26,6 +26,13 @@ typedef NS_ENUM(NSInteger,YDownloadType) {
     YDownloadTypeBehindSome
 };
 
+typedef NS_ENUM(NSInteger,YDownloadStatus) {
+    YDownloadStatusNone,
+    YDownloadStatusWait,
+    YDownloadStatusLoading,
+    YDownloadStatusCancel
+};
+
 #define kYReaderLeftSpace 20.0
 #define kYReaderRightSpace 20.0
 #define kYReaderTopSpace 40.0

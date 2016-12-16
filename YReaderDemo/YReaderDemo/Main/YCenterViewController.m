@@ -14,7 +14,7 @@
 @interface YCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *booksTableView;
-@property (copy, nonatomic) NSArray *booksArr;
+@property (strong, nonatomic) NSArray *booksArr;
 @property (strong, nonatomic) YSQLiteManager *sqliteM;
 
 @end
@@ -28,7 +28,7 @@
     self.sqliteM = [YSQLiteManager shareManager];
     self.booksArr = self.sqliteM.userBooks;
     [self.sqliteM addObserver:self forKeyPath:@"userBooks" options:NSKeyValueObservingOptionNew context:NULL];
-    
+  
 }
 
 - (void)asjdnajnafn {
@@ -82,9 +82,9 @@
     if (indexPath.row < self.booksArr.count) {
         YBookDetailModel *bookM = self.booksArr[indexPath.row];
         YReaderViewController *readerVC = [[YReaderViewController alloc] init];
-        readerVC.readingBook = bookM;
+        readerVC.readingBook = [self.sqliteM addUserBooksWith:bookM];
         [self presentViewController:readerVC animated:YES completion:^{
-            [self.sqliteM addUserBooksWith:bookM];
+            
         }];
     }
 }

@@ -7,6 +7,8 @@
 //
 
 #import "YBaseModel.h"
+#import "YReaderUniversal.h"
+@class YDownloadModel;
 
 @interface YBookDetailModel : YBaseModel
 
@@ -39,7 +41,15 @@
 @property (nonatomic, strong) NSDate * updated;
 @property (nonatomic, assign) NSInteger wordCount;
 
+
 @property (assign, nonatomic) BOOL hasUpdated;
+@property (assign, atomic) BOOL hasLoadCompletion;
+@property (weak, nonatomic) YDownloadModel *downloadM;
+@property (assign, atomic) YDownloadStatus loadStatus;
+@property (copy, nonatomic) void (^loadProgress)(NSUInteger, NSUInteger);
+@property (copy, nonatomic) void (^loadCompletion)();
+@property (copy, nonatomic) void (^loadFailure)(NSString *);
+@property (copy, nonatomic) void (^loadCancel)();
 
 - (NSString *)getBookWordCount;
 

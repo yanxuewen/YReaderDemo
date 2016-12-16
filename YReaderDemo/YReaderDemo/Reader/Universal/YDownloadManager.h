@@ -21,7 +21,7 @@
 @property (strong, nonatomic) YDownloadModel *downloadReading;
 
 + (instancetype)shareManager;
-- (void)downloadReadingBookWith:(YDownloadType)loadType progress:(void(^)(NSUInteger chapter,NSUInteger totalChapters))progress completion:(void(^)())completion failure:(void(^)(NSString *msg))failure;
+- (void)downloadReaderBookWith:(YBookDetailModel *)bookM type:(YDownloadType)loadType;
 
 @end
 
@@ -38,14 +38,17 @@
 @property (assign, nonatomic) NSUInteger startChapter;
 @property (assign, nonatomic) NSUInteger chapter;
 @property (assign, nonatomic) NSUInteger endChapter;
-@property (assign, nonatomic) NSUInteger totalChapter;
+@property (assign, nonatomic) YDownloadType loadType;
 @property (strong, nonatomic) NSString *recordKey;
 @property (strong, nonatomic) NSURLSessionTask *lastTask;
-@property (assign, atomic) BOOL iaCancelled;
-@property (copy, nonatomic) void (^cancelCompletion)();
 
-@property (copy, nonatomic) void (^progress)(NSUInteger, NSUInteger);
-@property (copy, nonatomic) void (^completion)();
-@property (copy, nonatomic) void (^failure)(NSString *);
++ (instancetype)downloadModelWith:(YBookDetailModel *)bookM loadType:(YDownloadType)loadType;
+- (BOOL)checkDownloadStatus;
+- (BOOL)checkCancelStatus;
 
 @end
+
+
+
+
+

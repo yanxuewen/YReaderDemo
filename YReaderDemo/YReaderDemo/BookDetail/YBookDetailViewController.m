@@ -117,9 +117,9 @@
 #pragma mark - 开始阅读
 - (IBAction)startReading:(id)sender {
     YReaderViewController *readerVC = [[YReaderViewController alloc] init];
-    readerVC.readingBook = self.bookDetail;
+    readerVC.readingBook = [[YSQLiteManager shareManager] addUserBooksWith:self.bookDetail];
     [self presentViewController:readerVC animated:YES completion:^{
-        [[YSQLiteManager shareManager] addUserBooksWith:self.bookDetail];
+        
     }];;
 }
 
