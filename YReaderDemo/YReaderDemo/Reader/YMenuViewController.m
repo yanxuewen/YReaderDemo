@@ -13,16 +13,17 @@
 
 @interface YMenuViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *topView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UIView *downloadView;
 @property (weak, nonatomic) IBOutlet UILabel *downloadLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *downloadViewBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewTop;
 
 @property (strong, nonatomic) YDownloadManager *downloadManager;
 @property (strong, nonatomic) YBookDetailModel *downloadBook;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottom;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewTop;
 
 @end
 
@@ -30,8 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupUI];
 
+    [self setupBottomViewUI];
     __weak typeof(self) wself = self;
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         [wself hideMenuView];
@@ -44,7 +45,84 @@
     
 }
 
-- (void)setupUI {
+- (void)downloadChpatersWith:(YDownloadType)type {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.downloadViewBottom.constant = 54;
+        [self.view layoutIfNeeded];
+    }];
+    
+    self.downloadManager = [YDownloadManager shareManager];
+    [self.downloadManager downloadReaderBookWith:self.downloadBook type:type];
+    [self setDownloadBookCallback];
+}
+
+- (void)setDownloadBookCallback {
+    __weak typeof(self) wself = self;
+    self.downloadBook.loadProgress = ^(NSUInteger chapter, NSUInteger totalChapters) {
+        wself.downloadLabel.text = [NSString stringWithFormat:@"正在缓存中 (%zi/%zi) ...",chapter,totalChapters];
+    };
+    
+    self.downloadBook.loadCompletion = ^ {
+        wself.downloadLabel.text = @"缓存完成";
+        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //            [wself hideMenuView];
+        //        });
+    };
+    
+    self.downloadBook.loadFailure = ^(NSString *msg) {
+        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存失败: %@",msg];
+    };
+    
+    self.downloadBook.loadCancel = ^ {
+        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存取消"];
+    };
+}
+
+- (IBAction)handleButton:(id)sender {
+    if (self.menuTapAction) {
+        self.menuTapAction(((UIButton *)sender).tag);
+    }
+}
+
+- (void)showMenuView {
+    self.view.hidden = NO;
+    BOOL showLoadView = self.downloadBook.loadStatus != YDownloadStatusNone;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.topViewTop.constant = 0;
+        self.bottomViewBottom.constant = 0;
+        if (showLoadView) {
+            self.downloadViewBottom.constant = self.bottomView.height;
+        }
+        [self.view layoutIfNeeded];
+    }];
+    if (self.downloadBook.loadStatus != YDownloadStatusNone) {
+        [self setDownloadBookCallback];
+    }
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+}
+
+- (void)hideMenuView {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.topViewTop.constant = -self.topView.height;
+        self.bottomViewBottom.constant = -self.bottomView.height - self.downloadView.height;
+        self.downloadViewBottom.constant = -self.downloadView.height;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            self.view.hidden = YES;
+        }
+    }];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+}
+
+- (YBookDetailModel *)downloadBook {
+    if (!_downloadBook) {
+        _downloadBook = [YReaderManager shareReaderManager].readingBook;
+    }
+    return _downloadBook;
+}
+
+- (void)setupBottomViewUI {
     NSArray *imgArr = @[@"night_mode",@"feedback",@"directory",@"preview_btn",@"reading_setting"];
     NSArray *titleArr = @[@"夜间",@"反馈",@"目录",@"缓存",@"设置"];
     void (^tapAction)(NSInteger) = ^(NSInteger tag){
@@ -63,7 +141,6 @@
             }
                 break;
             case 203: {          //下载
-//                [[YReaderManager shareReaderManager] ]
                 UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择缓存章节方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
                 UIAlertAction *someAction = [UIAlertAction actionWithTitle:@"后面50章" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -96,97 +173,10 @@
     }
 }
 
-- (void)downloadChpatersWith:(YDownloadType)type {
-    self.downloadView.hidden = NO;
-    self.downloadManager = [YDownloadManager shareManager];
-    [self.downloadManager downloadReaderBookWith:self.downloadBook type:type];
-    [self setDownloadBookCallback];
-}
-
-- (void)setDownloadBookCallback {
-    __weak typeof(self) wself = self;
-    self.downloadBook.loadProgress = ^(NSUInteger chapter, NSUInteger totalChapters) {
-        wself.downloadLabel.text = [NSString stringWithFormat:@"正在缓存中 (%zi/%zi) ...",chapter,totalChapters];
-    };
-    
-    self.downloadBook.loadCompletion = ^ {
-        wself.downloadLabel.text = @"缓存完成";
-        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //            [wself hideMenuView];
-        //        });
-    };
-    
-    self.downloadBook.loadFailure = ^(NSString *msg) {
-        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存失败: %@",msg];
-    };
-    
-    self.downloadBook.loadCancel = ^ {
-        wself.downloadLabel.text = [NSString stringWithFormat:@"缓存取消"];
-    };
-}
-
-- (IBAction)handleButton:(id)sender {
-    UIButton *btn = sender;
-    if (self.menuTapAction) {
-        self.menuTapAction(btn.tag);
-    }
-}
-
-
-- (void)showMenuView {
-    self.view.hidden = NO;
-    [UIView animateWithDuration:0.25 animations:^{
-//        self.topView.top = 0;
-//        self.bottomView.top = kScreenHeight - self.bottomView.height;
-        self.topViewTop.constant = 0;
-        self.bottomViewBottom.constant = 0;
-    } completion:^(BOOL finished) {
-        
-    }];
-    if (self.downloadBook.loadStatus != YDownloadStatusNone) {
-        self.downloadView.hidden = NO;
-        [self setDownloadBookCallback];
-    }
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-}
-
-- (void)hideMenuView {
-    [UIView animateWithDuration:0.25 animations:^{
-//        self.topView.top = -self.topView.height;
-//        self.bottomView.top = kScreenHeight + self.downloadView.height;
-        self.topViewTop.constant = -self.topView.height;
-        self.bottomViewBottom.constant = -self.bottomView.height - self.downloadView.height;
-    } completion:^(BOOL finished) {
-        if (finished) {
-//            self.topView.top = -self.topView.height;
-//            self.bottomView.top = kScreenHeight ;
-//            [self.view removeFromSuperview];
-            self.view.hidden = YES;
-        }
-    }];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-}
-
-- (YBookDetailModel *)downloadBook {
-    if (!_downloadBook) {
-        _downloadBook = [YReaderManager shareReaderManager].readingBook;
-    }
-    return _downloadBook;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

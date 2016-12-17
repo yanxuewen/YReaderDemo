@@ -15,7 +15,7 @@
 #import "YSQLiteManager.h"
 #import "YBookDetailViewController.h"
 
-#define kKeyboardShowDuartion 2.0
+#define kKeyboardShowDuartion 0.3
 
 @interface YSearchViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -248,6 +248,7 @@
     [searchBar setShowsCancelButton:YES animated:YES];
     [UIView animateWithDuration:kKeyboardShowDuartion animations:^{
         self.searchBarTop.constant = -44;
+        [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.searchBarTop.constant = -44;
     }];
@@ -273,6 +274,7 @@
     [searchBar setShowsCancelButton:NO animated:YES];
     [UIView animateWithDuration:kKeyboardShowDuartion animations:^{
         self.searchBarTop.constant = 0;
+        [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.searchBarTop.constant = 0;
     }];

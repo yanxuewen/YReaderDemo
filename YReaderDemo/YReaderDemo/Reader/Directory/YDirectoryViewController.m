@@ -78,18 +78,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YDirectoryViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([YDirectoryViewCell class]) forIndexPath:indexPath];
     NSUInteger count = _chaptersArr.count - indexPath.row - 1;
-    YChapterContentModel *chapterM = _chaptersArr[count];
-    if (count == _readingChapter) {
-        cell.imageV.image = [UIImage imageNamed:@"bookDirectory_selected"];
-    } else if (chapterM.isLoadCache) {
-        cell.imageV.image = [UIImage imageNamed:@"directory_previewed"];
-    } else {
-        cell.imageV.image = [UIImage imageNamed:@"directory_not_previewed"];
-    }
-    cell.numberLabel.text = [NSString stringWithFormat:@"%zi.",count+1];
-    CGSize size = [cell.numberLabel.text boundingRectWithSize:CGSizeMake(100, 100) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:cell.numberLabel.font} context:NULL].size;
-    cell.numberLabelWidth.constant = size.width+2;
-    cell.titleLabel.text = chapterM.title;
+    cell.isReadingChapter = count == _readingChapter;
+    cell.count = count +1;
+    cell.chapterM = _chaptersArr[count];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

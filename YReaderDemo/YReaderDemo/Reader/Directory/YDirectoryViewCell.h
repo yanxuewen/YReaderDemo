@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "YChapterContentModel.h"
 
 @interface YDirectoryViewCell : UITableViewCell
 
@@ -15,5 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *numberLabelWidth;
+
+@property (assign, nonatomic) BOOL isReadingChapter;
+@property (assign, nonatomic) NSUInteger count;
+@property (strong, nonatomic) YChapterContentModel *chapterM;
 
 @end
