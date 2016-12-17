@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="YThemeViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KPc-JU-jvD">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </imageView>
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting_theme_selected" translatesAutoresizingMaskIntoConstraints="NO" id="CS9-Jl-YEP">
+                        <rect key="frame" x="5" y="5" width="40" height="40"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="KPc-JU-jvD" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="FMq-Mj-S1o"/>
+                <constraint firstAttribute="bottom" secondItem="KPc-JU-jvD" secondAttribute="bottom" id="KVn-wf-wib"/>
+                <constraint firstItem="CS9-Jl-YEP" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Pl5-wg-EC2"/>
+                <constraint firstAttribute="trailing" secondItem="KPc-JU-jvD" secondAttribute="trailing" id="ddd-Ld-kIy"/>
+                <constraint firstItem="CS9-Jl-YEP" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="ogE-5u-yPk"/>
+                <constraint firstItem="KPc-JU-jvD" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="tvJ-dQ-Phe"/>
+            </constraints>
+            <connections>
+                <outlet property="selectImage" destination="CS9-Jl-YEP" id="NzJ-mL-SQ9"/>
+                <outlet property="themeImage" destination="KPc-JU-jvD" id="avU-Vc-KVy"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="setting_theme_selected" width="40" height="40"/>
+    </resources>
+</document>

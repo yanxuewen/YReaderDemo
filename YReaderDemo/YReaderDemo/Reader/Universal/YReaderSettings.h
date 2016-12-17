@@ -25,5 +25,8 @@
 @property (strong, nonatomic, readonly) UIColor *textColor;
 @property (strong, nonatomic, readonly) UIImage *pageImage;     //根据 YReaderTheme 来定
 @property (strong, nonatomic, readonly) NSDictionary *readerAttributes;
+@property (strong, nonatomic, readonly) UIImage *themeImage;
+@property (strong, nonatomic, readonly) NSArray *themeImageArr;
+
 
 @end

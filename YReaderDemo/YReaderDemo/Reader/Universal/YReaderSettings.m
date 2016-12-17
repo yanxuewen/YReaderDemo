@@ -15,6 +15,8 @@
 
 @property (assign, nonatomic) BOOL needUpdateAttributes;
 @property (strong, nonatomic) NSDictionary *readerAttributes;
+@property (strong, nonatomic) UIImage *themeImage;
+@property (strong, nonatomic) NSArray *themeImageArr;
 
 @end
 
@@ -100,6 +102,36 @@
             break;
     }
     return image;
+}
+
+- (UIImage *)themeImage {
+    if (!_themeImage) {
+        _themeImage = [self getThemeImageWith:self.theme];
+    }
+    return _themeImage;
+}
+
+- (UIImage *)getThemeImageWith:(YReaderTheme)theme {
+    if (self.isNightMode) {
+        
+    }
+    static NSArray *imageArr = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        imageArr = @[@"water_mode_bg",@"yellow_mode_bg",@"green_mode_bg",@"sheepskin_mode_bg",@"violet_mode_bg",@"pink_mode_bg",@"weekGreen_mode_bg",@"weekPink_mode_bg"];
+    });
+    return [UIImage imageNamed:imageArr[theme%imageArr.count]];
+}
+
+- (NSArray *)themeImageArr {
+    if (!_themeImageArr) {
+        NSMutableArray *arr = @[].mutableCopy;
+        for (NSUInteger i = 0; i < 8; i++) {
+            [arr addObject:[self getThemeImageWith:i]];
+        }
+        _themeImageArr = arr;
+    }
+    return _themeImageArr;
 }
 
 @end

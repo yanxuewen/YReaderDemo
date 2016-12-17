@@ -11,7 +11,7 @@
 
 
 typedef NS_ENUM(NSInteger,YReaderTheme) {
-    YReaderThemeOne = 100,
+    YReaderThemeOne,
     YReaderThemeTwo
 };
 

@@ -11,6 +11,7 @@
 #import "YDateModel.h"
 #import "YReaderView.h"
 #import "YReaderUniversal.h"
+#import "YReaderSettings.h"
 
 @interface YReadPageViewController ()
 
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet YBatteryView *batteryView;
 @property (strong, nonatomic) YReaderView *readerView;
+@property (weak, nonatomic) IBOutlet UIImageView *themeImageV;
 
 @end
 
@@ -29,7 +31,8 @@
     _readerView = [[YReaderView alloc] initWithFrame:CGRectMake(kYReaderLeftSpace, kYReaderTopSpace, kScreenWidth - kYReaderLeftSpace - kYReaderRightSpace, kScreenHeight - kYReaderTopSpace - kYReaderBottomSpace)];
     _readerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_readerView];
-    
+    self.themeImageV.image = [YReaderSettings shareReaderSettings].themeImage;
+    self.batteryView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

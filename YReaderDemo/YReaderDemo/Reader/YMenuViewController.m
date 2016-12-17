@@ -10,6 +10,8 @@
 #import "YBottomButton.h"
 #import "YReaderManager.h"
 #import "YDownloadManager.h"
+#import "YReaderSettings.h"
+#import "YThemeViewCell.h"
 
 @interface YMenuViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -28,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *spaceSmallBtn;
 @property (weak, nonatomic) IBOutlet UIButton *spaceNormalBtn;
 @property (weak, nonatomic) IBOutlet UIButton *spaceBigBtn;
+@property (weak, nonatomic) IBOutlet UICollectionView *themeCollectionView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceBtnInterval;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fontSizeBtnInterval;
@@ -35,9 +38,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgViewBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewBottom;
 
-
 @property (strong, nonatomic) YDownloadManager *downloadManager;
 @property (strong, nonatomic) YBookDetailModel *downloadBook;
+@property (strong, nonatomic) YReaderSettings *settings;
+@property (strong, nonatomic) NSArray *themeArr;
+@property (assign, nonatomic) YReaderTheme selectTheme;
 
 @end
 
@@ -48,6 +53,13 @@
 
     [self setupBottomViewUI];
     [self setupSettingViewUI];
+    self.settingView.backgroundColor = YRGBAColor(0, 0, 0, 0.85);
+    self.settings = [YReaderSettings shareReaderSettings];
+    self.themeArr = self.settings.themeImageArr;
+    self.selectTheme = self.settings.theme;
+    
+    [self.themeCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([YThemeViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([YThemeViewCell class])];
+    
     __weak typeof(self) wself = self;
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         [wself hideMenuView];
@@ -60,17 +72,40 @@
     
 }
 
+#pragma mark - collectionView delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 0;
+    return self.themeArr.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
-    
-    return nil;
+    YThemeViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([YThemeViewCell class]) forIndexPath:indexPath];
+    cell.layer.cornerRadius = cell.width/2;
+    cell.themeImage.image = self.themeArr[indexPath.row];
+    if (indexPath.row == self.selectTheme) {
+        cell.selectImage.hidden = NO;
+    } else {
+        cell.selectImage.hidden = YES;
+    }
+    return cell;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    self.settings.theme = indexPath.row;
+    self.selectTheme = indexPath.row;
+    [collectionView reloadData];
+}
+
+#pragma mark - download Chpaters
 - (void)downloadChpatersWith:(YDownloadType)type {
     [UIView animateWithDuration:0.25 animations:^{
         self.downloadViewBottom.constant = 54;
@@ -104,6 +139,7 @@
     };
 }
 
+#pragma mark - button action
 - (IBAction)handleButton:(id)sender {
     if (self.menuTapAction) {
         self.menuTapAction(((UIButton *)sender).tag);
@@ -115,6 +151,7 @@
     NSLog(@"%s %zi",__func__,btn.tag);
 }
 
+#pragma mark - show views
 - (void)showSettingView {
     if (self.settingViewBottom.constant == self.bottomView.height) {
         return;
@@ -166,11 +203,13 @@
             self.downloadViewBottom.constant = self.bottomView.height;
         }
         [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }];
     if (self.downloadBook.loadStatus != YDownloadStatusNone) {
         [self setDownloadBookCallback];
     }
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
 }
 
 - (void)hideMenuView {
@@ -183,6 +222,7 @@
     } completion:^(BOOL finished) {
         if (finished) {
             self.view.hidden = YES;
+            
         }
     }];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
@@ -195,6 +235,7 @@
     return _downloadBook;
 }
 
+#pragma mark - setup UI
 - (void)setupSettingViewUI {
     CGFloat space = kScreenWidth - 15 * 2 - self.fontSizeAddBtn.width * 2 - self.fontFanBtn.width * 2;
     self.fontSizeBtnInterval.constant = space / 80 * 30.0;

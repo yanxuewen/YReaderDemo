@@ -36,7 +36,6 @@
     btn.tag = 200 + tag;
     [btn addSubview:btn.imageView];
     [btn addSubview:btn.titleLabel];
-//    [btn addTarget:btn action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     [btn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:btn action:@selector(buttonAction)]];
     return btn;
 }
@@ -57,15 +56,6 @@
     }
 }
 
-//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-//    UIView *result = [super hitTest:point withEvent:event];
-//    CGPoint buttonPoint = [self convertPoint:point fromView:self.superview.superview];
-//    if ([self pointInside:buttonPoint withEvent:event]) {
-//        return self;
-//    }
-//    return result;
-//}
-
 - (UIImage *) imageWith:(UIImage *)image TintColor:(UIColor *)tintColor blendMode:(CGBlendMode)blendMode
 {
     UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
@@ -83,12 +73,5 @@
     return tintedImage;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end
