@@ -11,7 +11,7 @@
 #import "YReaderManager.h"
 #import "YDownloadManager.h"
 
-@interface YMenuViewController ()
+@interface YMenuViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
@@ -21,6 +21,20 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *downloadViewBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewTop;
+@property (weak, nonatomic) IBOutlet UIView *settingView;
+@property (weak, nonatomic) IBOutlet UIButton *fontSizeReduceBtn;
+@property (weak, nonatomic) IBOutlet UIButton *fontSizeAddBtn;
+@property (weak, nonatomic) IBOutlet UIButton *fontFanBtn;
+@property (weak, nonatomic) IBOutlet UIButton *spaceSmallBtn;
+@property (weak, nonatomic) IBOutlet UIButton *spaceNormalBtn;
+@property (weak, nonatomic) IBOutlet UIButton *spaceBigBtn;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceBtnInterval;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fontSizeBtnInterval;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fontFanBtnInterval;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgViewBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewBottom;
+
 
 @property (strong, nonatomic) YDownloadManager *downloadManager;
 @property (strong, nonatomic) YBookDetailModel *downloadBook;
@@ -33,6 +47,7 @@
     [super viewDidLoad];
 
     [self setupBottomViewUI];
+    [self setupSettingViewUI];
     __weak typeof(self) wself = self;
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         [wself hideMenuView];
@@ -43,6 +58,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 0;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
+    return nil;
 }
 
 - (void)downloadChpatersWith:(YDownloadType)type {
@@ -84,6 +110,52 @@
     }
 }
 
+- (IBAction)settingButtonAction:(id)sender {
+    UIButton *btn = (UIButton *)sender;
+    NSLog(@"%s %zi",__func__,btn.tag);
+}
+
+- (void)showSettingView {
+    if (self.settingViewBottom.constant == self.bottomView.height) {
+        return;
+    }
+    [self hideDownloadView];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.settingViewBottom.constant = self.bottomView.height;
+        self.bgViewBottom.constant = self.settingView.height + self.bottomView.height;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)hideSettingView {
+    if (self.settingViewBottom.constant == -self.settingView.height) {
+        return;
+    }
+    [UIView animateWithDuration:0.25 animations:^{
+        self.settingViewBottom.constant = -self.settingView.height;
+        self.bgViewBottom.constant = self.bottomView.height;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)showDownloadView {
+    if (self.downloadViewBottom.constant != self.bottomView.height) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.downloadViewBottom.constant = self.bottomView.height;
+            [self.view layoutIfNeeded];
+        }];
+    }
+}
+
+- (void)hideDownloadView {
+    if (self.downloadViewBottom.constant == self.bottomView.height) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.downloadViewBottom.constant = -self.downloadView.height;
+            [self.view layoutIfNeeded];
+        }];
+    }
+}
+
 - (void)showMenuView {
     self.view.hidden = NO;
     BOOL showLoadView = self.downloadBook.loadStatus != YDownloadStatusNone;
@@ -106,6 +178,7 @@
         self.topViewTop.constant = -self.topView.height;
         self.bottomViewBottom.constant = -self.bottomView.height - self.downloadView.height;
         self.downloadViewBottom.constant = -self.downloadView.height;
+        self.settingViewBottom.constant = -self.settingView.height;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
@@ -122,9 +195,18 @@
     return _downloadBook;
 }
 
+- (void)setupSettingViewUI {
+    CGFloat space = kScreenWidth - 15 * 2 - self.fontSizeAddBtn.width * 2 - self.fontFanBtn.width * 2;
+    self.fontSizeBtnInterval.constant = space / 80 * 30.0;
+    self.fontFanBtnInterval.constant = space / 80 * 25.0;
+    self.spaceBtnInterval.constant = (self.fontSizeAddBtn.width * 2 + self.fontSizeBtnInterval.constant - self.spaceBigBtn.width * 3)/2.0;
+    
+}
+
 - (void)setupBottomViewUI {
     NSArray *imgArr = @[@"night_mode",@"feedback",@"directory",@"preview_btn",@"reading_setting"];
     NSArray *titleArr = @[@"夜间",@"反馈",@"目录",@"缓存",@"设置"];
+    __weak typeof(self) wself = self;
     void (^tapAction)(NSInteger) = ^(NSInteger tag){
         NSLog(@"tapAction %zi",tag);
         switch (tag) {
@@ -135,32 +217,37 @@
                 
                 break;
             case 202: {          //目录
-                if (self.menuTapAction) {
-                    self.menuTapAction(tag);
+                [wself hideMenuView];
+                if (wself.menuTapAction) {
+                    wself.menuTapAction(tag);
                 }
             }
                 break;
             case 203: {          //下载
+                [wself hideSettingView];
+                if (wself.downloadBook.loadStatus != YDownloadStatusNone) {
+                    return ;
+                }
                 UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"选择缓存章节方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
                 UIAlertAction *someAction = [UIAlertAction actionWithTitle:@"后面50章" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self downloadChpatersWith:YDownloadTypeBehindSome];
+                    [wself downloadChpatersWith:YDownloadTypeBehindSome];
                 }];
                 UIAlertAction *behindAction = [UIAlertAction actionWithTitle:@"后面全部" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self downloadChpatersWith:YDownloadTypeBehindAll];
+                    [wself downloadChpatersWith:YDownloadTypeBehindAll];
                 }];
                 UIAlertAction *allAction = [UIAlertAction actionWithTitle:@"全部章节" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self downloadChpatersWith:YDownloadTypeAllLoad];
+                    [wself downloadChpatersWith:YDownloadTypeAllLoad];
                 }];
                 [alertVC addAction:cancelAction];
                 [alertVC addAction:someAction];
                 [alertVC addAction:behindAction];
                 [alertVC addAction:allAction];
-                [self presentViewController:alertVC animated:YES completion:nil];
+                [wself presentViewController:alertVC animated:YES completion:nil];
             }
                 break;
             case 204:           //设置
-                
+                [wself showSettingView];
                 break;
             default:
                 break;
@@ -178,5 +265,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    NSLog(@"%s",__func__);
+}
 
 @end

@@ -260,6 +260,13 @@
     [self.cache setObject:self.record forKey:self.recordKey];
 }
 
+- (void)closeReadingBook {
+    _readingBook = nil;
+    _record = nil;
+    _chaptersArr = nil;
+    _selectSummary = nil;
+    _chaptersCount = 0;
+}
 
 - (NSString *)cachePath {
     return [self.documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_cache",self.selectSummary.idField]];

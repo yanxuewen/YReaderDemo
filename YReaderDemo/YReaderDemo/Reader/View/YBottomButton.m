@@ -57,14 +57,14 @@
     }
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    UIView *result = [super hitTest:point withEvent:event];
-    CGPoint buttonPoint = [self convertPoint:point fromView:self.superview.superview];
-    if ([self pointInside:buttonPoint withEvent:event]) {
-        return self;
-    }
-    return result;
-}
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+//    UIView *result = [super hitTest:point withEvent:event];
+//    CGPoint buttonPoint = [self convertPoint:point fromView:self.superview.superview];
+//    if ([self pointInside:buttonPoint withEvent:event]) {
+//        return self;
+//    }
+//    return result;
+//}
 
 - (UIImage *) imageWith:(UIImage *)image TintColor:(UIColor *)tintColor blendMode:(CGBlendMode)blendMode
 {

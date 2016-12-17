@@ -26,5 +26,6 @@
 - (void)updateReadingBookChaptersContent;
 - (void)autoLoadNextChapters:(NSUInteger)index;
 - (void)updateReadingChapter:(NSUInteger)chapter page:(NSUInteger)page;
+- (void)closeReadingBook;
 
 @end

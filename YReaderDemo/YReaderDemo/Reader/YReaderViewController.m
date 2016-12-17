@@ -25,6 +25,8 @@
 @property (assign, nonatomic) NSUInteger nextPage;
 @property (strong, nonatomic) YMenuViewController *menuView;
 
+@property (strong, nonatomic) YDirectoryViewController *directoryVC;
+
 @end
 
 @implementation YReaderViewController
@@ -68,8 +70,6 @@
 #pragma mark - menu view
 - (void)setupMenuView {
     __weak typeof(self) wself = self;
-//    self.menuView = [[YMenuView alloc] initWithFrame:self.view.bounds];
-//    [self.view addSubview:self.menuView];
     self.menuView = [[YMenuViewController alloc] init];
     self.menuView.view.frame = self.view.bounds;
     [self.view addSubview:self.menuView.view];
@@ -85,13 +85,12 @@
             case 102: {          //关闭
                 [wself dismissViewControllerAnimated:YES completion:^{
                     [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
+                    [wself.readerManager closeReadingBook];
                 }];
             }
+                break;
             case 202: {          //目录
-                YDirectoryViewController *directoryVC  = [[YDirectoryViewController alloc] init];
-                directoryVC.readingChapter = wself.chapter;
-                directoryVC.chaptersArr = wself.readerManager.chaptersArr;
-                [wself presentViewController:directoryVC animated:YES completion:nil];
+                [wself presentViewController:wself.directoryVC animated:YES completion:nil];
             }
                 break;
             default:
@@ -192,6 +191,16 @@
 - (void)appDidEnterBackgroundNotification:(NSNotification *)noti {
     NSLog(@"%s",__func__);
     [self.readerManager updateReadingChapter:_chapter page:_page];
+}
+
+- (YDirectoryViewController *)directoryVC {
+    if (_directoryVC) {
+        _directoryVC = [[YDirectoryViewController alloc] init];
+        _directoryVC.readingChapter = self.chapter;
+        _directoryVC.chaptersArr = self.readerManager.chaptersArr;
+    }
+    _directoryVC.readingChapter = self.chapter;
+    return _directoryVC;
 }
 
 - (void)dealloc {
