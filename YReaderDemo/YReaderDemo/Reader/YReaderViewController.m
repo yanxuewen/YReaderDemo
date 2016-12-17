@@ -194,9 +194,8 @@
 }
 
 - (YDirectoryViewController *)directoryVC {
-    if (_directoryVC) {
+    if (!_directoryVC) {
         _directoryVC = [[YDirectoryViewController alloc] init];
-        _directoryVC.readingChapter = self.chapter;
         _directoryVC.chaptersArr = self.readerManager.chaptersArr;
     }
     _directoryVC.readingChapter = self.chapter;
@@ -204,7 +203,6 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%s",__func__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
