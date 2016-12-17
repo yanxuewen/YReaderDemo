@@ -33,6 +33,13 @@ typedef NS_ENUM(NSInteger,YDownloadStatus) {
     YDownloadStatusCancel
 };
 
+#define kYFontSizeMax 25
+#define kYFontSizeMin 13
+
+#define kYLineSpacingSparse 12.0
+#define kYLineSpacingNormal 8.0
+#define kYLineSpacingCompact 4.0
+
 #define kYReaderLeftSpace 20.0
 #define kYReaderRightSpace 20.0
 #define kYReaderTopSpace 40.0

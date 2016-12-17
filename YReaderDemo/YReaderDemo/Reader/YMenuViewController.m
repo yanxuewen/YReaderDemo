@@ -50,11 +50,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setupBottomViewUI];
     [self setupSettingViewUI];
+    [self setupSettingButtonStatus];
     self.settingView.backgroundColor = YRGBAColor(0, 0, 0, 0.85);
-    self.settings = [YReaderSettings shareReaderSettings];
     self.themeArr = self.settings.themeImageArr;
     self.selectTheme = self.settings.theme;
     
@@ -149,6 +149,71 @@
 - (IBAction)settingButtonAction:(id)sender {
     UIButton *btn = (UIButton *)sender;
     NSLog(@"%s %zi",__func__,btn.tag);
+    switch (btn.tag) {
+        case 300: {             //字体-
+            if (self.settings.fontSize > kYFontSizeMin) {
+                self.settings.fontSize --;
+                if (self.settings.fontSize == kYFontSizeMin) {
+                    btn.enabled = NO;
+                }
+                self.fontSizeAddBtn.enabled = YES;
+            } else {
+                btn.enabled = NO;
+            }
+        }
+            break;
+        case 301: {             //字体+
+            if (self.settings.fontSize < kYFontSizeMax) {
+                self.settings.fontSize ++;
+                if (self.settings.fontSize == kYFontSizeMax) {
+                    btn.enabled = NO;
+                }
+                self.fontSizeReduceBtn.enabled = YES;
+            } else {
+                btn.enabled = NO;
+            }
+        }
+            break;
+        case 302: {             //繁简体
+            
+        }
+            break;
+        case 303: {             //字体
+            
+        }
+            break;
+        case 304: {             //行间距:密集
+            self.settings.lineSpacing = kYLineSpacingCompact;
+            self.spaceSmallBtn.selected = YES;
+            self.spaceBigBtn.selected = NO;
+            self.spaceNormalBtn.selected = NO;
+        }
+            break;
+        case 305: {             //行间距:正常
+            self.settings.lineSpacing = kYLineSpacingNormal;
+            self.spaceSmallBtn.selected = NO;
+            self.spaceBigBtn.selected = NO;
+            self.spaceNormalBtn.selected = YES;
+        }
+            break;
+        case 306: {             //行间距:稀疏
+            self.settings.lineSpacing = kYLineSpacingSparse;
+            self.spaceSmallBtn.selected = NO;
+            self.spaceBigBtn.selected = YES;
+            self.spaceNormalBtn.selected = NO;
+        }
+            break;
+        case 307: {             //自动翻页
+            
+        }
+            break;
+        case 308: {             //横竖屏
+            
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - show views
@@ -218,6 +283,7 @@
         self.bottomViewBottom.constant = -self.bottomView.height - self.downloadView.height;
         self.downloadViewBottom.constant = -self.downloadView.height;
         self.settingViewBottom.constant = -self.settingView.height;
+        self.bgViewBottom.constant = self.bottomView.height;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
@@ -235,7 +301,29 @@
     return _downloadBook;
 }
 
+- (YReaderSettings *)settings {
+    if (!_settings) {
+        _settings = [YReaderSettings shareReaderSettings];
+    }
+    return _settings;
+}
+
 #pragma mark - setup UI
+- (void)setupSettingButtonStatus {
+    if (self.settings.fontSize == kYFontSizeMax) {
+        self.fontSizeAddBtn.enabled = NO;
+    } else if (self.settings.fontSize == kYFontSizeMin) {
+        self.fontSizeReduceBtn.enabled = NO;
+    }
+    if (self.settings.lineSpacing <= kYLineSpacingCompact + 0.1) {
+        self.spaceSmallBtn.selected = YES;
+    } else if (self.settings.lineSpacing <= kYLineSpacingNormal + 0.1) {
+        self.spaceNormalBtn.selected = YES;
+    } else {
+        self.spaceBigBtn.selected  =YES;
+    }
+}
+
 - (void)setupSettingViewUI {
     CGFloat space = kScreenWidth - 15 * 2 - self.fontSizeAddBtn.width * 2 - self.fontFanBtn.width * 2;
     self.fontSizeBtnInterval.constant = space / 80 * 30.0;

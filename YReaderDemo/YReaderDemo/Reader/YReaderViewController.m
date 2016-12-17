@@ -12,6 +12,7 @@
 #import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
+#import "YReaderSettings.h"
 
 
 @interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
@@ -38,6 +39,7 @@
     
     _netManager = [YNetworkManager shareManager];
     _readerManager = [YReaderManager shareReaderManager];
+    [self readerSettingsUpdate];
     __weak typeof(self) wself = self;
     [_readerManager updateReadingBook:_readingBook completion:^{
         [wself setupPageViewController];
@@ -115,6 +117,18 @@
     });
 }
 
+- (void)readerSettingsUpdate {
+    __weak typeof(self) wself = self;
+    [[YReaderSettings shareReaderSettings] setRefreshReaderView:^{
+        YChapterContentModel *chapterM = wself.readerManager.chaptersArr[wself.chapter];
+        [chapterM updateContentPaging];
+        if (wself.page >= chapterM.pageCount) {
+            wself.page = chapterM.pageCount - 1;
+        }
+        [wself.pageViewController setViewControllers:@[[wself readPageViewWithChapter:wself.chapter page:wself.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    }];
+}
+
 - (YReadPageViewController *)readPageViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page {
     YReadPageViewController *readPageVC = [[YReadPageViewController alloc] init];
     readPageVC.page = page;
@@ -162,7 +176,7 @@
         return nil;
     }
     
-    if (_page == [_readerManager.chaptersArr[_chapter] pageCount] - 1) {
+    if (_page >= [_readerManager.chaptersArr[_chapter] pageCount] - 1) {
         _nextPage = 0;
         _nextChpater++;
     } else {

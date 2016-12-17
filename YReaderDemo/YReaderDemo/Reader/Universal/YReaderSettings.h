@@ -22,6 +22,8 @@
 @property (assign, nonatomic) BOOL isNightMode;
 @property (assign, nonatomic) CGFloat fontSize;
 
+@property (copy, nonatomic) void(^refreshReaderView)();
+
 @property (strong, nonatomic, readonly) UIColor *textColor;
 @property (strong, nonatomic, readonly) UIImage *pageImage;     //根据 YReaderTheme 来定
 @property (strong, nonatomic, readonly) NSDictionary *readerAttributes;

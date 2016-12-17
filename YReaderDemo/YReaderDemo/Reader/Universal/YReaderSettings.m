@@ -33,9 +33,6 @@
         YYCache *cache = [YSQLiteManager shareManager].cache;
         if ([cache containsObjectForKey:kYReaderSettings]) {
             setting = (YReaderSettings *)[cache objectForKey:kYReaderSettings];
-            setting.fontSize = 16;
-            setting.font = [UIFont systemFontOfSize:setting.fontSize];
-            setting.lineSpacing = 8;
         } else {
             setting = [[self alloc] init];
             [cache setObject:setting forKey:kYReaderSettings];
@@ -48,7 +45,7 @@
     self = [super init];
     if (self) {
         _brightness = 0.7;
-        _lineSpacing = 8.0;
+        _lineSpacing = kYLineSpacingNormal;
         _isTraditional = NO;
         _fontSize = 16.0;
         _font = [UIFont systemFontOfSize:_fontSize];
@@ -59,11 +56,44 @@
     return self;
 }
 
+#pragma mark - set
+- (void)setTheme:(YReaderTheme)theme {
+    _theme = theme;
+    _themeImage = [self getThemeImageWith:self.theme];
+    [self updateReaderSettings];
+}
+
+- (void)setFontSize:(CGFloat)fontSize {
+    if (fontSize >= kYFontSizeMin && fontSize <= kYFontSizeMax) {
+        _fontSize = fontSize;
+        _font = [UIFont systemFontOfSize:fontSize];
+        _needUpdateAttributes = YES;
+        [self updateReaderSettings];
+    }
+}
+
+- (void)setLineSpacing:(CGFloat)lineSpacing {
+    _lineSpacing = lineSpacing;
+    _needUpdateAttributes = YES;
+    [self updateReaderSettings];
+}
+
+- (void)updateReaderSettings {
+    [[YSQLiteManager shareManager].cache setObject:self forKey:kYReaderSettings];
+    
+    if (self.refreshReaderView) {
+        self.refreshReaderView();
+    }
+}
+
+
+#pragma mark - get
 
 - (NSDictionary *)readerAttributes {
     if (!_needUpdateAttributes && _readerAttributes) {
         return _readerAttributes;
     }
+    _needUpdateAttributes = NO;
     NSMutableDictionary *dic = @{}.mutableCopy;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 //    paragraphStyle.alignment = NSTextAlignmentJustified;
