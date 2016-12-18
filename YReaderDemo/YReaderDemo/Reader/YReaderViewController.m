@@ -213,6 +213,7 @@
 
     if ( _chapter == 0 && _page == 0) {
         DDLogInfo(@"已经是第一页");
+        [YProgressHUD showErrorHUDWith:@"已经是第一页"];
         return nil;
     }
     
@@ -234,14 +235,15 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     if (_chapter == _readerManager.chaptersArr.count - 1 && _page == [_readerManager.chaptersArr.lastObject pageCount] - 1) {
         DDLogInfo(@"已经是最后一页");
+        [YProgressHUD showErrorHUDWith:@"已经是最后一页"];
         return nil;
     }
     
     if (_page >= [_readerManager.chaptersArr[_chapter] pageCount] - 1) {
         _nextPage = 0;
-        _nextChpater++;
+        _nextChpater = _chapter + 1;
     } else {
-        _nextPage++;
+        _nextPage = _page + 1;
         _nextChpater = _chapter;
     }
     
