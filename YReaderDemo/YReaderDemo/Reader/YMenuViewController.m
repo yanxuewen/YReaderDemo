@@ -141,8 +141,12 @@
 
 #pragma mark - button action
 - (IBAction)handleButton:(id)sender {
+    UIButton *btn = (UIButton *)sender;
     if (self.menuTapAction) {
-        self.menuTapAction(((UIButton *)sender).tag);
+        self.menuTapAction(btn.tag);
+    }
+    if (btn.tag != 102) { //102:close
+        [self hideMenuView];
     }
 }
 

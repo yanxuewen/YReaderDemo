@@ -91,8 +91,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row < self.chaptersArr.count) {
+        BOOL needUpdate = self.readingChapter != (_chaptersArr.count - indexPath.row - 1);
         [self dismissViewControllerAnimated:YES completion:^{
-            if (self.selectChapter) {
+            if (needUpdate && self.selectChapter) {
                 self.selectChapter(_chaptersArr.count - indexPath.row - 1);
             }
         }];

@@ -97,6 +97,27 @@
     });
 }
 
+- (void)updateBookSummary:(YBookSummaryModel *)summaryM completion:(void (^)())completion failure:(void (^)(NSString *))failure {
+    if (self.updateCompletion || self.updateFailure) {
+        self.updateFailure(@"更新书籍错误");
+        return;
+    }
+    self.updateCompletion = completion;
+    self.updateFailure = failure;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (_readingBook.downloadM && _readingBook.loadStatus != YDownloadStatusCancel) {
+            _readingBook.loadStatus = YDownloadStatusCancel;
+        }
+        [self.sqliteM.cache setObject:summaryM forKey:self.summarykey];
+        self.record = nil;
+        self.chaptersArr = nil;
+        self.chaptersCount = 0;
+        self.selectSummary = summaryM;
+        [self getBookChaptersLink];
+
+    });
+}
+
 - (void)getBookSummary {
     __weak typeof(self) wself = self;
     _summaryTask = [_netManager getWithAPIType:YAPITypeBookSummary parameter:_readingBook.idField success:^(id response) {
@@ -161,6 +182,9 @@
             if (arr.count > 0) {
                 wself.record.chaptersLink = arr;
                 [wself updateReadingBookChaptersContent];
+                if (wself.record.readingChapter >= wself.record.chaptersLink.count) {
+                    wself.record.readingChapter = wself.record.chaptersLink.count - 1;//换源的时候可能发生
+                }
                 [wself getChapterContentWith:wself.record.readingChapter autoLoad:NO];
             } else {
                 DDLogWarn(@"本书该来源没有下载地址 %@",wself.selectSummary);

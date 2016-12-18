@@ -303,10 +303,12 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 
 - (BOOL)checkCancelStatus {
     if (self.downloadBook.loadStatus == YDownloadStatusCancel) {
+        DDLogInfo(@"Download task Cancel book:%@",self.downloadBook);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.downloadBook.loadCancel) {
                 self.downloadBook.loadCancel();
             }
+            self.downloadBook.loadStatus = YDownloadStatusNone;
         });
         return YES;
     }

@@ -13,7 +13,7 @@
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
 #import "YReaderSettings.h"
-
+#import "YSummaryViewController.h"
 
 @interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 
@@ -27,6 +27,7 @@
 @property (strong, nonatomic) YMenuViewController *menuView;
 
 @property (strong, nonatomic) YDirectoryViewController *directoryVC;
+@property (strong, nonatomic) YSummaryViewController *summaryVC;
 @property (assign, nonatomic) BOOL isPageBefore;
 
 @end
@@ -96,8 +97,9 @@
     self.menuView.view.hidden = YES;
     self.menuView.menuTapAction = ^(NSInteger tag) {
         switch (tag) {
-            case 100:           //换源
-                
+            case 100: {          //换源
+                [wself presentViewController:wself.summaryVC animated:YES completion:nil];
+            }
                 break;
             case 101:           //播放
                 
@@ -277,6 +279,7 @@
     [self.readerManager updateReadingChapter:_chapter page:_page];
 }
 
+#pragma mark - 更新章节
 - (YDirectoryViewController *)directoryVC {
     if (!_directoryVC) {
         _directoryVC = [[YDirectoryViewController alloc] init];
@@ -288,6 +291,46 @@
     }
     _directoryVC.readingChapter = self.chapter;
     return _directoryVC;
+}
+
+#pragma mark - 更新来源
+- (YSummaryViewController *)summaryVC {
+    if (!_summaryVC) {
+        _summaryVC = [[YSummaryViewController alloc] init];
+        __weak typeof(self) wself = self;
+        _summaryVC.updateSelectSummary = ^(YBookSummaryModel *summary){
+            [wself updateReaderBookSummary:summary];
+        };
+    }
+    _summaryVC.bookM = self.readingBook;
+    _summaryVC.summaryM = self.readerManager.selectSummary;
+    return _summaryVC;
+}
+
+- (void)updateReaderBookSummary:(YBookSummaryModel *)summaryM {
+    __weak typeof(self) wself = self;
+    [YProgressHUD showLoadingHUD];
+    self.view.userInteractionEnabled = NO;
+    [[YProgressHUD shareProgressHUD] setCancelAction:^{
+        [wself.readerManager cancelLoadReadingBook];
+    }];
+    
+    self.readerManager.cancelLoadingCompletion = ^ {
+        [YProgressHUD hideLoadingHUD];
+        [wself.readerManager closeReadingBook];
+        [wself dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    [self.readerManager updateBookSummary:summaryM completion:^{
+        [YProgressHUD hideLoadingHUD];
+        wself.view.userInteractionEnabled = YES;
+        [wself updateReaderChapter:wself.readerManager.record.readingChapter page:wself.readerManager.record.readingPage];
+        [wself.readerManager updateReadingChapter:wself.chapter page:wself.page];
+    } failure:^(NSString *msg) {
+        [YProgressHUD hideLoadingHUD];
+        [YProgressHUD showErrorHUDWith:msg];
+        [wself dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 - (void)dealloc {
