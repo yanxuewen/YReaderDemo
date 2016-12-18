@@ -16,5 +16,6 @@ typedef NS_ENUM(NSInteger,YShowState) {
 @interface YCenterViewController : YBaseViewController
 
 @property (copy, nonatomic) void(^tapBarButton)(YShowState);
+-(void)autoRefreshbooks;
 
 @end

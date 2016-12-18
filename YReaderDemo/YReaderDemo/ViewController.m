@@ -27,6 +27,7 @@
 @property (strong, nonatomic) UIView *rightView;
 @property (strong, nonatomic) UIView *closeView;
 @property (assign, nonatomic) YShowState currentShow;
+@property (assign, nonatomic) BOOL hasLoad;
 
 @end
 
@@ -54,6 +55,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_hasLoad) {
+        _hasLoad = YES;
+        [self.centerVC autoRefreshbooks];
+    }
 }
 
 - (void)setupUI {

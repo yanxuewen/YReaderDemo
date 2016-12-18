@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger,YAPIType) {
     YAPITypeBookSummary,
     YAPITypeChaptersLink,
     YAPITypeChapterContent,
+    YAPITypeBookUpdate,
 };
 
 @interface YURLManager : NSObject

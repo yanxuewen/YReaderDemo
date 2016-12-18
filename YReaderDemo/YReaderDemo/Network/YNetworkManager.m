@@ -15,6 +15,7 @@
 #import "YBookSummaryModel.h"
 #import "YChaptersLinkModel.h"
 #import "YChapterContentModel.h"
+#import "YBookUpdateModel.h"
 
 @interface YNetworkManager ()
 
@@ -135,6 +136,8 @@
             bookM = [YBookSummaryModel yy_modelWithJSON:arr[i]];
         } else if (type == YAPITypeChaptersLink) {
             bookM = [YChaptersLinkModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeBookUpdate) {
+            bookM = [YBookUpdateModel yy_modelWithJSON:arr[i]];
         }
         
         if (!bookM) {

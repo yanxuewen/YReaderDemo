@@ -58,6 +58,9 @@
             urlStr = [NSString stringWithFormat:@"http://chapter2.zhuishushenqi.com/chapter/%@",parameter];
             break;
         }
+        case YAPITypeBookUpdate:
+            urlStr = [NSString stringWithFormat:@"%@book?view=updated&id=%@",kAPIBaseUrl,parameter];
+            break;
         default:
             break;
     }

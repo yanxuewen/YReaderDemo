@@ -8,14 +8,18 @@
 
 #import "YCenterViewController.h"
 #import "YReaderViewController.h"
+#import "YBookDetailModel.h"
 #import "YBookViewCell.h"
 #import "YSQLiteManager.h"
+#import "YNetworkManager.h"
+#import "YBookUpdateModel.h"
 
 @interface YCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *booksTableView;
 @property (strong, nonatomic) NSArray *booksArr;
 @property (strong, nonatomic) YSQLiteManager *sqliteM;
+@property (strong, nonatomic) YNetworkManager *netManager;
 
 @end
 
@@ -26,13 +30,54 @@
     
     [self setupUI];
     self.sqliteM = [YSQLiteManager shareManager];
+    self.netManager = [YNetworkManager shareManager];
     self.booksArr = self.sqliteM.userBooks;
     [self.sqliteM addObserver:self forKeyPath:@"userBooks" options:NSKeyValueObservingOptionNew context:NULL];
-  
+    self.booksTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshbooks)];
 }
 
-- (void)asjdnajnafn {
-    NSLog(@"%s",__func__);
+- (void)autoRefreshbooks {
+    if (self.booksArr.count > 0) {
+        [self.booksTableView.mj_header beginRefreshing];
+    }
+}
+
+- (void)refreshbooks {
+    if (self.booksArr.count == 0) {
+        [self.booksTableView.mj_header endRefreshing];
+        return;
+    }
+    NSArray *books = self.booksArr.copy;
+    NSMutableString *parameter = [NSMutableString string];
+    for (NSUInteger i = 0; i < books.count; i ++) {
+        [parameter appendString:((YBookDetailModel *)books[i]).idField];
+        if (i < books.count - 1 ) {
+            [parameter appendString:@","];
+        }
+    }
+    if (parameter.length == 0) {
+        
+        return;
+    }
+    __weak typeof(self) wself = self;
+    [_netManager getWithAPIType:YAPITypeBookUpdate parameter:parameter.copy success:^(id response) {
+        NSArray *arr = response;
+        for (YBookUpdateModel *updateM in arr) {
+            for (YBookDetailModel *bookM in books) {
+                if ([updateM.idField isEqualToString:bookM.idField] && [updateM.updated compare:bookM.updated] == NSOrderedDescending) {
+                    bookM.lastChapter = updateM.lastChapter;
+                    bookM.updated = updateM.updated;
+                    bookM.chaptersCount = updateM.chaptersCount;
+                    bookM.hasUpdated = YES;
+                }
+            }
+        }
+        [wself.sqliteM saveUserBooksStatus];
+        [wself.booksTableView.mj_header endRefreshing];
+        [wself.booksTableView reloadData];
+    } failure:^(NSError *error) {
+        [wself.booksTableView.mj_header endRefreshing];
+    }];
 }
 
 - (void)setupUI {
@@ -84,7 +129,9 @@
         YReaderViewController *readerVC = [[YReaderViewController alloc] init];
         readerVC.readingBook = [self.sqliteM addUserBooksWith:bookM];
         [self presentViewController:readerVC animated:YES completion:^{
-            
+            bookM.hasUpdated = NO;
+            [self.sqliteM saveUserBooksStatus];
+            [self.booksTableView reloadData];
         }];
     }
 }
