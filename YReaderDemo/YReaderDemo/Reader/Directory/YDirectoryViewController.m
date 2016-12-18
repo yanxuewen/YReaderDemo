@@ -87,7 +87,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (indexPath.row < self.chaptersArr.count) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (self.selectChapter) {
+                self.selectChapter(_chaptersArr.count - indexPath.row - 1);
+            }
+        }];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {

@@ -29,8 +29,13 @@
 @property (strong, nonatomic, readonly) NSString *cachePath;
 @property (strong, nonatomic, readonly) NSString *summarykey;
 @property (strong, nonatomic, readonly) NSString *recordKey;
+@property (strong, nonatomic) NSURLSessionTask *summaryTask;
+@property (strong, nonatomic) NSURLSessionTask *chaptersLinkTask;
+@property (strong, nonatomic) NSURLSessionTask *chapterTask;
 @property (assign, atomic) BOOL isAutoLoading;
-
+@property (assign, atomic) BOOL cancelLoading;
+@property (assign, nonatomic) BOOL cancelGetChapter;
+@property (strong, nonatomic) NSURLSessionTask *getChapterTask;
 
 @end
 
@@ -78,7 +83,11 @@
 
 - (void)getBookSummary {
     __weak typeof(self) wself = self;
-    [_netManager getWithAPIType:YAPITypeBookSummary parameter:_readingBook.idField success:^(id response) {
+    _summaryTask = [_netManager getWithAPIType:YAPITypeBookSummary parameter:_readingBook.idField success:^(id response) {
+        if (wself.cancelLoading) {
+            [wself cancelLoadCompletion];
+            return ;
+        }
         NSArray *arr = (NSArray *)response;
         if (arr.count > 0) {
             YBookSummaryModel *selectSummary = nil;
@@ -100,14 +109,27 @@
             [wself updateReadingCompletionWith:@"书籍来源返回错误"];
         }
     } failure:^(NSError *error) {
-        DDLogWarn(@"get Book Summary failure %@",wself.readingBook);
-        [wself updateReadingCompletionWith:error.localizedFailureReason];
+        if (wself.cancelLoading) {
+            DDLogInfo(@"getBookSummary summaryTask cancel");
+            if (wself.cancelLoading) {
+                [wself cancelLoadCompletion];
+                return ;
+            }
+        } else {
+            DDLogWarn(@"get Book Summary failure %@",wself.readingBook);
+            [wself updateReadingCompletionWith:error.localizedFailureReason];
+        }
+        
     }];
     
 }
 
 - (void)getBookChaptersLink {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (self.cancelLoading) {
+            [self cancelLoadCompletion];
+            return ;
+        }
         self.cache = [[YYDiskCache alloc] initWithPath:self.cachePath];
         self.record = (YReaderRecord *)[self.cache objectForKey:self.recordKey];
         if (self.record && self.record.chaptersLink.count > 0) {
@@ -118,7 +140,7 @@
             self.record = [[YReaderRecord alloc] init];
         }
         __weak typeof(self) wself = self;
-        [_netManager getWithAPIType:YAPITypeChaptersLink parameter:_selectSummary.idField success:^(id response) {
+        _chaptersLinkTask = [_netManager getWithAPIType:YAPITypeChaptersLink parameter:_selectSummary.idField success:^(id response) {
             NSArray *arr = (NSArray *)response;
             if (arr.count > 0) {
                 wself.record.chaptersLink = arr;
@@ -129,13 +151,26 @@
                 [wself updateReadingCompletionWith:@"该来源没有下载地址"];
             }
         } failure:^(NSError *error) {
-            DDLogWarn(@"get Book Chapters Link failure %@",wself.selectSummary);
-            [wself updateReadingCompletionWith:error.localizedFailureReason];
+            if (wself.cancelLoading) {
+                DDLogInfo(@"getBookChaptersLink chaptersLinkTask cancel");
+                if (wself.cancelLoading) {
+                    [wself cancelLoadCompletion];
+                    return ;
+                }
+            } else {
+                DDLogWarn(@"get Book Chapters Link failure %@",wself.selectSummary);
+                [wself updateReadingCompletionWith:error.localizedFailureReason];
+            }
+            
         }];
     });
 }
 
 - (void)getChapterContentWith:(NSUInteger)chapter autoLoad:(BOOL)isAutoLoad{
+    if (self.cancelLoading) {
+        [self cancelLoadCompletion];
+        return ;
+    }
     YChapterContentModel *chapterM = nil;
     if (chapter < self.chaptersArr.count) {
         chapterM = self.chaptersArr[chapter];
@@ -170,7 +205,7 @@
         return;
     }
     __weak typeof(self) wself = self;
-    [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
+    _chapterTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
         chapterM.body = ((YChapterContentModel *)response).body;
         chapterM.isLoad = YES;
         DDLogInfo(@"Load chapter %zi",chapter);
@@ -196,20 +231,30 @@
             [wself updateReadingCompletionWith:nil];
         }
     } failure:^(NSError *error) {
-        if (isAutoLoad) {
-            if (chapter < self.endLoadIndex) {
-                [wself getChapterContentWith:chapter+1 autoLoad:YES];
-            } else {
-                wself.isAutoLoading = NO;
-                DDLogInfo(@"AutoLoad 完成 endLoadIndex:%zi",self.endLoadIndex);
+        if (wself.cancelLoading) {
+            DDLogInfo(@"getChapterContentWith chapterTask cancel");
+            if (wself.cancelLoading) {
+                [wself cancelLoadCompletion];
+                return ;
             }
         } else {
-            DDLogWarn(@"get Chapter Content failure %@",chapterM);
-            [wself updateReadingCompletionWith:error.localizedFailureReason];
+            if (isAutoLoad) {
+                if (chapter < self.endLoadIndex) {
+                    [wself getChapterContentWith:chapter+1 autoLoad:YES];
+                } else {
+                    wself.isAutoLoading = NO;
+                    DDLogInfo(@"AutoLoad 完成 endLoadIndex:%zi",self.endLoadIndex);
+                }
+            } else {
+                DDLogWarn(@"get Chapter Content failure %@",chapterM);
+                [wself updateReadingCompletionWith:error.localizedFailureReason];
+            }
         }
+        
     }];
 }
 
+#pragma mark - Completion
 - (void)updateReadingCompletionWith:(NSString *)errorMsg {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (errorMsg) {
@@ -253,6 +298,97 @@
     
 }
 
+#pragma mark - Cancel load
+- (void)cancelLoadReadingBook {
+    if (!self.updateCompletion || !self.updateFailure) {
+        DDLogWarn(@"cancelLoadReadingBook updateCompletion == nil || updateFailure == nil");
+        return;
+    }
+    self.cancelLoading = YES;
+    if (self.summaryTask.state == NSURLSessionTaskStateRunning) {
+        [self.summaryTask cancel];
+    }
+    if (self.chaptersLinkTask.state == NSURLSessionTaskStateRunning) {
+        [self.chaptersLinkTask cancel];
+    }
+    if (self.chapterTask.state == NSURLSessionTaskStateRunning) {
+        [self.chapterTask cancel];
+    }
+}
+
+- (void)cancelLoadCompletion {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.cancelLoadingCompletion) {
+            self.cancelLoadingCompletion();
+        }
+        self.updateCompletion = nil;
+        self.updateFailure = nil;
+        self.cancelLoadingCompletion = nil;
+        self.cancelLoading = NO;
+    });
+}
+
+#pragma mark - cancel ChapterContent
+- (void)cancelGetChapterContent {
+    self.cancelGetChapter = YES;
+    if (self.getChapterTask.state == NSURLSessionTaskStateRunning) {
+        [self.getChapterTask cancel];
+    }
+}
+
+- (void)getChapterContentWith:(NSUInteger)chapter completion:(void (^)())completion failure:(void (^)(NSString *))failure {
+    if (chapter >= self.chaptersArr.count) {
+        failure(@"章节错误");
+        return;
+    }
+    YChapterContentModel *chapterM = self.chaptersArr[chapter];
+    self.updateCompletion = completion;
+    self.updateFailure = failure;
+    if (chapterM.isLoadCache) {
+        chapterM.body = (NSString *)[self.cache objectForKey:chapterM.link];
+        chapterM.isLoad = YES;
+        [chapterM updateContentPaging];
+        [self updateReadingCompletionWith:nil];
+        return;
+    }
+    __weak typeof(self) wself = self;
+    _getChapterTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
+        chapterM.body = ((YChapterContentModel *)response).body;
+        chapterM.isLoad = YES;
+        DDLogInfo(@"getChapterContent %@",chapterM);
+        [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{
+            chapterM.isLoadCache = YES;
+            DDLogInfo(@"Load Cache chapter %zi",chapter);
+            if (chapter < wself.record.chaptersLink.count) {
+                YChaptersLinkModel *linkM = wself.record.chaptersLink[chapter];
+                linkM.isLoadCache = YES;
+            } else {
+                DDLogError(@"error cache chapterM.body success but chapterz:%zi < wself.record.chaptersLink.count:%zi",chapter,wself.record.chaptersLink.count);
+            }
+        }];
+        
+        [chapterM updateContentPaging];
+        [wself updateReadingCompletionWith:nil];
+        wself.getChapterTask = nil;
+    } failure:^(NSError *error) {
+        if (wself.cancelGetChapter) {
+            DDLogInfo(@"getChapterContentWith getChapterTask cancel");
+            if (wself.cancelLoadingCompletion) {
+                wself.cancelLoadingCompletion();
+            }
+            wself.updateCompletion = nil;
+            wself.updateFailure = nil;
+            wself.cancelGetChapter = NO;
+            ;
+        } else {
+            DDLogWarn(@"get Chapter Content failure %@",chapterM);
+            [wself updateReadingCompletionWith:error.localizedFailureReason];
+        }
+        wself.getChapterTask = nil;
+    }];
+    
+}
+
 - (void)updateReadingChapter:(NSUInteger)chapter page:(NSUInteger)page {
     self.record.readingChapter = chapter;
     self.record.readingPage = page;
@@ -265,6 +401,9 @@
     _record = nil;
     _chaptersArr = nil;
     _selectSummary = nil;
+    _summaryTask = nil;
+    _chaptersLinkTask = nil;
+    _chapterTask = nil;
     _chaptersCount = 0;
 }
 

@@ -20,6 +20,8 @@
 @property (strong, nonatomic, readonly) YBookSummaryModel *selectSummary;
 @property (strong, nonatomic, readonly) YReaderRecord *record;
 @property (assign, nonatomic, readonly) NSUInteger chaptersCount;
+@property (copy, nonatomic) void(^cancelLoadingCompletion)();
+@property (copy, nonatomic) void(^cancelGetChapterCompletion)();
 
 + (instancetype)shareReaderManager;
 - (void)updateReadingBook:(YBookDetailModel *)bookM completion:(void(^)())completion failure:(void (^)(NSString *msg))failure;
@@ -27,5 +29,10 @@
 - (void)autoLoadNextChapters:(NSUInteger)index;
 - (void)updateReadingChapter:(NSUInteger)chapter page:(NSUInteger)page;
 - (void)closeReadingBook;
-
+- (void)cancelLoadReadingBook;
+- (void)getChapterContentWith:(NSUInteger)chapter completion:(void(^)())completion failure:(void (^)(NSString *msg))failure;
+- (void)cancelGetChapterContent;
 @end
+
+
+

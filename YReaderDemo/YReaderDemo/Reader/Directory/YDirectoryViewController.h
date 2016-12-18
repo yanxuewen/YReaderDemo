@@ -12,5 +12,6 @@
 
 @property (assign, nonatomic) NSUInteger readingChapter;
 @property (strong, nonatomic) NSArray *chaptersArr;
+@property (copy, nonatomic) void(^selectChapter)(NSUInteger);
 
 @end

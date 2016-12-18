@@ -50,6 +50,7 @@
     if (!msg) {
         return;
     }
+    [YProgressHUD hideLoadingHUD];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication] keyWindow] animated:YES];
     hud.mode = MBProgressHUDModeText;
     hud.label.text = msg;
@@ -73,6 +74,7 @@
     if (self.cancelAction) {
         self.cancelAction();
     }
+    self.cancelAction = nil;
 }
 
 

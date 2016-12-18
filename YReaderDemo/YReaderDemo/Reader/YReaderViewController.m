@@ -27,6 +27,7 @@
 @property (strong, nonatomic) YMenuViewController *menuView;
 
 @property (strong, nonatomic) YDirectoryViewController *directoryVC;
+@property (assign, nonatomic) BOOL isPageBefore;
 
 @end
 
@@ -41,10 +42,27 @@
     _readerManager = [YReaderManager shareReaderManager];
     [self readerSettingsUpdate];
     __weak typeof(self) wself = self;
+    
+    [YProgressHUD showLoadingHUD];
+    self.view.userInteractionEnabled = NO;
+    [[YProgressHUD shareProgressHUD] setCancelAction:^{
+        [wself.readerManager cancelLoadReadingBook];
+    }];
+    
+    self.readerManager.cancelLoadingCompletion = ^ {
+        [YProgressHUD hideLoadingHUD];
+        [wself.readerManager closeReadingBook];
+        [wself dismissViewControllerAnimated:YES completion:nil];
+    };
+    
     [_readerManager updateReadingBook:_readingBook completion:^{
+        wself.view.userInteractionEnabled = YES;
         [wself setupPageViewController];
+        [YProgressHUD hideLoadingHUD];
     } failure:^(NSString *msg) {
         DDLogWarn(@"updateReadingBook error msg %@",msg);
+        [YProgressHUD showErrorHUDWith:msg];
+        [wself dismissViewControllerAnimated:YES completion:nil];
     }];
     
     [self setupMenuView];
@@ -113,20 +131,62 @@
     _chapter = _readerManager.record.readingChapter;
     [_pageViewController setViewControllers:@[[self readPageViewWithChapter:_chapter page:_page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.readerManager autoLoadNextChapters:self.chapter];
+        [self.readerManager autoLoadNextChapters:self.chapter+1];
     });
 }
 
 - (void)readerSettingsUpdate {
     __weak typeof(self) wself = self;
     [[YReaderSettings shareReaderSettings] setRefreshReaderView:^{
-        YChapterContentModel *chapterM = wself.readerManager.chaptersArr[wself.chapter];
-        [chapterM updateContentPaging];
-        if (wself.page >= chapterM.pageCount) {
-            wself.page = chapterM.pageCount - 1;
-        }
-        [wself.pageViewController setViewControllers:@[[wself readPageViewWithChapter:wself.chapter page:wself.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        [wself updateReaderChapter:wself.chapter page:wself.page];
     }];
+}
+
+- (void)updateReaderChapter:(NSUInteger)chapter page:(NSUInteger)page{
+    if (chapter >= self.readerManager.chaptersArr.count) {
+        DDLogError(@"updateReaderChapter chapter >= self.readerManager.chaptersArr.count  \n readerManager:%@",self.readerManager);
+        return;
+    }
+    YChapterContentModel *chapterM = self.readerManager.chaptersArr[chapter];
+    if (chapterM.isLoad) {
+        [chapterM updateContentPaging];
+        [self reloadReaderPageViewControllerWith:chapter page:page];
+    } else {
+        __weak typeof(self) wself = self;
+        [YProgressHUD showLoadingHUD];
+        [[YProgressHUD shareProgressHUD] setCancelAction:^{
+            [wself.readerManager cancelGetChapterContent];
+        }];
+        self.view.userInteractionEnabled = NO;
+        [self.readerManager getChapterContentWith:chapter completion:^{
+            wself.view.userInteractionEnabled = YES;
+            [YProgressHUD hideLoadingHUD];
+            [wself reloadReaderPageViewControllerWith:chapter page:page];
+        } failure:^(NSString *msg) {
+            wself.view.userInteractionEnabled = YES;
+            [YProgressHUD hideLoadingHUD];
+            [YProgressHUD showErrorHUDWith:msg];
+        }];
+        self.readerManager.cancelGetChapterCompletion = ^ {
+            wself.view.userInteractionEnabled = YES;
+            [YProgressHUD hideLoadingHUD];
+        };
+    }
+    
+}
+
+- (void)reloadReaderPageViewControllerWith:(NSUInteger)chapter page:(NSUInteger)page {
+    YChapterContentModel *chapterM = self.readerManager.chaptersArr[chapter];
+    if (_isPageBefore || page >= chapterM.pageCount) {
+        page = chapterM.pageCount - 1;
+    }
+    self.chapter = chapter;
+    self.page = page;
+    [self.pageViewController setViewControllers:@[[self readPageViewWithChapter:self.chapter page:self.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self.readerManager updateReadingChapter:chapter page:page];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.readerManager autoLoadNextChapters:self.chapter+1];
+    });
 }
 
 - (YReadPageViewController *)readPageViewWithChapter:(NSUInteger)chapter page:(NSUInteger)page {
@@ -137,7 +197,7 @@
     if (chapter != _chapter) {
         [chapterM updateContentPaging];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.readerManager autoLoadNextChapters:chapter];
+            [self.readerManager autoLoadNextChapters:chapter+1];
         });
     }
     readPageVC.pageContent = [chapterM getStringWith:page];
@@ -161,7 +221,6 @@
         _nextChpater = _chapter - 1;
         YChapterContentModel *chapterM = _readerManager.chaptersArr[_nextChpater];
         if (chapterM.pageCount == 0) {
-            NSLog(@"得先加载...");
             [chapterM updateContentPaging];
         }
         _nextPage = chapterM.pageCount - 1;
@@ -189,8 +248,14 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers {
     NSLog(@"%s",__func__);
+    if (_nextChpater > _chapter || (_nextChpater == _chapter && _nextPage > _page)) {
+        _isPageBefore = NO;
+    } else {
+        _isPageBefore = YES;
+    }
     _chapter = _nextChpater;
     _page = _nextPage;
+    
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed {
@@ -199,6 +264,11 @@
         YReadPageViewController *readerPageVC = (YReadPageViewController *)previousViewControllers.firstObject;
         _page = readerPageVC.page;
         _chapter = readerPageVC.chapter;
+    } else {
+        YChapterContentModel *chapterM = self.readerManager.chaptersArr[self.chapter];
+        if (!chapterM.isLoad) {
+            [self updateReaderChapter:self.chapter page:self.page];
+        }
     }
 }
 
@@ -211,6 +281,10 @@
     if (!_directoryVC) {
         _directoryVC = [[YDirectoryViewController alloc] init];
         _directoryVC.chaptersArr = self.readerManager.chaptersArr;
+        __weak typeof(self) wself = self;
+        _directoryVC.selectChapter = ^(NSUInteger chapter) {
+            [wself updateReaderChapter:chapter page:0];
+        };
     }
     _directoryVC.readingChapter = self.chapter;
     return _directoryVC;
