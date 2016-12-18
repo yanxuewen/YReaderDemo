@@ -17,6 +17,8 @@
 
 @property (assign, nonatomic) BOOL firstDisplay;
 @property (assign, nonatomic) CGFloat beginOffsetY;
+@property (weak, nonatomic) IBOutlet UIView *moveView;
+@property (weak, nonatomic) IBOutlet UIImageView *moveImageV;
 
 @end
 
@@ -25,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.moveView.backgroundColor = YRGBAColor(0, 0, 0, 0.85);
     _firstDisplay = YES;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([YDirectoryViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([YDirectoryViewCell class])];
     self.tableView.rowHeight = 44;
@@ -113,8 +116,16 @@
 
 - (IBAction)goToAction:(id)sender {
     if ([self.goBtn.currentTitle isEqualToString:@"到顶部"]) {
+        self.moveImageV.image = [UIImage imageNamed:@"move-up"];
+        [UIView animateWithDuration:0.05 animations:^{
+            self.moveView.alpha = 1.0;
+        }];
         [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
     } else {
+        self.moveImageV.image = [UIImage imageNamed:@"move-down"];
+        [UIView animateWithDuration:0.05 animations:^{
+            self.moveView.alpha = 1.0;
+        }];
         [_tableView setContentOffset:CGPointMake(0, (_chaptersArr.count - 1) * _tableView.rowHeight - _tableView.height) animated:YES];
     }
 }
@@ -134,6 +145,7 @@
     }
     [UIView animateWithDuration:0.1 animations:^{
         self.goBtn.alpha = 0;
+        self.moveView.alpha = 0.0;
     }];
 }
 

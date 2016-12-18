@@ -10,6 +10,7 @@
 #import "YSQLiteManager.h"
 #import "YReaderUniversal.h"
 #import "YNetworkManager.h"
+#import "YDownloadManager.h"
 #import <UIKit/UIKit.h>
 
 #define kYReaderAutoLoadNumber 10
@@ -19,6 +20,7 @@
 @property (strong, nonatomic) YSQLiteManager *sqliteM;
 @property (strong, nonatomic) YReaderRecord *record;
 @property (strong, nonatomic) YBookSummaryModel *selectSummary;
+@property (strong, nonatomic) NSMutableArray *chaptersArr;
 @property (assign, nonatomic) NSUInteger chaptersCount;
 @property (strong, nonatomic) YYDiskCache *cache;
 @property (strong, nonatomic) NSString *documentPath;
@@ -72,12 +74,26 @@
     self.updateFailure = failure;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _readingBook = bookM;
-        self.selectSummary = (YBookSummaryModel *)[self.sqliteM.cache objectForKey:self.summarykey];
-        if (self.selectSummary) {
-            [self getBookChaptersLink];
+        if (bookM.downloadM) {
+            if (bookM.downloadM.summaryM && bookM.downloadM.record && bookM.downloadM.chaptersArr.count > 0) {
+                self.selectSummary = bookM.downloadM.summaryM;
+                self.record = bookM.downloadM.record;
+                self.chaptersArr = (NSMutableArray *)bookM.downloadM.chaptersArr;
+                self.chaptersCount = self.chaptersArr.count;
+                self.cache = [[YYDiskCache alloc] initWithPath:self.cachePath];
+                [self getChapterContentWith:self.record.readingChapter autoLoad:NO];
+            } else {
+                [self updateReadingCompletionWith:@"书籍错误,请重试"];
+            }
         } else {
-            [self getBookSummary];
+            self.selectSummary = (YBookSummaryModel *)[self.sqliteM.cache objectForKey:self.summarykey];
+            if (self.selectSummary) {
+                [self getBookChaptersLink];
+            } else {
+                [self getBookSummary];
+            }
         }
+        
     });
 }
 

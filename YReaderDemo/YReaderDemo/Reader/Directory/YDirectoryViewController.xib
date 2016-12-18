@@ -12,6 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YDirectoryViewController">
             <connections>
                 <outlet property="goBtn" destination="bnp-Sk-otr" id="z18-4u-e4e"/>
+                <outlet property="moveImageV" destination="LaP-Ze-nZC" id="zC0-HU-8w2"/>
+                <outlet property="moveView" destination="hX7-J6-Cgo" id="9a4-cq-zKy"/>
                 <outlet property="tableView" destination="cOo-08-nbC" id="ENa-Oy-JNW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -86,14 +88,36 @@
                         <outlet property="delegate" destination="-1" id="xRJ-Nd-umJ"/>
                     </connections>
                 </tableView>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hX7-J6-Cgo">
+                    <rect key="frame" x="157.5" y="293.5" width="60" height="80"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="move-down" translatesAutoresizingMaskIntoConstraints="NO" id="LaP-Ze-nZC">
+                            <rect key="frame" x="11.5" y="21.5" width="37" height="37"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="LaP-Ze-nZC" firstAttribute="centerX" secondItem="hX7-J6-Cgo" secondAttribute="centerX" id="Pfz-kE-pss"/>
+                        <constraint firstItem="LaP-Ze-nZC" firstAttribute="centerY" secondItem="hX7-J6-Cgo" secondAttribute="centerY" id="RdP-QW-VgW"/>
+                        <constraint firstAttribute="height" constant="80" id="dyN-4i-jl3"/>
+                        <constraint firstAttribute="width" constant="60" id="e4a-g3-2nE"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="sSC-bt-gqY" secondAttribute="trailing" id="33Y-pz-hgz"/>
                 <constraint firstItem="sSC-bt-gqY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6uE-k4-Xhb"/>
                 <constraint firstAttribute="bottom" secondItem="d9U-6o-KPX" secondAttribute="bottom" id="85d-EX-jFC"/>
+                <constraint firstItem="hX7-J6-Cgo" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="8m7-V5-GUc"/>
                 <constraint firstItem="d9U-6o-KPX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CjL-H2-Jpq"/>
                 <constraint firstItem="cOo-08-nbC" firstAttribute="top" secondItem="sSC-bt-gqY" secondAttribute="bottom" id="E7V-9f-Qpw"/>
+                <constraint firstItem="hX7-J6-Cgo" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="L0C-qS-bjj"/>
                 <constraint firstAttribute="trailing" secondItem="d9U-6o-KPX" secondAttribute="trailing" id="NuI-hM-ZF6"/>
                 <constraint firstItem="cOo-08-nbC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZBO-33-Cs3"/>
                 <constraint firstItem="d9U-6o-KPX" firstAttribute="top" secondItem="cOo-08-nbC" secondAttribute="bottom" id="bFz-8v-OsH"/>
@@ -105,5 +129,6 @@
     </objects>
     <resources>
         <image name="directory_close" width="30" height="30"/>
+        <image name="move-down" width="37" height="37"/>
     </resources>
 </document>

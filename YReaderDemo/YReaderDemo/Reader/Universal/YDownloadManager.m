@@ -230,6 +230,9 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 #pragma mark - YDownloadModel
 @implementation YDownloadModel
 
+-(NSString *)description {
+    return [self yy_modelDescription];
+}
 
 + (instancetype)downloadModelWith:(YBookDetailModel *)bookM loadType:(YDownloadType)loadType {
     YDownloadModel *downloadM = [[YDownloadModel alloc] init];
@@ -237,6 +240,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
     if ([bookM isEqual:readerM.readingBook]) {
         downloadM.downloadBook = readerM.readingBook;
         downloadM.summaryM = readerM.selectSummary;
+        downloadM.record = readerM.record;
         downloadM.chaptersLink = readerM.record.chaptersLink;
         downloadM.chaptersArr = readerM.chaptersArr;
     } else {
