@@ -9,10 +9,18 @@
 #ifndef YReaderUniversal_h
 #define YReaderUniversal_h
 
-
+#pragma mark - 实在不想起名字了
 typedef NS_ENUM(NSInteger,YReaderTheme) {
     YReaderThemeOne,
-    YReaderThemeTwo
+    YReaderThemeTwo,
+    YReaderThemeThree,
+    YReaderThemeFour,
+    YReaderThemeFive,
+    YReaderThemeSix,
+    YReaderThemeSeven,
+    YReaderThemeEight,
+    YReaderThemeNine,
+    YReaderThemeTen
 };
 
 typedef NS_ENUM(NSInteger,YTurnPageStyle) {

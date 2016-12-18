@@ -26,6 +26,7 @@
 @interface YBookDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *bookImageView;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *majorCateLabel;
@@ -62,6 +63,12 @@
 @property (copy, nonatomic) NSArray *recommendBookArr;
 @property (copy, nonatomic) NSArray *recommendBookListArr;
 @property (copy, nonatomic) NSArray *tagColorArr;
+@property (assign, nonatomic) BOOL isDidLoad;
+
+@property (strong, nonatomic) NSURLSessionTask *detailTask;
+@property (strong, nonatomic) NSURLSessionTask *recommendTask;
+@property (strong, nonatomic) NSURLSessionTask *recommendListTask;
+@property (strong, nonatomic) NSURLSessionTask *reviewsTask;
 
 @end
 
@@ -69,8 +76,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.bgView.alpha = 0;
     _netManager = [YNetworkManager shareManager];
-    
     _tagColorArr = @[YRGBColor(146, 197, 238),YRGBColor(192, 104, 208),YRGBColor(245, 188, 120),YRGBColor(145, 206, 213),YRGBColor(103, 204, 183),YRGBColor(231, 143, 143)];
     
     [self setupUI];
@@ -78,7 +85,36 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getNetBookDetailData];
+    if (!_isDidLoad) {
+        _isDidLoad = YES;
+        self.view.userInteractionEnabled = NO;
+        __weak typeof(self) wself = self;
+        [[YProgressHUD shareProgressHUD] setCancelAction:^{
+            [wself cancelAllTasks];
+            [wself.navigationController popViewControllerAnimated:YES];
+        }];
+        [YProgressHUD showLoadingHUD];
+        [self getNetBookDetailData];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)cancelAllTasks {
+    if (self.detailTask.state == NSURLSessionTaskStateRunning) {
+        [self.detailTask cancel];
+    }
+    if (self.recommendTask.state == NSURLSessionTaskStateRunning) {
+        [self.recommendTask cancel];
+    }
+    if (self.recommendListTask.state == NSURLSessionTaskStateRunning) {
+        [self.recommendListTask cancel];
+    }
+    if (self.reviewsTask.state == NSURLSessionTaskStateRunning) {
+        [self.reviewsTask cancel];
+    }
 }
 
 - (void)setupUI {
@@ -125,39 +161,57 @@
 
 - (void)getNetBookDetailData {
     __weak typeof(self) wself = self;
-    [_netManager getWithAPIType:YAPITypeBookDetail parameter:_selectBook.idField success:^(id response) {
+    _detailTask = [_netManager getWithAPIType:YAPITypeBookDetail parameter:_selectBook.idField success:^(id response) {
         wself.bookDetail = response;
-        [self refleshView];
+        [wself refleshView];
         DDLogInfo(@"bookDetail %@",response);
     } failure:^(NSError *error) {
-        DDLogError(@"YAPITypeBookDetail %@ error ",_selectBook.idField);
+        if (error.code == -999) {
+            DDLogInfo(@"getNetBookDetailData detailTask cancel");
+        } else {
+            DDLogError(@"YAPITypeBookDetail %@ error ",wself.selectBook.idField);
+            [YProgressHUD showErrorHUDWith:error.localizedFailureReason];
+        }
+        
     }];
     
-    [_netManager getWithAPIType:YAPITypeBookReview parameter:_selectBook.idField success:^(id response) {
+    _reviewsTask = [_netManager getWithAPIType:YAPITypeBookReview parameter:_selectBook.idField success:^(id response) {
         wself.reviewArr = response;
-        [self refleshView];
+        [wself refleshView];
         DDLogInfo(@"reviewArr %@",response);
     } failure:^(NSError *error) {
-        wself.reviewArr = @[];
-        [self refleshView];
+        if (error.code == -999) {
+            DDLogInfo(@"getNetBookDetailData reviewsTask cancel");
+        } else {
+            wself.reviewArr = @[];
+            [wself refleshView];
+        }
     }];
     
-    [_netManager getWithAPIType:YAPITypeRecommendBook parameter:_selectBook.idField success:^(id response) {
+    _recommendTask = [_netManager getWithAPIType:YAPITypeRecommendBook parameter:_selectBook.idField success:^(id response) {
         wself.recommendBookArr = response;
-        [self refleshView];
+        [wself refleshView];
         DDLogInfo(@"recommendBookArr %@",response);
     } failure:^(NSError *error) {
-        wself.recommendBookArr = @[];
-        [self refleshView];
+        if (error.code == -999) {
+            DDLogInfo(@"getNetBookDetailData recommendTask cancel");
+        } else {
+            wself.recommendBookArr = @[];
+            [wself refleshView];
+        }
     }];
     
-    [_netManager getWithAPIType:YAPITypeRecommendBookList parameter:_selectBook.idField success:^(id response) {
+   _recommendListTask = [_netManager getWithAPIType:YAPITypeRecommendBookList parameter:_selectBook.idField success:^(id response) {
         wself.recommendBookListArr = response;
-        [self refleshView];
+        [wself refleshView];
         DDLogInfo(@"recommendBookListArr %@",response);
     } failure:^(NSError *error) {
-        wself.recommendBookListArr = @[];
-        [self refleshView];
+        if (error.code == -999) {
+            DDLogInfo(@"getNetBookDetailData recommendListTask cancel");
+        } else {
+            wself.recommendBookListArr = @[];
+            [wself refleshView];
+        }
     }];
 }
 
@@ -166,6 +220,10 @@
     if (!_bookDetail || !_recommendBookListArr || !_recommendBookArr || !_reviewArr) {
         return;
     }
+    _detailTask = nil;
+    _reviewsTask = nil;
+    _recommendListTask = nil;
+    _recommendTask = nil;
     
     [_bookImageView sd_setImageWithURL:[YURLManager getURLWith:YAPITypeBookCover parameter:_bookDetail.cover] placeholderImage:kImageDefaltBookCover];
     _titleLabel.text = _bookDetail.title;
@@ -240,6 +298,11 @@
         _recommendListView.hidden = YES;
     }
     
+    [UIView animateWithDuration:0.2 animations:^{
+        self.bgView.alpha = 1.0;
+    }];
+    [YProgressHUD hideLoadingHUD];
+    self.view.userInteractionEnabled = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.bgViewHeight.constant = self.bottomView.top + self.bottomView.height;
     });
@@ -394,6 +457,8 @@
 
 
 - (IBAction)backVC:(id)sender {
+    [self cancelAllTasks];
+    [YProgressHUD hideLoadingHUD];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

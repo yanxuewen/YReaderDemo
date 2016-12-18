@@ -64,4 +64,15 @@
     return [NSString stringWithFormat:@"%.f %@字",number,unit];
 }
 
+- (NSArray *)tags {
+    if (_tags.count == 0) {
+        if (_majorCate) {
+            _tags = @[_majorCate];
+        } else if (_minorCate) {
+            _tags = @[_minorCate];
+        }
+    }
+    return _tags;
+}
+
 @end

@@ -20,6 +20,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <AFNetworking/AFNetworking.h>
 
+#import "YProgressHUD.h"
 #import "YBaseViewController.h"
 #import "YUniversal.h"
 #import "YURLManager.h"

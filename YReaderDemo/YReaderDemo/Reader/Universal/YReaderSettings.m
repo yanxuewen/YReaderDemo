@@ -148,7 +148,7 @@
     static NSArray *imageArr = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        imageArr = @[@"water_mode_bg",@"yellow_mode_bg",@"green_mode_bg",@"sheepskin_mode_bg",@"violet_mode_bg",@"pink_mode_bg",@"weekGreen_mode_bg",@"weekPink_mode_bg"];
+        imageArr = @[@"water_mode_bg",@"yellow_mode_bg",@"green_mode_bg",@"sheepskin_mode_bg",@"violet_mode_bg",@"pink_mode_bg",@"weekGreen_mode_bg",@"weekPink_mode_bg",@"coffee_mode_bg",@"blackGreen_mode_bg"];
     });
     return [UIImage imageNamed:imageArr[theme%imageArr.count]];
 }
@@ -156,7 +156,7 @@
 - (NSArray *)themeImageArr {
     if (!_themeImageArr) {
         NSMutableArray *arr = @[].mutableCopy;
-        for (NSUInteger i = 0; i < 8; i++) {
+        for (NSUInteger i = 0; i < 10; i++) {
             [arr addObject:[self getThemeImageWith:i]];
         }
         _themeImageArr = arr;

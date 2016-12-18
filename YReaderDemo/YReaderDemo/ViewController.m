@@ -65,8 +65,6 @@
     self.rightVC.view.frame = self.view.bounds;
     [self.centerView addSubview:self.centerVC.view];
     [self.view addSubview:self.centerView];
-    
-
 }
 
 - (void)moveToVCWith:(YShowState)state {

@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YBookDetailViewController">
             <connections>
                 <outlet property="authorLabel" destination="8TV-02-2ZZ" id="Opo-su-FPT"/>
+                <outlet property="bgView" destination="P6F-Py-PCw" id="qXb-Pe-WOv"/>
                 <outlet property="bgViewHeight" destination="6dY-Hz-qzM" id="lpi-iO-nEI"/>
                 <outlet property="bookImageView" destination="5kB-AF-wxd" id="mLN-f0-TtP"/>
                 <outlet property="bottomView" destination="uLA-qY-jjV" id="62Y-Dp-Hjw"/>
