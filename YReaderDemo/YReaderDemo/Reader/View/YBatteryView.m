@@ -15,11 +15,11 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 1);
     CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
-    CGContextSetStrokeColorWithColor(context, YRGBColor(145, 140, 135).CGColor);
+    CGContextSetStrokeColorWithColor(context, _fillColor.CGColor);
     CGRect newR = CGRectMake(0.5, 0.5, rect.size.width - 4, rect.size.height-1);
     CGContextStrokeRect(context, newR);
     
-    CGContextSetFillColorWithColor(context, YRGBColor(145, 140, 135).CGColor);
+    CGContextSetFillColorWithColor(context, _fillColor.CGColor);
     newR = CGRectMake(rect.size.width - 4 + 0.5, (rect.size.height - 4) / 2,  4, 4);
     CGContextFillRect(context, newR);
     

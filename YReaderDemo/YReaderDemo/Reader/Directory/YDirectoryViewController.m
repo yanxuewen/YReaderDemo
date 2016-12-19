@@ -34,6 +34,11 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     NSLog(@"%s",__func__);
     self.beginOffsetY = scrollView.contentOffset.y;

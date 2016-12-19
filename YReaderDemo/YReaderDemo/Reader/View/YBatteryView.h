@@ -10,4 +10,6 @@
 
 @interface YBatteryView : UIView
 
+@property (strong, nonatomic) UIColor *fillColor;
+
 @end

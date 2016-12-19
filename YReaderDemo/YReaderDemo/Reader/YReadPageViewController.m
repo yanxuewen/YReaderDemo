@@ -31,8 +31,15 @@
     _readerView = [[YReaderView alloc] initWithFrame:CGRectMake(kYReaderLeftSpace, kYReaderTopSpace, kScreenWidth - kYReaderLeftSpace - kYReaderRightSpace, kScreenHeight - kYReaderTopSpace - kYReaderBottomSpace)];
     _readerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_readerView];
-    self.themeImageV.image = [YReaderSettings shareReaderSettings].themeImage;
+    YReaderSettings *settings = [YReaderSettings shareReaderSettings];
+    self.themeImageV.image = settings.themeImage;
+    UIColor *textColor = settings.otherTextColor;
+    self.titleLabel.textColor = textColor;
+    self.timeLabel.textColor = textColor;
+    self.pageNumberLabel.textColor = textColor;
+    self.batteryView.fillColor = textColor;
     self.batteryView.backgroundColor = [UIColor clearColor];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

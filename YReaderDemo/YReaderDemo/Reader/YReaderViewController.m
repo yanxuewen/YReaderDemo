@@ -286,12 +286,12 @@
 - (YDirectoryViewController *)directoryVC {
     if (!_directoryVC) {
         _directoryVC = [[YDirectoryViewController alloc] init];
-        _directoryVC.chaptersArr = self.readerManager.chaptersArr;
         __weak typeof(self) wself = self;
         _directoryVC.selectChapter = ^(NSUInteger chapter) {
             [wself updateReaderChapter:chapter page:0];
         };
     }
+    _directoryVC.chaptersArr = self.readerManager.chaptersArr;
     _directoryVC.readingChapter = self.chapter;
     return _directoryVC;
 }

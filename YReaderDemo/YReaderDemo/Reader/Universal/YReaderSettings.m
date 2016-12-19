@@ -59,6 +59,7 @@
 #pragma mark - set
 - (void)setTheme:(YReaderTheme)theme {
     _theme = theme;
+    _needUpdateAttributes = YES;
     _themeImage = [self getThemeImageWith:self.theme];
     [self updateReaderSettings];
 }
@@ -96,7 +97,6 @@
     _needUpdateAttributes = NO;
     NSMutableDictionary *dic = @{}.mutableCopy;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-//    paragraphStyle.alignment = NSTextAlignmentJustified;
     paragraphStyle.lineSpacing = self.lineSpacing;
     paragraphStyle.firstLineHeadIndent = [@"汉字" boundingRectWithSize:CGSizeMake(200, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:NULL].size.width;
     dic[NSForegroundColorAttributeName] = self.textColor;
@@ -107,31 +107,57 @@
 }
 
 - (UIColor *)textColor {
-    UIColor *color = [UIColor blackColor];
+    UIColor *color = [UIColor blackColor];//YRGBColor(33, 33, 33);
     switch (self.theme) {
-        case YReaderThemeOne:
-        case YReaderThemeTwo:
-            color = YRGBColor(33, 33, 33);
+        case YReaderThemeNine:
+            color = YRGBColor(149, 147, 143);
             break;
-            
+        case YReaderThemeTen:
+            color = YRGBColor(98, 112, 121);
+            break;
         default:
             break;
     }
     return color;
 }
 
-- (UIImage *)pageImage {
-    UIImage *image = [UIImage new];
+- (UIColor *)otherTextColor {
+    UIColor *color = [UIColor blackColor];
     switch (self.theme) {
         case YReaderThemeOne:
-        case YReaderThemeTwo:
-            image = [UIImage imageWithColor:YRGBColor(200, 200, 200) size:kScreenSize];
+            color = YRGBColor(115, 111, 131);
             break;
-            
+        case YReaderThemeTwo:
+            color = YRGBColor(121, 104, 74);
+            break;
+        case YReaderThemeThree:
+            color = YRGBColor(129, 147, 129);
+            break;
+        case YReaderThemeFour:
+            color = YRGBColor(145, 132, 106);
+            break;
+        case YReaderThemeFive:
+            color = YRGBColor(145, 132, 106);
+            break;
+        case YReaderThemeSix:
+            color = YRGBColor(138, 133, 146);
+            break;
+        case YReaderThemeSeven:
+            color = YRGBColor(146, 139, 152);
+            break;
+        case YReaderThemeEight:
+            color = YRGBColor(128, 135, 107);
+            break;
+        case YReaderThemeNine:
+            color = YRGBColor(111, 108, 104);
+            break;
+        case YReaderThemeTen:
+            color = YRGBColor(59, 78, 87);
+            break;
         default:
             break;
     }
-    return image;
+    return color;
 }
 
 - (UIImage *)themeImage {

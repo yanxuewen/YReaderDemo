@@ -51,7 +51,6 @@
     }
     _pageCount = _pageArr.count;
     _attributedString = attr;
-//    NSLog(@"_pageArr %@ %zi %zi",_pageArr,attr.length,_body.length);
 }
 
 - (NSAttributedString *)getStringWith:(NSUInteger)page {
@@ -63,7 +62,6 @@
         } else {
             len = [_pageArr[page + 1] integerValue] - loc;
         }
-        NSLog(@"getStringWithpage  %zi loc %zi  len  %zi",page,loc,len);
         return [_attributedString attributedSubstringFromRange:NSMakeRange(loc, len)];
     }
     return nil;
