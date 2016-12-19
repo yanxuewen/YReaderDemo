@@ -140,8 +140,7 @@
 }
 
 #pragma mark - button action
-- (IBAction)handleButton:(id)sender {
-    UIButton *btn = (UIButton *)sender;
+- (IBAction)handleButton:(UIButton *)btn {
     if (self.menuTapAction) {
         self.menuTapAction(btn.tag);
     }
@@ -150,8 +149,7 @@
     }
 }
 
-- (IBAction)settingButtonAction:(id)sender {
-    UIButton *btn = (UIButton *)sender;
+- (IBAction)settingButtonAction:(UIButton *)btn {
     NSLog(@"%s %zi",__func__,btn.tag);
     switch (btn.tag) {
         case 300: {             //字体-
@@ -273,7 +271,9 @@
         }
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        if (finished) {
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        }
     }];
     if (self.downloadBook.loadStatus != YDownloadStatusNone) {
         [self setDownloadBookCallback];

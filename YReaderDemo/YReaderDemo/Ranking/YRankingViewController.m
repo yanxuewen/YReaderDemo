@@ -7,6 +7,7 @@
 //
 
 #import "YRankingViewController.h"
+#import "YRankingDetailController.h"
 #import "YNetworkManager.h"
 #import "YURLManager.h"
 #import "YRankingModel.h"
@@ -137,7 +138,9 @@
         }
         [self.tableView reloadData];
     } else {
-        NSLog(@"select rankingM: %@",rankingM);
+        YRankingDetailController *rankingDetailVC = [[YRankingDetailController alloc] init];
+        rankingDetailVC.rankingM = rankingM;
+        [self.navigationController pushViewController:rankingDetailVC animated:YES];
     }
 }
 

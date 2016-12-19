@@ -85,6 +85,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     if (!_isDidLoad) {
         _isDidLoad = YES;
         self.view.userInteractionEnabled = NO;

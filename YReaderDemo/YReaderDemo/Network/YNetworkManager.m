@@ -131,6 +131,12 @@
         key = @"reviews";
     } else if (type == YAPITypeChaptersLink) {
         key = @"chapters";
+    } else if (type == YAPITypeRankingDetial) {
+        response = response[@"ranking"];
+        if (!response) {
+            return  nil;
+        }
+        key = @"books";
     }
     
     if (type == YAPITypeAutoCompletion) {
@@ -160,6 +166,8 @@
             bookM = [YChaptersLinkModel yy_modelWithJSON:arr[i]];
         } else if (type == YAPITypeBookUpdate) {
             bookM = [YBookUpdateModel yy_modelWithJSON:arr[i]];
+        } else if (type == YAPITypeRankingDetial) {
+            bookM = [YBookModel yy_modelWithJSON:arr[i]];//先这样
         }
         
         if (!bookM) {
