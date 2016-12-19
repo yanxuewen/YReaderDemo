@@ -161,7 +161,13 @@
 
 - (void)getNetBookDetailData {
     __weak typeof(self) wself = self;
-    _detailTask = [_netManager getWithAPIType:YAPITypeBookDetail parameter:_selectBook.idField success:^(id response) {
+    NSString *parameter = _selectBook.idField ? _selectBook.idField : _recommendBook.idField;
+    if (!parameter) {
+        [YProgressHUD showErrorHUDWith:@"参数错误"];
+        DDLogError(@"getNetBookDetailData parameter == nil");
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    _detailTask = [_netManager getWithAPIType:YAPITypeBookDetail parameter:parameter success:^(id response) {
         wself.bookDetail = response;
         [wself refleshView];
         DDLogInfo(@"bookDetail %@",response);
@@ -171,11 +177,12 @@
         } else {
             DDLogError(@"YAPITypeBookDetail %@ error ",wself.selectBook.idField);
             [YProgressHUD showErrorHUDWith:error.localizedFailureReason];
+            [wself.navigationController popViewControllerAnimated:YES];
         }
         
     }];
     
-    _reviewsTask = [_netManager getWithAPIType:YAPITypeBookReview parameter:_selectBook.idField success:^(id response) {
+    _reviewsTask = [_netManager getWithAPIType:YAPITypeBookReview parameter:parameter success:^(id response) {
         wself.reviewArr = response;
         [wself refleshView];
         DDLogInfo(@"reviewArr %@",response);
@@ -188,7 +195,7 @@
         }
     }];
     
-    _recommendTask = [_netManager getWithAPIType:YAPITypeRecommendBook parameter:_selectBook.idField success:^(id response) {
+    _recommendTask = [_netManager getWithAPIType:YAPITypeRecommendBook parameter:parameter success:^(id response) {
         wself.recommendBookArr = response;
         [wself refleshView];
         DDLogInfo(@"recommendBookArr %@",response);
@@ -201,7 +208,7 @@
         }
     }];
     
-   _recommendListTask = [_netManager getWithAPIType:YAPITypeRecommendBookList parameter:_selectBook.idField success:^(id response) {
+   _recommendListTask = [_netManager getWithAPIType:YAPITypeRecommendBookList parameter:parameter success:^(id response) {
         wself.recommendBookListArr = response;
         [wself refleshView];
         DDLogInfo(@"recommendBookListArr %@",response);
@@ -370,6 +377,16 @@
         return headerView;
     }
     return nil;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([collectionView isEqual:self.recommendCollectionView]) {
+        if (indexPath.row < self.recommendBookArr.count) {
+            YBookDetailViewController *detailVC = [[YBookDetailViewController alloc] init];
+            detailVC.recommendBook = self.recommendBookArr[indexPath.row];
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -11,6 +11,9 @@
 @interface YRightViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *dataArr;
+@property (strong, nonatomic) NSArray *testArr;
+@property (strong, nonatomic) NSArray *imageArr;
+
 @end
 
 @implementation YRightViewController
@@ -19,6 +22,9 @@
     [super viewDidLoad];
     
     _dataArr = @[@"搜索",@"书城",@"包月专区",@"排行榜",@"主题书单",@"分类",@"听书专区",@"随机看书"];
+    _testArr = @[@"搜索",@"排行榜"];
+    _imageArr = @[@"rsm_icon_0",@"rsm_icon_3"];
+    
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"YReuseCell"];
     _tableView.rowHeight = 50;
 }
@@ -36,7 +42,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _dataArr.count;
+    return _testArr.count;
+//    return _dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -46,8 +53,10 @@
     UIView *bgview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.width, tableView.rowHeight)];
     bgview.backgroundColor = YRGBColor(28, 28, 28);
     cell.selectedBackgroundView = bgview;
-    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"rsm_icon_%zi",indexPath.row]];
-    cell.textLabel.text = _dataArr[indexPath.row];
+//    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"rsm_icon_%zi",indexPath.row]];
+//    cell.textLabel.text = _dataArr[indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:_imageArr[indexPath.row]];
+    cell.textLabel.text = _testArr[indexPath.row];
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, tableView.rowHeight - 1.5, tableView.width, 1.5)];
     line.backgroundColor = YRGBColor(20, 20, 20);
     [cell addSubview:line];

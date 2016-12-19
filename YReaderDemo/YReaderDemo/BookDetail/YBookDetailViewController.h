@@ -8,10 +8,11 @@
 
 #import "YBaseViewController.h"
 
-@class YBookModel;
+@class YBookModel,YRecommendBookModel;
 
 @interface YBookDetailViewController : YBaseViewController
 
 @property (strong, nonatomic) YBookModel *selectBook;
+@property (strong, nonatomic) YRecommendBookModel *recommendBook;
 
 @end

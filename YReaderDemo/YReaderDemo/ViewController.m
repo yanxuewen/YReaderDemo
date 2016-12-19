@@ -11,6 +11,7 @@
 #import "YRightViewController.h"
 #import "YCenterViewController.h"
 #import "YSearchViewController.h"
+#import "YRankingViewController.h"
 
 #define kLeftAnimationDuration 0.25
 #define kRightAnimationDuration 0.5
@@ -47,6 +48,9 @@
         if (index == 0) {
             YSearchViewController *searchVC = [[YSearchViewController alloc] init];
             [wself.navigationController pushViewController:searchVC animated:YES];
+        } else if (index == 1) {
+            YRankingViewController *rankingVC = [[YRankingViewController alloc] init];
+            [wself.navigationController pushViewController:rankingVC animated:YES];
         }
     };
     

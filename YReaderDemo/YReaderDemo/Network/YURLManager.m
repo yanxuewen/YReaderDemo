@@ -23,9 +23,8 @@
             urlStr = [NSString stringWithFormat:@"%@book/auto-complete?query=%@",kAPIBaseUrl,parameter];
             break;
         case YAPITypeBookCover: {
-            if ([parameter hasPrefix:@"/cover/"]) {
+            if ([parameter hasPrefix:@"/cover/"] || [parameter hasPrefix:@"/ranking-cover/"]) {
                 urlStr = [NSString stringWithFormat:@"http://statics.zhuishushenqi.com%@",parameter];
-                NSLog(@"urlStr cover   %@",urlStr);
             } else {
                 parameter = [self encodeToPercentEscapeString:parameter];
                 urlStr = [NSString stringWithFormat:@"http://statics.zhuishushenqi.com/agent/%@-covers",parameter];
@@ -60,6 +59,12 @@
         }
         case YAPITypeBookUpdate:
             urlStr = [NSString stringWithFormat:@"%@book?view=updated&id=%@",kAPIBaseUrl,parameter];
+            break;
+        case YAPITypeRanking:
+            urlStr = [NSString stringWithFormat:@"%@ranking/gender",kAPIBaseUrl];
+            break;
+        case YAPITypeRankingDetial:
+            urlStr = [NSString stringWithFormat:@"%@ranking/%@",kAPIBaseUrl,parameter];
             break;
         default:
             break;

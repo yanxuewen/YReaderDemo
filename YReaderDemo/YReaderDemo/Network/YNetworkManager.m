@@ -16,6 +16,7 @@
 #import "YChaptersLinkModel.h"
 #import "YChapterContentModel.h"
 #import "YBookUpdateModel.h"
+#import "YRankingModel.h"
 
 @interface YNetworkManager ()
 
@@ -93,6 +94,27 @@
         if ([response[@"ok"] boolValue]) {
             YChapterContentModel *chapter = [YChapterContentModel yy_modelWithJSON:response[@"chapter"]];
             return chapter;
+        }
+        return nil;
+    }
+    if (type == YAPITypeRanking) {
+        if ([response[@"ok"] boolValue]) {
+            NSArray *arr = @[response[@"male"],response[@"female"]];
+            NSMutableArray *maleArr = [NSMutableArray new];
+            NSMutableArray *femaleArr = [NSMutableArray new];
+            for (NSInteger i = 0; i < arr.count; i++) {
+                for (NSDictionary *dict in arr[i]) {
+                    YRankingModel *rankingM = [YRankingModel yy_modelWithDictionary:dict];
+                    if (rankingM) {
+                        if (i == 0) {
+                            [maleArr addObject:rankingM];
+                        } else {
+                            [femaleArr addObject:rankingM];
+                        }
+                    }
+                }
+            }
+            return @[maleArr,femaleArr];
         }
         return nil;
     }
