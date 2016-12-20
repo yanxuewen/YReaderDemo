@@ -59,6 +59,7 @@
 		465D42EE1DF9949400ED1D58 /* YCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42ED1DF9949400ED1D58 /* YCollectionViewLayout.m */; };
 		465D42F21DF99E1D00ED1D58 /* YTagViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42F01DF99E1D00ED1D58 /* YTagViewCell.m */; };
 		465D42F31DF99E1D00ED1D58 /* YTagViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 465D42F11DF99E1D00ED1D58 /* YTagViewCell.xib */; };
+		466537EB1E09058A00162F2F /* YProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 466537EA1E09058A00162F2F /* YProgressView.m */; };
 		46711E581E0121030051772F /* YBookViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46711E561E0121030051772F /* YBookViewCell.m */; };
 		46711E591E0121030051772F /* YBookViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46711E571E0121030051772F /* YBookViewCell.xib */; };
 		4688CCD21E06AE9E00C88C01 /* YBookUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4688CCD11E06AE9E00C88C01 /* YBookUpdateModel.m */; };
@@ -181,6 +182,8 @@
 		465D42EF1DF99E1D00ED1D58 /* YTagViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTagViewCell.h; sourceTree = "<group>"; };
 		465D42F01DF99E1D00ED1D58 /* YTagViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTagViewCell.m; sourceTree = "<group>"; };
 		465D42F11DF99E1D00ED1D58 /* YTagViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YTagViewCell.xib; sourceTree = "<group>"; };
+		466537E91E09058A00162F2F /* YProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YProgressView.h; sourceTree = "<group>"; };
+		466537EA1E09058A00162F2F /* YProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YProgressView.m; sourceTree = "<group>"; };
 		46711E551E0121030051772F /* YBookViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBookViewCell.h; sourceTree = "<group>"; };
 		46711E561E0121030051772F /* YBookViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBookViewCell.m; sourceTree = "<group>"; };
 		46711E571E0121030051772F /* YBookViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YBookViewCell.xib; sourceTree = "<group>"; };
@@ -476,6 +479,8 @@
 				46711E551E0121030051772F /* YBookViewCell.h */,
 				46711E561E0121030051772F /* YBookViewCell.m */,
 				46711E571E0121030051772F /* YBookViewCell.xib */,
+				466537E91E09058A00162F2F /* YProgressView.h */,
+				466537EA1E09058A00162F2F /* YProgressView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -786,6 +791,7 @@
 				46A48CB01DFF998900DB58A6 /* YReaderManager.m in Sources */,
 				46110D3B1DFBB2B10012DAD1 /* YNavHeaderView.m in Sources */,
 				46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */,
+				466537EB1E09058A00162F2F /* YProgressView.m in Sources */,
 				463F5B081DFE9CFB00999A0B /* YReadPageViewController.m in Sources */,
 				46110D351DFBACA60012DAD1 /* YBookDetailViewController.m in Sources */,
 				46B640B41E07B4980049E595 /* YRankingDetailController.m in Sources */,

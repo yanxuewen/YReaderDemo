@@ -13,6 +13,7 @@
 #import "YSQLiteManager.h"
 #import "YNetworkManager.h"
 #import "YBookUpdateModel.h"
+#import "YDownloadManager.h"
 
 @interface YCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -151,9 +152,20 @@
         [self showAlcrtViewWithDeleteBook:editBookM];
     }];
     deleteAction.backgroundColor = YRGBColor(255, 59, 48);
-    UITableViewRowAction *loadAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"下载" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        NSLog(@"点击了下载");
+    UITableViewRowAction *loadAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:editBookM.loadStatus == YDownloadStatusNone ? @"下载" : @"取消下载" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@"点击了下载/取消下载");
         [tableView setEditing:NO animated:YES];
+        if (editBookM.loadStatus == YDownloadStatusCancel) {
+            [YProgressHUD showErrorHUDWith:@"正在取消中..."];
+            return ;
+        }
+        if (editBookM.loadStatus == YDownloadStatusNone) {
+            [[YDownloadManager shareManager] downloadReaderBookWith:editBookM type:YDownloadTypeAllLoad];
+        } else {
+            [[YDownloadManager shareManager] cancelDownloadBookWith:editBookM];
+        }
+        [tableView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationNone];
+        
     }];
     loadAction.backgroundColor = YRGBColor(255, 156, 0);
     UITableViewRowAction *stickyAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:editBookM.hasSticky ? @"取消置顶" : @"置顶" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
@@ -187,6 +199,9 @@
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"是否选择彻底删除此书？" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (bookM.loadStatus != YDownloadStatusNone) {
+            bookM.loadStatus = YDownloadStatusCancel;
+        }
         [self.sqliteM deleteBookWith:bookM];
     }];
     [alertVC addAction:cancelAction];

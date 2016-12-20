@@ -75,6 +75,10 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 }
 
 - (void)downloadReaderBookWith:(YBookDetailModel *)bookM type:(YDownloadType)loadType{
+    if (bookM.hasLoadCompletion) {
+        [YProgressHUD showErrorHUDWith:@"已经缓存完成"];
+        return;
+    }
     if (bookM.loadStatus != YDownloadStatusNone) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (bookM.loadFailure) {
@@ -95,6 +99,12 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 }
 
 - (void)downloadChapterWith:(YDownloadModel *)downloadM {
+    
+    if (!downloadM) {
+        DDLogError(@"downloadChapterWith: nil");
+        return;
+    }
+    
     if ([downloadM checkCancelStatus]) {
         [self finishTaskWith:downloadM];
         return;
@@ -156,7 +166,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 }
 
 - (void)finishTaskWith:(YDownloadModel *)downloadM {
-    dispatch_async(YDownloadManagerGetQueue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         [self removeDownloadTaskWith:downloadM];
         [self startNextTask];
     });
@@ -170,7 +180,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
     if (![self.taskArray containsObject:downloadM]) {
         [self.taskArray addObject:downloadM];
     } else {
-        DDLogWarn(@"addDownloadTaskWith:%@ 但是taskArray containsObject",downloadM);
+        DDLogWarn(@"addDownloadTaskWith:%@ 但是taskArray containsObject",downloadM.downloadBook.title);
     }
     Unlock();
 }
@@ -183,7 +193,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
     if ([self.taskArray containsObject:downloadM]) {
         [self.taskArray removeObject:downloadM];
     } else {
-        DDLogWarn(@"removeDownloadTaskWith:%@ 但是taskArray containsObject == NO",downloadM);
+        DDLogWarn(@"removeDownloadTaskWith:%@ 但是taskArray containsObject == NO",downloadM.downloadBook.title);
     }
     Unlock();
 }
@@ -223,6 +233,23 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 }
 
 
+#pragma mark - cancel task
+- (void)cancelDownloadBookWith:(YBookDetailModel *)bookM {
+    dispatch_async(YDownloadManagerGetQueue(), ^{
+        if (bookM.downloadM.lastTask && bookM.downloadM.lastTask.state == NSURLSessionTaskStateRunning) {
+            [bookM.downloadM.lastTask cancel];
+        }
+        if (bookM.loadStatus == YDownloadStatusWait) {
+            bookM.loadStatus = YDownloadStatusCancel;
+            [bookM.downloadM checkCancelStatus];
+        } else {
+            bookM.loadStatus = YDownloadStatusCancel;
+        }
+        
+        
+    });
+}
+
 @end
 
 
@@ -231,22 +258,23 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 @implementation YDownloadModel
 
 -(NSString *)description {
-    return [self yy_modelDescription];
+    return [NSString stringWithFormat:@"<YDownloadModel: summaryM:%@ record:%@ downloadBook:%@>",self.summaryM,self.record,self.downloadBook];
 }
 
 + (instancetype)downloadModelWith:(YBookDetailModel *)bookM loadType:(YDownloadType)loadType {
     YDownloadModel *downloadM = [[YDownloadModel alloc] init];
     YReaderManager *readerM = [YReaderManager shareReaderManager];
+    NSUInteger chaptersCount = 0;
     if ([bookM isEqual:readerM.readingBook]) {
         downloadM.downloadBook = readerM.readingBook;
         downloadM.summaryM = readerM.selectSummary;
         downloadM.record = readerM.record;
         downloadM.chaptersLink = readerM.record.chaptersLink;
         downloadM.chaptersArr = readerM.chaptersArr;
+        chaptersCount = readerM.chaptersArr.count;
     } else {
         downloadM.downloadBook = bookM;
-        NSString *summaryKey = [NSString stringWithFormat:@"%@_summary",bookM.idField];
-        downloadM.summaryM = (YBookSummaryModel *)[[YSQLiteManager shareManager].cache objectForKey:summaryKey];
+        downloadM.summaryM = (YBookSummaryModel *)[[YSQLiteManager shareManager] getBookSummaryWith:bookM];
         if (!downloadM.summaryM) {
             [downloadM downloadBookFailureWith:@"本书没有下载源"];
             return nil;
@@ -257,7 +285,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
             [downloadM downloadBookFailureWith:@"本书没有下载地址"];
             return nil;
         }
-        
+        downloadM.record = record;
         downloadM.chaptersLink = record.chaptersLink;
         NSMutableArray *chaptersArr = @[].mutableCopy;
         for (YChaptersLinkModel *linkM in record.chaptersLink) {
@@ -265,17 +293,18 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
             [chaptersArr addObject:chapterM];
         }
         downloadM.chaptersArr = chaptersArr;
+        chaptersCount = chaptersArr.count;
     }
     
     if (loadType == YDownloadTypeAllLoad) {
         downloadM.startChapter = 0;
-        downloadM.endChapter = readerM.chaptersArr.count;
+        downloadM.endChapter = chaptersCount;
     } else if (loadType == YDownloadTypeBehindAll) {
         downloadM.startChapter = readerM.record.readingChapter;
-        downloadM.endChapter = readerM.chaptersArr.count;
+        downloadM.endChapter = chaptersCount;
     } else if (loadType == YDownloadTypeBehindSome) {
         downloadM.startChapter = readerM.record.readingChapter;
-        downloadM.endChapter = downloadM.startChapter + 50 < readerM.chaptersArr.count ?  downloadM.startChapter + 50 : readerM.chaptersArr.count;
+        downloadM.endChapter = downloadM.startChapter + 50 < chaptersCount ?  downloadM.startChapter + 50 : chaptersCount;
     }
     downloadM.chapter = downloadM.startChapter;
     downloadM.loadType = loadType;
@@ -303,7 +332,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
 
 - (BOOL)checkCancelStatus {
     if (self.downloadBook.loadStatus == YDownloadStatusCancel) {
-        DDLogInfo(@"Download task Cancel book:%@",self.downloadBook);
+        DDLogInfo(@"Download task Cancel book:%@",self.downloadBook.title);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.downloadBook.loadCancel) {
                 self.downloadBook.loadCancel();

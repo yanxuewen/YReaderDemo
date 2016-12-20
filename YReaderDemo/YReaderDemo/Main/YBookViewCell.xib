@@ -33,7 +33,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ll6-Cs-dqF">
-                        <rect key="frame" x="69" y="43.5" width="234" height="14.5"/>
+                        <rect key="frame" x="69" y="43.5" width="197" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.47058823529411764" green="0.47058823529411764" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -44,25 +44,36 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bs_stick_icon" translatesAutoresizingMaskIntoConstraints="NO" id="yES-f3-p8u">
                         <rect key="frame" x="313" y="0.0" width="8" height="8"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qpw-vT-c1o" customClass="YProgressView">
+                        <rect key="frame" x="281" y="26.5" width="25" height="25"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="90k-Mh-M6y"/>
+                            <constraint firstAttribute="height" constant="25" id="FpM-WL-wyw"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="p5k-DI-kpp" firstAttribute="leading" secondItem="flW-OD-sTQ" secondAttribute="trailing" constant="5" id="3yp-fl-Ken"/>
+                    <constraint firstItem="qpw-vT-c1o" firstAttribute="leading" secondItem="Ll6-Cs-dqF" secondAttribute="trailing" constant="15" id="Hkr-5i-4CE"/>
                     <constraint firstAttribute="trailing" secondItem="yES-f3-p8u" secondAttribute="trailing" id="QsV-Zn-4C0"/>
                     <constraint firstItem="S5j-g1-4L4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VGo-FS-vZq"/>
                     <constraint firstItem="Ll6-Cs-dqF" firstAttribute="bottom" secondItem="S5j-g1-4L4" secondAttribute="bottom" constant="-3" id="VZI-T6-BS9"/>
                     <constraint firstItem="flW-OD-sTQ" firstAttribute="top" secondItem="S5j-g1-4L4" secondAttribute="top" constant="3" id="atb-Is-fhV"/>
                     <constraint firstItem="Ll6-Cs-dqF" firstAttribute="leading" secondItem="flW-OD-sTQ" secondAttribute="leading" id="blG-at-dcF"/>
+                    <constraint firstAttribute="trailing" secondItem="qpw-vT-c1o" secondAttribute="trailing" constant="15" id="ecP-HN-6tN"/>
                     <constraint firstItem="flW-OD-sTQ" firstAttribute="leading" secondItem="S5j-g1-4L4" secondAttribute="trailing" constant="15" id="iwz-Se-u0e"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Ll6-Cs-dqF" secondAttribute="trailing" constant="10" id="ke8-8x-Pvx"/>
                     <constraint firstItem="p5k-DI-kpp" firstAttribute="centerY" secondItem="flW-OD-sTQ" secondAttribute="centerY" id="lqu-J8-Gm4"/>
                     <constraint firstItem="S5j-g1-4L4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="qFX-bu-QGj"/>
+                    <constraint firstItem="qpw-vT-c1o" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qX1-2T-MeA"/>
                     <constraint firstItem="yES-f3-p8u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="uCs-Yh-nKY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bookImage" destination="S5j-g1-4L4" id="B5j-Kh-tWi"/>
                 <outlet property="lastUpdate" destination="Ll6-Cs-dqF" id="YyW-uw-k8a"/>
+                <outlet property="progressView" destination="qpw-vT-c1o" id="eze-9Q-9Ja"/>
                 <outlet property="stickImageV" destination="yES-f3-p8u" id="QJy-Q6-QLV"/>
                 <outlet property="titleLabel" destination="flW-OD-sTQ" id="lGI-Mx-wEB"/>
                 <outlet property="updateImage" destination="p5k-DI-kpp" id="wiZ-Mq-i6S"/>

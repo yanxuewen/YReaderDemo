@@ -22,6 +22,7 @@
 
 + (instancetype)shareManager;
 - (void)downloadReaderBookWith:(YBookDetailModel *)bookM type:(YDownloadType)loadType;
+- (void)cancelDownloadBookWith:(YBookDetailModel *)bookM;
 
 @end
 

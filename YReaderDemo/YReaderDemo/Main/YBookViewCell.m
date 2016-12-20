@@ -10,6 +10,7 @@
 #import "YURLManager.h"
 #import "YBookDetailModel.h"
 #import "YDateModel.h"
+#import "YProgressView.h"
 
 @interface YBookViewCell ()
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lastUpdate;
 @property (weak, nonatomic) IBOutlet UIImageView *updateImage;
 @property (weak, nonatomic) IBOutlet UIImageView *stickImageV;
+@property (weak, nonatomic) IBOutlet YProgressView *progressView;
 
 @end
 
@@ -31,17 +33,40 @@
     self.lastUpdate.text = [updateTime stringByAppendingFormat:@"更新 %@",bookM.lastChapter];
     self.updateImage.hidden = !bookM.hasUpdated;
     self.stickImageV.hidden = !bookM.hasSticky;
+    self.progressView.loadStatus = bookM.loadStatus;
+    [self setDownloadBookCallback];
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+- (void)setDownloadBookCallback {
+    __weak typeof(self) wself = self;
+    self.bookM.loadProgress = ^(NSUInteger chapter, NSUInteger totalChapters) {
+        wself.progressView.loadStatus = YDownloadStatusLoading;
+        if (totalChapters > 0) {
+            wself.progressView.progress = chapter*1.0/totalChapters;
+        }
+    };
+    
+    self.bookM.loadCompletion = ^ {
+        [wself hideProgressView];
+        [YProgressHUD showErrorHUDWith:[NSString stringWithFormat:@"%@ 已经下载完成",wself.bookM.title]];
+    };
+    
+    self.bookM.loadFailure = ^(NSString *msg) {
+        [wself hideProgressView];
+        [YProgressHUD showErrorHUDWith:[NSString stringWithFormat:@"%@ 下载失败 \n %@",wself.bookM.title,msg]];
+    };
+    
+    self.bookM.loadCancel = ^ {
+        [wself hideProgressView];
+        [YProgressHUD showErrorHUDWith:[NSString stringWithFormat:@"%@ 下载取消",wself.bookM.title]];
+    };
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)hideProgressView {
+    self.progressView.loadStatus = YDownloadStatusNone;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.progressView setNeedsDisplay];
+    });
 }
 
 @end

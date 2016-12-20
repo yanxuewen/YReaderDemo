@@ -108,6 +108,10 @@
             _readingBook.loadStatus = YDownloadStatusCancel;
         }
         [self.sqliteM updateBookSummaryWith:self.readingBook summaryM:self.selectSummary];
+        if (self.readingBook.hasLoadCompletion) {
+            self.readingBook.hasLoadCompletion = NO;
+            [self.sqliteM updateUserBooksStatus];
+        }
         self.record = nil;
         self.chaptersArr = nil;
         self.chaptersCount = 0;
