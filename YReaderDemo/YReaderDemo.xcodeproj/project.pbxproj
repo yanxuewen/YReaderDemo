@@ -88,6 +88,7 @@
 		46D5DB1A1DF82AC9009CC6AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46D5DB191DF82AC9009CC6AB /* Assets.xcassets */; };
 		46D5DB1D1DF82AC9009CC6AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D5DB1B1DF82AC9009CC6AB /* LaunchScreen.storyboard */; };
 		46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */; };
+		46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F9614C1E08210B004B6850 /* YPageBackViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,6 +231,8 @@
 		46D5DB241DF84BB8009CC6AB /* YReaderDemo.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderDemo.pch; sourceTree = "<group>"; };
 		46EAEF851DFD668C0073AAB7 /* YReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderViewController.h; sourceTree = "<group>"; };
 		46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderViewController.m; sourceTree = "<group>"; };
+		46F9614B1E08210B004B6850 /* YPageBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPageBackViewController.h; sourceTree = "<group>"; };
+		46F9614C1E08210B004B6850 /* YPageBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPageBackViewController.m; sourceTree = "<group>"; };
 		BCB6D624FDE7FC0EEDEEC3B4 /* Pods-YReaderDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YReaderDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		CE093AAFAB12142A63E9A1BD /* libPods-YReaderDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YReaderDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D787A029417B987058C4AECD /* Pods-YReaderDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YReaderDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -606,6 +609,8 @@
 				463F5B051DFE9CFB00999A0B /* YReadPageViewController.h */,
 				463F5B061DFE9CFB00999A0B /* YReadPageViewController.m */,
 				463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */,
+				46F9614B1E08210B004B6850 /* YPageBackViewController.h */,
+				46F9614C1E08210B004B6850 /* YPageBackViewController.m */,
 				4688CCD31E06C73400C88C01 /* Summary */,
 				4696B10F1E041E23001DCC54 /* Directory */,
 				46A48CA91DFF998900DB58A6 /* Universal */,
@@ -780,6 +785,7 @@
 				460D9CF81E0789AE009A608D /* YRankingViewCell.m in Sources */,
 				46A48CB01DFF998900DB58A6 /* YReaderManager.m in Sources */,
 				46110D3B1DFBB2B10012DAD1 /* YNavHeaderView.m in Sources */,
+				46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */,
 				463F5B081DFE9CFB00999A0B /* YReadPageViewController.m in Sources */,
 				46110D351DFBACA60012DAD1 /* YBookDetailViewController.m in Sources */,
 				46B640B41E07B4980049E595 /* YRankingDetailController.m in Sources */,

@@ -58,29 +58,71 @@
 }
 
 - (YBookDetailModel *)addUserBooksWith:(YBookDetailModel *)bookM; {
-    NSMutableArray *arr = _userBooks.mutableCopy;
-    YBookDetailModel *sameM = nil;
-    for (YBookDetailModel * book in arr) {
-        if ([book isEqual:bookM]) {
-            sameM = book;
-            break;
-        }
+    if (!bookM || ![bookM isKindOfClass:[YBookDetailModel class]]) {
+        DDLogError(@"addUserBooksWith error %@",bookM);
+        return nil;
     }
-    if ([arr containsObject:bookM]) {
-        NSLog(@"addUserBooksWith containsObject OK");
+    
+    
+    YBookDetailModel *sameM = nil;
+    NSMutableArray *arr = self.userBooks.mutableCopy;
+    /*
+     这里重写了 YBookDetailModel 的isEqual 方法,userBooks如果存在这本书,就只需要重新排序
+     不能用新加bookM替换数组中同一本书,因为这本书可能有其他状态需要保存
+     */
+    for (YBookDetailModel *book in arr) {
+        if ([bookM isEqual:book]) {
+            sameM = book;
+        }
     }
     if (sameM) {
         [arr removeObject:sameM];
     } else {
         sameM = bookM;
     }
+    [arr addObject:sameM];
+    _userBooks = arr.copy;
+    arr = [self reorderUserBooksWith:bookM];
+    if (!arr) {
+        return nil;
+    }
     
-    [arr insertObject:sameM atIndex:0];
     self.userBooks = arr.copy;
-    [self.cache setObject:self.userBooks forKey:kYUesrBooks withBlock:^{
-        
-    }];
+    [self saveUserBooksStatus];
     return sameM;
+}
+
+- (void)stickyUserBookWith:(YBookDetailModel *)bookM {
+    NSMutableArray *arr = [self reorderUserBooksWith:bookM];
+    if (!arr) {
+        return;
+    }
+    self.userBooks = arr.copy;
+    [self saveUserBooksStatus];
+}
+
+- (NSMutableArray *)reorderUserBooksWith:(YBookDetailModel *)bookM {
+    if (!bookM || ![bookM isKindOfClass:[YBookDetailModel class]]) {
+        DDLogError(@"stickyUserBookWith error %@",bookM);
+        return nil;
+    }
+    
+    NSMutableArray *arr = _userBooks.mutableCopy;
+    if (![arr containsObject:bookM]) {
+        DDLogError(@"stickyUserBookWith containsObject error %@",bookM);
+        return nil;
+    }
+    [arr removeObject:bookM];
+    NSInteger firstCount = 0;
+    for (NSInteger i = 0; i < arr.count; i ++) {
+        YBookDetailModel * book = arr[i];
+        if (book.hasSticky) {
+            firstCount ++;
+        }
+    }
+    
+    [arr insertObject:bookM atIndex:firstCount];
+    return arr;
 }
 
 - (void)saveUserBooksStatus {

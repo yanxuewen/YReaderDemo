@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastUpdate;
 @property (weak, nonatomic) IBOutlet UIImageView *updateImage;
+@property (weak, nonatomic) IBOutlet UIImageView *stickImageV;
 
 @end
 
@@ -29,6 +30,7 @@
     NSString *updateTime = [[YDateModel shareDateModel] getUpdateStringWith:bookM.updated];
     self.lastUpdate.text = [updateTime stringByAppendingFormat:@"更新 %@",bookM.lastChapter];
     self.updateImage.hidden = !bookM.hasUpdated;
+    self.stickImageV.hidden = !bookM.hasSticky;
 }
 
 - (void)awakeFromNib {

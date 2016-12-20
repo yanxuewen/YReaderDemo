@@ -9,6 +9,7 @@
 #import "YReaderViewController.h"
 #import "YReadPageViewController.h"
 #import "YDirectoryViewController.h"
+#import "YPageBackViewController.h"
 #import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
@@ -126,6 +127,7 @@
     _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageViewController.delegate = self;
     _pageViewController.dataSource = self;
+    _pageViewController.doubleSided = YES;
     _pageViewController.view.frame = self.view.bounds;
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
@@ -239,6 +241,12 @@
         [YProgressHUD showErrorHUDWith:@"已经是最后一页"];
         return nil;
     }
+    
+//    if ([viewController isKindOfClass:[YReadPageViewController class]]) {
+//        YPageBackViewController *backVC = [[YPageBackViewController alloc] init];
+//        [backVC updateBackViewWith:viewController.view];
+//        return backVC;//翻页背面,但效果没写好,先这样
+//    }
     
     if (_page >= [_readerManager.chaptersArr[_chapter] pageCount] - 1) {
         _nextPage = 0;

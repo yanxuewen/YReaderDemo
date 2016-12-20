@@ -20,6 +20,7 @@
 - (void)updateHistorySearchTextArrayWith:(NSArray *)array;
 
 - (YBookDetailModel *)addUserBooksWith:(YBookDetailModel *)bookM;
+- (void)stickyUserBookWith:(YBookDetailModel *)bookM;
 -(void)saveUserBooksStatus;
 
 @end

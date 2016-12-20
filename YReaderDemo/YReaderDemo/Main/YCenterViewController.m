@@ -136,6 +136,37 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return UITableViewCellEditingStyleDelete;
+//}
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    YBookDetailModel *editBookM = self.booksArr[indexPath.row];
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@"点击了删除");
+        [tableView setEditing:NO animated:YES];
+    }];
+    deleteAction.backgroundColor = YRGBColor(255, 59, 48);
+    UITableViewRowAction *loadAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"下载" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@"点击了下载");
+        [tableView setEditing:NO animated:YES];
+    }];
+    loadAction.backgroundColor = YRGBColor(255, 156, 0);
+    UITableViewRowAction *stickyAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:editBookM.hasSticky ? @"取消置顶" : @"置顶" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@"点击了置顶/取消置顶");
+        [tableView setEditing:NO animated:YES];
+        editBookM.hasSticky = !editBookM.hasSticky;
+        [[YSQLiteManager shareManager] stickyUserBookWith:editBookM];
+        
+    }];
+    stickyAction.backgroundColor = YRGBColor(199, 199, 204);
+    NSArray *arr = @[deleteAction,loadAction,stickyAction];
+    return arr;
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"userBooks"]) {
         self.booksArr = self.sqliteM.userBooks;

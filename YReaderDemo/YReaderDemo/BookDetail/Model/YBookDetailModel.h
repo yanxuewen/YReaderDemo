@@ -41,8 +41,12 @@
 @property (nonatomic, strong) NSDate * updated;
 @property (nonatomic, assign) NSInteger wordCount;
 
-
-@property (assign, nonatomic) BOOL hasUpdated;
+@property (assign, nonatomic) BOOL hasSticky;       //置顶
+@property (assign, nonatomic) BOOL hasUpdated;      //有更新
+/**
+ 已经下载完,这个状态现在有误,比如换了书籍的下载来源,但是现在不改了,然后现在Xcode 8 插件比较麻烦,不好写注释了,就没写了...
+ 反正这也是写给女朋友看的...
+ **/
 @property (assign, atomic) BOOL hasLoadCompletion;
 @property (weak, nonatomic) YDownloadModel *downloadM;
 @property (assign, atomic) YDownloadStatus loadStatus;
