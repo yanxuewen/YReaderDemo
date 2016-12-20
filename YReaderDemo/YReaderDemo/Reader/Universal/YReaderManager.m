@@ -29,7 +29,6 @@
 @property (copy, nonatomic) void(^updateFailure)(NSString *);
 @property (assign, nonatomic) NSUInteger endLoadIndex;
 @property (strong, nonatomic, readonly) NSString *cachePath;
-@property (strong, nonatomic, readonly) NSString *summarykey;
 @property (strong, nonatomic, readonly) NSString *recordKey;
 @property (strong, nonatomic) NSURLSessionTask *summaryTask;
 @property (strong, nonatomic) NSURLSessionTask *chaptersLinkTask;
@@ -86,7 +85,7 @@
                 [self updateReadingCompletionWith:@"书籍错误,请重试"];
             }
         } else {
-            self.selectSummary = (YBookSummaryModel *)[self.sqliteM.cache objectForKey:self.summarykey];
+            self.selectSummary = [self.sqliteM getBookSummaryWith:bookM];
             if (self.selectSummary) {
                 [self getBookChaptersLink];
             } else {
@@ -108,7 +107,7 @@
         if (_readingBook.downloadM && _readingBook.loadStatus != YDownloadStatusCancel) {
             _readingBook.loadStatus = YDownloadStatusCancel;
         }
-        [self.sqliteM.cache setObject:summaryM forKey:self.summarykey];
+        [self.sqliteM updateBookSummaryWith:self.readingBook summaryM:self.selectSummary];
         self.record = nil;
         self.chaptersArr = nil;
         self.chaptersCount = 0;
@@ -136,6 +135,7 @@
             }
             if (selectSummary) {
                 wself.selectSummary = selectSummary;
+                [wself.sqliteM updateBookSummaryWith:wself.readingBook summaryM:selectSummary];
                 [wself getBookChaptersLink];
             } else {
                 DDLogWarn(@"本书没有免费来源 %@",wself.readingBook);
@@ -432,7 +432,7 @@
 - (void)updateReadingChapter:(NSUInteger)chapter page:(NSUInteger)page {
     self.record.readingChapter = chapter;
     self.record.readingPage = page;
-    [self.sqliteM.cache setObject:self.selectSummary forKey:self.summarykey];
+    [self.sqliteM updateBookSummaryWith:self.readingBook summaryM:self.selectSummary];
     [self.cache setObject:self.record forKey:self.recordKey];
 }
 
@@ -449,10 +449,6 @@
 
 - (NSString *)cachePath {
     return [self.documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_cache",self.selectSummary.idField]];
-}
-
-- (NSString *)summarykey {
-    return [NSString stringWithFormat:@"%@_summary",self.readingBook.idField];
 }
 
 - (NSString *)recordKey {

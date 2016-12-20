@@ -28,7 +28,6 @@
     [super viewDidLoad];
     
     self.moveView.backgroundColor = YRGBAColor(0, 0, 0, 0.85);
-    _firstDisplay = YES;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([YDirectoryViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([YDirectoryViewCell class])];
     self.tableView.rowHeight = 44;
     
@@ -36,6 +35,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _firstDisplay = YES;
     [self.tableView reloadData];
 }
 
@@ -106,7 +106,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    if (indexPath.row == 0 && _firstDisplay) {
+    if (_firstDisplay) {
         _firstDisplay = NO;
         CGFloat offsetY = (_chaptersArr.count - 1 - _readingChapter) * tableView.rowHeight - tableView.height/2;
         if (offsetY > _chaptersArr.count * tableView.rowHeight - tableView.height) {

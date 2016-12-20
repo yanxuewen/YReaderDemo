@@ -291,7 +291,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
         self.downloadBook.loadStatus = YDownloadStatusNone;
         if (self.loadType == YDownloadTypeAllLoad) {
             self.downloadBook.hasLoadCompletion = YES;
-            [[YSQLiteManager shareManager] saveUserBooksStatus];
+            [[YSQLiteManager shareManager] updateUserBooksStatus];
         }
         if (self.downloadBook.loadCompletion) {
             self.downloadBook.loadCompletion();

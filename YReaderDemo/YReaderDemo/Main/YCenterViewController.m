@@ -72,7 +72,7 @@
                 }
             }
         }
-        [wself.sqliteM saveUserBooksStatus];
+        [wself.sqliteM updateUserBooksStatus];
         [wself.booksTableView.mj_header endRefreshing];
         [wself.booksTableView reloadData];
     } failure:^(NSError *error) {
@@ -130,7 +130,7 @@
         readerVC.readingBook = [self.sqliteM addUserBooksWith:bookM];
         [self presentViewController:readerVC animated:YES completion:^{
             bookM.hasUpdated = NO;
-            [self.sqliteM saveUserBooksStatus];
+            [self.sqliteM updateUserBooksStatus];
             [self.booksTableView reloadData];
         }];
     }
@@ -148,6 +148,7 @@
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         NSLog(@"点击了删除");
         [tableView setEditing:NO animated:YES];
+        [self showAlcrtViewWithDeleteBook:editBookM];
     }];
     deleteAction.backgroundColor = YRGBColor(255, 59, 48);
     UITableViewRowAction *loadAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"下载" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
@@ -180,6 +181,17 @@
     if (self.tapBarButton) {
         self.tapBarButton(state);
     }
+}
+
+- (void)showAlcrtViewWithDeleteBook:(YBookDetailModel *)bookM {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"是否选择彻底删除此书？" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.sqliteM deleteBookWith:bookM];
+    }];
+    [alertVC addAction:cancelAction];
+    [alertVC addAction:sureAction];
+    [self presentViewController:alertVC animated:YES completion:nil];
 }
 
 - (void)dealloc {

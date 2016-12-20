@@ -13,8 +13,8 @@
 @property (nonatomic, strong) NSString * body;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSString *link;
-@property (nonatomic, assign) BOOL isLoad;
-@property (assign, atomic) BOOL isLoadCache;
+@property (nonatomic, assign) BOOL isLoad;          //从本地加载到内存,为了速度,内存等
+@property (assign, atomic) BOOL isLoadCache;        //从网络下载到本地
 @property (assign, nonatomic) NSUInteger pageCount;
 
 - (void)updateContentPaging;

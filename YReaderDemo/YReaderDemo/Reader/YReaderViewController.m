@@ -64,6 +64,7 @@
     } failure:^(NSString *msg) {
         DDLogWarn(@"updateReadingBook error msg %@",msg);
         [YProgressHUD showErrorHUDWith:msg];
+        [wself.readerManager closeReadingBook];
         [wself dismissViewControllerAnimated:YES completion:nil];
     }];
     
@@ -340,6 +341,7 @@
     } failure:^(NSString *msg) {
         [YProgressHUD hideLoadingHUD];
         [YProgressHUD showErrorHUDWith:msg];
+        [wself.readerManager closeReadingBook];
         [wself dismissViewControllerAnimated:YES completion:nil];
     }];
 }

@@ -8,6 +8,7 @@
 
 #import "YSQLiteManager.h"
 #import "YBookDetailModel.h"
+#import "YBookSummaryModel.h"
 
 #define kYReaderSqliteName @"kYReaderSqliteName"
 #define kYHistorySearchText @"kYHistorySearchText"
@@ -17,6 +18,7 @@
 
 @property (strong, nonatomic) YYCache *cache;
 @property (copy, nonatomic) NSArray *userBooks;
+@property (strong, nonatomic) NSString *documentFolder;
 
 @end
 
@@ -34,8 +36,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        NSString *documentFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-        NSString *path = [documentFolder stringByAppendingPathComponent:kYReaderSqliteName];
+        self.documentFolder = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *path = [self.documentFolder stringByAppendingPathComponent:kYReaderSqliteName];
         self.cache = [[YYCache alloc] initWithPath:path];
         _userBooks = (NSArray *)[self.cache objectForKey:kYUesrBooks];
         if (!_userBooks) {
@@ -63,7 +65,6 @@
         return nil;
     }
     
-    
     YBookDetailModel *sameM = nil;
     NSMutableArray *arr = self.userBooks.mutableCopy;
     /*
@@ -88,8 +89,17 @@
     }
     
     self.userBooks = arr.copy;
-    [self saveUserBooksStatus];
+    [self updateUserBooksStatus];
     return sameM;
+}
+
+- (void)removeUserBookWith:(YBookDetailModel *)bookM {
+    NSMutableArray *arr = self.userBooks.mutableCopy;
+    if ([arr containsObject:bookM]) {
+        [arr removeObject:bookM];
+    }
+    self.userBooks = arr.copy;
+    [self updateUserBooksStatus];
 }
 
 - (void)stickyUserBookWith:(YBookDetailModel *)bookM {
@@ -98,7 +108,7 @@
         return;
     }
     self.userBooks = arr.copy;
-    [self saveUserBooksStatus];
+    [self updateUserBooksStatus];
 }
 
 - (NSMutableArray *)reorderUserBooksWith:(YBookDetailModel *)bookM {
@@ -125,10 +135,46 @@
     return arr;
 }
 
-- (void)saveUserBooksStatus {
+- (void)updateUserBooksStatus {
     [self.cache setObject:self.userBooks forKey:kYUesrBooks withBlock:^{
-        NSLog(@"saveUserBooksStatus ok ");
+        NSLog(@"updateUserBooksStatus ok ");
     }];
+}
+
+- (YBookSummaryModel *)getBookSummaryWith:(YBookDetailModel *)bookM {
+    NSString *summaryKey = [NSString stringWithFormat:@"%@_summary",bookM.idField];
+    return (YBookSummaryModel *)[self.cache objectForKey:summaryKey];
+}
+
+- (void)updateBookSummaryWith:(YBookDetailModel *)bookM summaryM:(YBookSummaryModel *)summaryM {
+    NSString *summaryKey = [NSString stringWithFormat:@"%@_summary",bookM.idField];
+    [self.cache setObject:summaryM forKey:summaryKey];
+    
+    NSString *summaryArrKey = [NSString stringWithFormat:@"%@_SelectSummaryArr",bookM.idField];
+    NSArray *summaryArr = (NSArray *)[self.cache objectForKey:summaryArrKey];
+    if (!summaryArr) {
+        summaryArr = @[];
+    }
+    if (![summaryArr containsObject:summaryM]) {
+        summaryArr = [summaryArr arrayByAddingObject:summaryM];
+    }
+    [self.cache setObject:summaryArr forKey:summaryArrKey];
+}
+
+- (void)deleteBookWith:(YBookDetailModel *)bookM {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *summaryKey = [NSString stringWithFormat:@"%@_summary",bookM.idField];
+        [self.cache removeObjectForKey:summaryKey];
+        
+        NSString *summaryArrKey = [NSString stringWithFormat:@"%@_SelectSummaryArr",bookM.idField];
+        NSArray *summaryArr = (NSArray *)[self.cache objectForKey:summaryArrKey];
+        for (YBookSummaryModel *summaryM in summaryArr) {
+            NSString *bookCachePath = [self.documentFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_cache",summaryM.idField]];
+            YYDiskCache *bookCache = [[YYDiskCache alloc] initWithPath:bookCachePath];
+            [bookCache removeAllObjects];
+        }
+    });
+    [self removeUserBookWith:bookM];
 }
 
 @end

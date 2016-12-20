@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class YBookDetailModel;
+@class YBookDetailModel,YBookSummaryModel;
 
 @interface YSQLiteManager : NSObject
 
@@ -21,6 +21,12 @@
 
 - (YBookDetailModel *)addUserBooksWith:(YBookDetailModel *)bookM;
 - (void)stickyUserBookWith:(YBookDetailModel *)bookM;
--(void)saveUserBooksStatus;
+-(void)updateUserBooksStatus;
+
+
+- (YBookSummaryModel *)getBookSummaryWith:(YBookDetailModel *)bookM;
+- (void)updateBookSummaryWith:(YBookDetailModel *)bookM summaryM:(YBookSummaryModel *)summaryM;
+
+- (void)deleteBookWith:(YBookDetailModel *)bookM;
 
 @end
