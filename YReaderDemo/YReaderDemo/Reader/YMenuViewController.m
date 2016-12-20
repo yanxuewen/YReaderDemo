@@ -80,7 +80,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     YThemeViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([YThemeViewCell class]) forIndexPath:indexPath];
-    cell.layer.cornerRadius = cell.width/2;
+    cell.themeImage.layer.cornerRadius = cell.width/2;
     cell.themeImage.image = self.themeArr[indexPath.row];
     if (indexPath.row == self.selectTheme) {
         cell.selectImage.hidden = NO;
@@ -90,15 +90,8 @@
     return cell;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%s %@",__func__,indexPath);
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     self.settings.theme = indexPath.row;
     self.selectTheme = indexPath.row;

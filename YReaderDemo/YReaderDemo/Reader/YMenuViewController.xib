@@ -120,7 +120,7 @@
                                 <action selector="settingButtonAction:" destination="-1" eventType="touchUpInside" id="lv5-Ey-o75"/>
                             </connections>
                         </button>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="G1Y-HL-OGa">
+                        <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="G1Y-HL-OGa">
                             <rect key="frame" x="20" y="162" width="335" height="70"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -133,8 +133,8 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                             <connections>
-                                <outlet property="dataSource" destination="-1" id="ryk-hT-OQj"/>
-                                <outlet property="delegate" destination="-1" id="xQN-pe-8eK"/>
+                                <outlet property="dataSource" destination="-1" id="6S9-vP-Zd8"/>
+                                <outlet property="delegate" destination="-1" id="RNG-Ro-uP3"/>
                             </connections>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBf-LZ-v8L">

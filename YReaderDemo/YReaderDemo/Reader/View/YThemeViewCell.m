@@ -8,13 +8,6 @@
 
 #import "YThemeViewCell.h"
 
-@interface YThemeViewCell ()
-
-
-
-
-@end
-
 @implementation YThemeViewCell
 
 - (void)awakeFromNib {
