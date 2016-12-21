@@ -16,13 +16,12 @@
 
 @implementation YBookDetailModel
 
-//之前打印这个类会卡死线程
 - (NSString *)description {
     return [NSString stringWithFormat:@"<YBookDetailModel: title:%@ author:%@ hasLoadCompletion:%zi loadStatus:%zi>",self.title,self.author,self.hasLoadCompletion,self.loadStatus];
 }
 
 + (NSArray *)modelPropertyBlacklist {
-    return @[@"updated",@"loadStatus",@"loadProgress",@"loadCompletion",@"loadFailure",@"loadCancel"];
+    return @[@"updated",@"loadStatus",@"loadProgress",@"loadCompletion",@"loadFailure",@"loadCancel",@"downloadM"];
 }
 
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
