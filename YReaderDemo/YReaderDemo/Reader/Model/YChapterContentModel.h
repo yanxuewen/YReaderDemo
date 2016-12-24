@@ -20,5 +20,5 @@
 - (void)updateContentPaging;
 - (NSAttributedString *)getStringWith:(NSUInteger)page;
 + (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link load:(BOOL)isLoadCache;
-
++ (NSString *)adjustParagraphFormat:(NSString *)string;
 @end

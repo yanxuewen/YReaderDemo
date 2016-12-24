@@ -98,7 +98,8 @@
     NSMutableDictionary *dic = @{}.mutableCopy;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = self.lineSpacing;
-    paragraphStyle.firstLineHeadIndent = [@"汉字" boundingRectWithSize:CGSizeMake(200, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:NULL].size.width;
+    //这种方式两个字符位置更加准确,但是每一页的开始也会空格,但是这不一定是段落的开始
+//    paragraphStyle.firstLineHeadIndent = [@"汉字" boundingRectWithSize:CGSizeMake(200, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.font} context:NULL].size.width;
     dic[NSForegroundColorAttributeName] = self.textColor;
     dic[NSFontAttributeName] = self.font;
     dic[NSParagraphStyleAttributeName] = paragraphStyle;

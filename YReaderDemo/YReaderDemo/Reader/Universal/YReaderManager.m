@@ -250,7 +250,7 @@
     }
     __weak typeof(self) wself = self;
     _chapterTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
-        chapterM.body = ((YChapterContentModel *)response).body;
+        chapterM.body = [YChapterContentModel adjustParagraphFormat:((YChapterContentModel *)response).body];
         chapterM.isLoad = YES;
         DDLogInfo(@"Load chapter %zi",chapter);
         [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{
@@ -397,7 +397,7 @@
     }
     __weak typeof(self) wself = self;
     _getChapterTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
-        chapterM.body = ((YChapterContentModel *)response).body;
+        chapterM.body = [YChapterContentModel adjustParagraphFormat:((YChapterContentModel *)response).body];
         chapterM.isLoad = YES;
         DDLogInfo(@"getChapterContent %@",chapterM);
         [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{

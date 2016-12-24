@@ -127,7 +127,7 @@ static dispatch_queue_t YDownloadManagerGetQueue() {
     __weak typeof(self) wself = self;
     __weak typeof(downloadM) weakDownLoad = downloadM;
     downloadM.lastTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
-        NSString *body = ((YChapterContentModel *)response).body;
+        NSString *body = [YChapterContentModel adjustParagraphFormat:((YChapterContentModel *)response).body];
         DDLogInfo(@"Load book:%@  chapter:%zi",downloadM.downloadBook.title,downloadM.chapter);
         [weakDownLoad.cache setObject:body forKey:chapterM.link withBlock:^{
             chapterM.isLoadCache = YES;

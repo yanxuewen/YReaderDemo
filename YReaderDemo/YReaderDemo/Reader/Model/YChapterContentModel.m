@@ -72,9 +72,18 @@
     chapterM.title = title;
     chapterM.link = link;
     chapterM.isLoadCache = isLoadCache;
-    chapterM.body = @"正在为您加载...";
+    chapterM.body = @"\t正在为您加载...";
     chapterM.isLoad = NO;
     return chapterM;
+}
+
++ (NSString *)adjustParagraphFormat:(NSString *)string {
+    if (!string) {
+        return nil;
+    }
+    string = [@"\t" stringByAppendingString:string];
+    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"\n\t"];
+    return string;
 }
 
 @end

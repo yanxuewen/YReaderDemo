@@ -58,7 +58,13 @@
     self.themeArr = self.settings.themeImageArr;
     self.selectTheme = self.settings.theme;
     
+    
     [self.themeCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([YThemeViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([YThemeViewCell class])];
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.themeCollectionView.collectionViewLayout;
+    layout.itemSize = CGSizeMake(40, 40);
+    layout.minimumLineSpacing = (kScreenWidth - 40 - 200) / 4;
+    layout.minimumInteritemSpacing = 10;
+    [self.themeCollectionView setCollectionViewLayout:layout];
     
     __weak typeof(self) wself = self;
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
