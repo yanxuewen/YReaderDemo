@@ -30,5 +30,6 @@
 @property (strong, nonatomic, readonly) UIImage *themeImage;
 @property (strong, nonatomic, readonly) NSArray *themeImageArr;
 
+- (NSString *)transformToTraditionalWith:(NSString *)string;
 
 @end

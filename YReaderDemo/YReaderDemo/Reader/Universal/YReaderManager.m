@@ -11,6 +11,7 @@
 #import "YReaderUniversal.h"
 #import "YNetworkManager.h"
 #import "YDownloadManager.h"
+#import "YReaderSettings.h"
 #import <UIKit/UIKit.h>
 
 #define kYReaderAutoLoadNumber 10
@@ -37,6 +38,7 @@
 @property (assign, atomic) BOOL cancelLoading;
 @property (assign, nonatomic) BOOL cancelGetChapter;
 @property (strong, nonatomic) NSURLSessionTask *getChapterTask;
+@property (strong, nonatomic) YReaderSettings *settings;
 
 @end
 
@@ -57,6 +59,7 @@
         self.documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         self.netManager = [YNetworkManager shareManager];
         self.sqliteM = [YSQLiteManager shareManager];
+        self.settings = [YReaderSettings shareReaderSettings];
     }
     return self;
 }
@@ -223,7 +226,6 @@
         if (!isAutoLoad) {
             [self updateReadingCompletionWith:@"书籍历史章节记录错误"];
         }
-        
         return;
     }
     
@@ -233,6 +235,9 @@
         }
         chapterM.isLoad = YES;
         if (isAutoLoad) {
+            if (self.settings.isTraditional) {
+                [chapterM.traditionalStr class];//check traditionalStr
+            }
             if (chapter < self.endLoadIndex) {
                 [self getChapterContentWith:chapter+1 autoLoad:YES];
             } else {
@@ -252,6 +257,9 @@
     _chapterTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
         chapterM.body = [YChapterContentModel adjustParagraphFormat:((YChapterContentModel *)response).body];
         chapterM.isLoad = YES;
+        if (wself.settings.isTraditional) {
+            [chapterM.traditionalStr class];//check traditionalStr
+        }
         DDLogInfo(@"Load chapter %zi",chapter);
         [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{
             chapterM.isLoadCache = YES;
@@ -399,6 +407,9 @@
     _getChapterTask = [_netManager getWithAPIType:YAPITypeChapterContent parameter:chapterM.link success:^(id response) {
         chapterM.body = [YChapterContentModel adjustParagraphFormat:((YChapterContentModel *)response).body];
         chapterM.isLoad = YES;
+        if (wself.settings.isTraditional) {
+            [chapterM.traditionalStr class];//check traditionalStr
+        }
         DDLogInfo(@"getChapterContent %@",chapterM);
         [wself.cache setObject:chapterM.body forKey:chapterM.link withBlock:^{
             chapterM.isLoadCache = YES;
@@ -449,6 +460,7 @@
     _chaptersLinkTask = nil;
     _chapterTask = nil;
     _chaptersCount = 0;
+    _isAutoLoading = NO;
 }
 
 - (NSString *)cachePath {

@@ -111,6 +111,8 @@
         CGFloat offsetY = (_chaptersArr.count - 1 - _readingChapter) * tableView.rowHeight - tableView.height/2;
         if (offsetY > _chaptersArr.count * tableView.rowHeight - tableView.height) {
             offsetY = _chaptersArr.count * tableView.rowHeight - tableView.height;
+        } else if (offsetY < 0) {
+            offsetY = 0;
         }
         tableView.contentOffset = CGPointMake(0,offsetY);
     }

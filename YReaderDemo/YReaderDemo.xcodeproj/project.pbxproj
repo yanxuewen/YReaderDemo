@@ -37,6 +37,8 @@
 		46110D771DFC43590012DAD1 /* YRecommendBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46110D751DFC43590012DAD1 /* YRecommendBookCell.m */; };
 		46110D781DFC43590012DAD1 /* YRecommendBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46110D761DFC43590012DAD1 /* YRecommendBookCell.xib */; };
 		461548F71E061BC900E8251B /* YProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 461548F61E061BC900E8251B /* YProgressHUD.m */; };
+		463B22D11E0EAA1600B7B3DB /* simplified.txt in Resources */ = {isa = PBXBuildFile; fileRef = 463B22CF1E0EAA1600B7B3DB /* simplified.txt */; };
+		463B22D21E0EAA1600B7B3DB /* traditional.txt in Resources */ = {isa = PBXBuildFile; fileRef = 463B22D01E0EAA1600B7B3DB /* traditional.txt */; };
 		463F5AFB1DFE54E900999A0B /* YBottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5AFA1DFE54E900999A0B /* YBottomButton.m */; };
 		463F5AFE1DFE97C400999A0B /* YBookSummaryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5AFD1DFE97C400999A0B /* YBookSummaryModel.m */; };
 		463F5B011DFE992A00999A0B /* YChaptersLinkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B001DFE992A00999A0B /* YChaptersLinkModel.m */; };
@@ -144,6 +146,8 @@
 		46110D761DFC43590012DAD1 /* YRecommendBookCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YRecommendBookCell.xib; sourceTree = "<group>"; };
 		461548F51E061BC900E8251B /* YProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YProgressHUD.h; sourceTree = "<group>"; };
 		461548F61E061BC900E8251B /* YProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YProgressHUD.m; sourceTree = "<group>"; };
+		463B22CF1E0EAA1600B7B3DB /* simplified.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simplified.txt; sourceTree = "<group>"; };
+		463B22D01E0EAA1600B7B3DB /* traditional.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = traditional.txt; sourceTree = "<group>"; };
 		463F5AF91DFE54E900999A0B /* YBottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBottomButton.h; sourceTree = "<group>"; };
 		463F5AFA1DFE54E900999A0B /* YBottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBottomButton.m; sourceTree = "<group>"; };
 		463F5AFC1DFE97C400999A0B /* YBookSummaryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBookSummaryModel.h; sourceTree = "<group>"; };
@@ -376,6 +380,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		463B22CE1E0EAA1600B7B3DB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				463B22CF1E0EAA1600B7B3DB /* simplified.txt */,
+				463B22D01E0EAA1600B7B3DB /* traditional.txt */,
+			);
+			name = Resources;
+			path = YReaderDemo/Resources;
+			sourceTree = SOURCE_ROOT;
+		};
 		463F5AF71DFE549200999A0B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +440,7 @@
 		465D42D91DF9496F00ED1D58 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				463B22CE1E0EAA1600B7B3DB /* Resources */,
 				465D42DA1DF949B900ED1D58 /* YUniversal.h */,
 				465D42DB1DF94D7500ED1D58 /* YBaseViewController.h */,
 				465D42DC1DF94D7500ED1D58 /* YBaseViewController.m */,
@@ -707,12 +722,14 @@
 				46711E591E0121030051772F /* YBookViewCell.xib in Resources */,
 				465D42E81DF987DA00ED1D58 /* YTableHeaderView.xib in Resources */,
 				46D5DB181DF82AC9009CC6AB /* Main.storyboard in Resources */,
+				463B22D11E0EAA1600B7B3DB /* simplified.txt in Resources */,
 				4688CCD81E06C75B00C88C01 /* YSummaryViewController.xib in Resources */,
 				46110D3D1DFBB2C70012DAD1 /* YNavHeaderView.xib in Resources */,
 				465D42F31DF99E1D00ED1D58 /* YTagViewCell.xib in Resources */,
 				460D9CEF1E076B61009A608D /* YRankingViewController.xib in Resources */,
 				465D42CE1DF932DC00ED1D58 /* YCenterViewController.xib in Resources */,
 				465D42D31DF932EE00ED1D58 /* YLeftViewController.xib in Resources */,
+				463B22D21E0EAA1600B7B3DB /* traditional.txt in Resources */,
 				46110D731DFC311B0012DAD1 /* YReviewTableViewCell.xib in Resources */,
 				465D42D81DF932FD00ED1D58 /* YRightViewController.xib in Resources */,
 				4696B1211E054EA0001DCC54 /* YThemeViewCell.xib in Resources */,

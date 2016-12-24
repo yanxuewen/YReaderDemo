@@ -17,6 +17,8 @@
 @property (nonatomic, assign) BOOL isLoadCache;        //从网络下载到本地
 @property (nonatomic, assign) NSUInteger pageCount;
 
+@property (strong, nonatomic) NSString *traditionalStr;//body对于繁体
+
 - (void)updateContentPaging;
 - (NSAttributedString *)getStringWith:(NSUInteger)page;
 + (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link load:(BOOL)isLoadCache;

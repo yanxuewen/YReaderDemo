@@ -148,6 +148,7 @@
     }];
 }
 
+#pragma mark - 更新章节
 - (void)updateReaderChapter:(NSUInteger)chapter page:(NSUInteger)page{
     if (chapter >= self.readerManager.chaptersArr.count) {
         DDLogError(@"updateReaderChapter chapter >= self.readerManager.chaptersArr.count  \n readerManager:%@",self.readerManager);
@@ -291,7 +292,7 @@
     [self.readerManager updateReadingChapter:_chapter page:_page];
 }
 
-#pragma mark - 更新章节
+#pragma mark - 选择章节页面
 - (YDirectoryViewController *)directoryVC {
     if (!_directoryVC) {
         _directoryVC = [[YDirectoryViewController alloc] init];

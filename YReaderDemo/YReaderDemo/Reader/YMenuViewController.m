@@ -176,7 +176,12 @@
         }
             break;
         case 302: {             //繁简体
-            
+            self.settings.isTraditional = !self.settings.isTraditional;
+            if (self.settings.isTraditional) {
+                [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_fan"] forState:UIControlStateNormal];
+            } else {
+                [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_jian"] forState:UIControlStateNormal];
+            }
         }
             break;
         case 303: {             //字体
@@ -313,9 +318,9 @@
 
 #pragma mark - setup UI
 - (void)setupSettingButtonStatus {
-    if (self.settings.fontSize == kYFontSizeMax) {
+    if (self.settings.fontSize >= kYFontSizeMax) {
         self.fontSizeAddBtn.enabled = NO;
-    } else if (self.settings.fontSize == kYFontSizeMin) {
+    } else if (self.settings.fontSize <= kYFontSizeMin) {
         self.fontSizeReduceBtn.enabled = NO;
     }
     if (self.settings.lineSpacing <= kYLineSpacingCompact + 0.1) {
@@ -324,6 +329,11 @@
         self.spaceNormalBtn.selected = YES;
     } else {
         self.spaceBigBtn.selected  =YES;
+    }
+    if (self.settings.isTraditional) {
+        [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_fan"] forState:UIControlStateNormal];
+    } else {
+        [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_jian"] forState:UIControlStateNormal];
     }
 }
 

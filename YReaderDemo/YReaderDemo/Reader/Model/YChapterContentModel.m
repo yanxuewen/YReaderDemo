@@ -29,7 +29,9 @@
 
 - (void)pagingWithBounds:(CGRect)bounds {
     _pageArr = @[].mutableCopy;
-    NSMutableAttributedString *attr = [[NSMutableAttributedString  alloc] initWithString:self.body attributes:[YReaderSettings shareReaderSettings].readerAttributes];
+    YReaderSettings *settings = [YReaderSettings shareReaderSettings];
+    NSString *content = settings.isTraditional ? self.traditionalStr : self.body;
+    NSMutableAttributedString *attr = [[NSMutableAttributedString  alloc] initWithString:content attributes:settings.readerAttributes];
     CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attr);
     CGPathRef path = CGPathCreateWithRect(bounds, NULL);
     CFRange range = CFRangeMake(0, 0);
@@ -84,6 +86,13 @@
     string = [@"\t" stringByAppendingString:string];
     string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"\n\t"];
     return string;
+}
+
+- (NSString *)traditionalStr {
+    if (!_traditionalStr) {
+        _traditionalStr = [[YReaderSettings shareReaderSettings] transformToTraditionalWith:_body];
+    }
+    return _traditionalStr;
 }
 
 @end

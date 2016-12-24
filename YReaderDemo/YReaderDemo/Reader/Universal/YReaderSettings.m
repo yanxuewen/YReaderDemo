@@ -18,6 +18,9 @@
 @property (strong, nonatomic) UIImage *themeImage;
 @property (strong, nonatomic) NSArray *themeImageArr;
 
+@property (strong, nonatomic) NSString *simplifiedStr;
+@property (strong, nonatomic) NSString *traditionalStr;
+
 @end
 
 @implementation YReaderSettings
@@ -76,6 +79,11 @@
 - (void)setLineSpacing:(CGFloat)lineSpacing {
     _lineSpacing = lineSpacing;
     _needUpdateAttributes = YES;
+    [self updateReaderSettings];
+}
+
+- (void)setIsTraditional:(BOOL)isTraditional {
+    _isTraditional = isTraditional;
     [self updateReaderSettings];
 }
 
@@ -189,6 +197,33 @@
         _themeImageArr = arr;
     }
     return _themeImageArr;
+}
+
+- (NSString *)transformToTraditionalWith:(NSString *)string {
+    NSInteger length = [string length];
+    for (NSInteger i = 0; i< length; i++) {
+        NSString *str = [string substringWithRange:NSMakeRange(i, 1)];
+        NSRange gbRange = [self.simplifiedStr rangeOfString:str];
+        if(gbRange.location != NSNotFound) {
+            NSString *tString = [self.traditionalStr substringWithRange:gbRange];
+            string = [string stringByReplacingCharactersInRange:NSMakeRange(i, 1) withString:tString];
+        }
+    }
+    return string;
+}
+
+- (NSString *)simplifiedStr {
+    if (!_simplifiedStr) {
+        _simplifiedStr = [NSString stringWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"simplified" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
+    }
+    return _simplifiedStr;
+}
+
+- (NSString *)traditionalStr {
+    if (!_traditionalStr) {
+        _traditionalStr = [NSString stringWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"traditional" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
+    }
+    return _traditionalStr;
 }
 
 @end
