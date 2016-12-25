@@ -209,16 +209,17 @@
 }
 
 - (NSString *)transformToTraditionalWith:(NSString *)string {
+    NSMutableString *mutableStr = string.mutableCopy;
     NSInteger length = [string length];
     for (NSInteger i = 0; i< length; i++) {
         NSString *str = [string substringWithRange:NSMakeRange(i, 1)];
         NSRange gbRange = [self.simplifiedStr rangeOfString:str];
         if(gbRange.location != NSNotFound) {
             NSString *tString = [self.traditionalStr substringWithRange:gbRange];
-            string = [string stringByReplacingCharactersInRange:NSMakeRange(i, 1) withString:tString];
+            [mutableStr replaceCharactersInRange:NSMakeRange(i, 1) withString:tString];
         }
     }
-    return string;
+    return mutableStr.copy;
 }
 
 - (NSString *)simplifiedStr {

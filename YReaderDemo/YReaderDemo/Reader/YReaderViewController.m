@@ -141,7 +141,6 @@
     }
     _pageViewController.view.frame = self.view.bounds;
     [self addChildViewController:_pageViewController];
-//    [self.view addSubview:_pageViewController.view];
     [self.view insertSubview:_pageViewController.view belowSubview:self.menuView.view];
     _page = _readerManager.record.readingPage;
     _chapter = _readerManager.record.readingChapter;
