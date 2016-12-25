@@ -700,7 +700,7 @@
 				TargetAttributes = {
 					46D5DB091DF82AC9009CC6AB = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 43AC695K39;
+						DevelopmentTeam = WVNBUP4CB4;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -993,12 +993,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 43AC695K39;
+				DEVELOPMENT_TEAM = WVNBUP4CB4;
 				GCC_PREFIX_HEADER = YReaderDemo/YReaderDemo.pch;
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jykj.YReaderDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReaderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1009,12 +1009,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 43AC695K39;
+				DEVELOPMENT_TEAM = WVNBUP4CB4;
 				GCC_PREFIX_HEADER = YReaderDemo/YReaderDemo.pch;
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jykj.YReaderDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReaderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
