@@ -7,6 +7,7 @@
 //
 
 #import "YMenuViewController.h"
+#import "YMoreSettingsViewController.h"
 #import "YBottomButton.h"
 #import "YReaderManager.h"
 #import "YDownloadManager.h"
@@ -138,7 +139,7 @@
     };
 }
 
-#pragma mark - button action
+#pragma mark - 点击上/下部按钮
 - (IBAction)handleButton:(UIButton *)btn {
     if (self.menuTapAction) {
         self.menuTapAction(btn.tag);
@@ -148,6 +149,7 @@
     }
 }
 
+#pragma mark - 点击设置里面按钮
 - (IBAction)settingButtonAction:(UIButton *)btn {
     NSLog(@"%s %zi",__func__,btn.tag);
     switch (btn.tag) {
@@ -178,9 +180,9 @@
         case 302: {             //繁简体
             self.settings.isTraditional = !self.settings.isTraditional;
             if (self.settings.isTraditional) {
-                [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_fan"] forState:UIControlStateNormal];
-            } else {
                 [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_jian"] forState:UIControlStateNormal];
+            } else {
+                [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_fan"] forState:UIControlStateNormal];
             }
         }
             break;
@@ -215,6 +217,13 @@
             break;
         case 308: {             //横竖屏
             
+        }
+            break;
+        case 309: {             //更多设置
+            YMoreSettingsViewController *moreVC = [[YMoreSettingsViewController alloc] init];
+            [self presentViewController:moreVC animated:YES completion:nil];
+            [self hideMenuView];
+
         }
             break;
         default:
@@ -276,6 +285,7 @@
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         }
     }];
@@ -331,9 +341,9 @@
         self.spaceBigBtn.selected  =YES;
     }
     if (self.settings.isTraditional) {
-        [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_fan"] forState:UIControlStateNormal];
-    } else {
         [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_jian"] forState:UIControlStateNormal];
+    } else {
+        [self.fontFanBtn setImage:[UIImage imageNamed:@"setting_font_fan"] forState:UIControlStateNormal];
     }
 }
 

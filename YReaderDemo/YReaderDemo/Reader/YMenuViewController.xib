@@ -144,7 +144,7 @@
                                 <constraint firstAttribute="height" constant="1" id="gFF-j9-Y7X"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" tag="308" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yjX-n3-gqk">
+                        <button opaque="NO" tag="309" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yjX-n3-gqk">
                             <rect key="frame" x="152.5" y="246" width="70" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="更多设置 &gt;"/>

@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger,YReaderTheme) {
 };
 
 typedef NS_ENUM(NSInteger,YTurnPageStyle) {
-    YTurnPageStyleSimulated,
+    YTurnPageStylePageCurl,
     YTurnPageStyleScroll
 };
 

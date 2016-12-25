@@ -23,13 +23,13 @@
 @property (strong, nonatomic) YNetworkManager *netManager;
 @property (assign, nonatomic) NSUInteger chapter;
 @property (assign, nonatomic) NSUInteger page;
-@property (assign, nonatomic) NSUInteger nextChpater;
-@property (assign, nonatomic) NSUInteger nextPage;
 @property (strong, nonatomic) YMenuViewController *menuView;
 
 @property (strong, nonatomic) YDirectoryViewController *directoryVC;
 @property (strong, nonatomic) YSummaryViewController *summaryVC;
-@property (assign, nonatomic) BOOL isPageBefore;
+@property (assign, nonatomic) BOOL isPageBefore;//记录向前/后翻页,改变章节时用,
+@property (strong, nonatomic) YReaderSettings *settings;
+@property (assign, nonatomic) BOOL isPageCurlStyle;
 
 @end
 
@@ -42,6 +42,7 @@
     
     _netManager = [YNetworkManager shareManager];
     _readerManager = [YReaderManager shareReaderManager];
+    _settings = [YReaderSettings shareReaderSettings];
     [self readerSettingsUpdate];
     __weak typeof(self) wself = self;
     
@@ -125,17 +126,33 @@
 }
 
 - (void)setupPageViewController {
-    _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    if (_pageViewController) {
+        [_pageViewController.view removeFromSuperview];
+        [_pageViewController removeFromParentViewController];
+        _pageViewController = nil;
+    }
+    
+    UIPageViewControllerTransitionStyle style= _isPageCurlStyle ? UIPageViewControllerTransitionStylePageCurl : UIPageViewControllerTransitionStyleScroll;
+    _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:style navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     _pageViewController.delegate = self;
     _pageViewController.dataSource = self;
-    _pageViewController.doubleSided = YES;
+    if (_isPageCurlStyle) {
+        _pageViewController.doubleSided = YES;
+    }
     _pageViewController.view.frame = self.view.bounds;
     [self addChildViewController:_pageViewController];
-    [self.view addSubview:_pageViewController.view];
+//    [self.view addSubview:_pageViewController.view];
     [self.view insertSubview:_pageViewController.view belowSubview:self.menuView.view];
     _page = _readerManager.record.readingPage;
     _chapter = _readerManager.record.readingChapter;
-    [_pageViewController setViewControllers:@[[self readPageViewWithChapter:_chapter page:_page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    __weak typeof(self) wself = self;
+    [_pageViewController setViewControllers:@[[self readPageViewWithChapter:_chapter page:_page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
+        if (finished && !wself.isPageCurlStyle) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [wself.pageViewController setViewControllers:@[[wself readPageViewWithChapter:wself.chapter page:wself.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+            });
+        }
+    }];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.readerManager autoLoadNextChapters:self.chapter+1];
     });
@@ -146,6 +163,11 @@
     [[YReaderSettings shareReaderSettings] setRefreshReaderView:^{
         [wself updateReaderChapter:wself.chapter page:wself.page];
     }];
+    [[YReaderSettings shareReaderSettings] setRefreshPageStyle:^{
+        wself.isPageCurlStyle = wself.settings.pageStyle == YTurnPageStylePageCurl;
+        [wself setupPageViewController];
+    }];
+    _isPageCurlStyle = _settings.pageStyle == YTurnPageStylePageCurl;
 }
 
 #pragma mark - 更新章节
@@ -189,7 +211,14 @@
     }
     self.chapter = chapter;
     self.page = page;
-    [self.pageViewController setViewControllers:@[[self readPageViewWithChapter:self.chapter page:self.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    __weak typeof(self) wself = self;
+    [self.pageViewController setViewControllers:@[[self readPageViewWithChapter:self.chapter page:self.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:^(BOOL finished) {
+        if (finished && !wself.isPageCurlStyle) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [wself.pageViewController setViewControllers:@[[wself readPageViewWithChapter:wself.chapter page:wself.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+            });
+        }
+    }];
     [self.readerManager updateReadingChapter:chapter page:page];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.readerManager autoLoadNextChapters:self.chapter+1];
@@ -222,19 +251,25 @@
         return nil;
     }
     
-    if (_page > 0) {
-        _nextPage = _page - 1;
-        _nextChpater = _chapter;
+    YReadPageViewController *pageVC = (YReadPageViewController *)viewController;
+    NSUInteger page = pageVC.page;
+    NSUInteger chapter = pageVC.chapter;
+    if (_isPageCurlStyle) {
+        page = _page;
+        chapter = _chapter;
+    }
+    if (page > 0) {
+        page = page - 1;
     } else {
-        _nextChpater = _chapter - 1;
-        YChapterContentModel *chapterM = _readerManager.chaptersArr[_nextChpater];
+        chapter = chapter - 1;
+        YChapterContentModel *chapterM = _readerManager.chaptersArr[chapter];
         if (chapterM.pageCount == 0) {
             [chapterM updateContentPaging];
         }
-        _nextPage = chapterM.pageCount - 1;
+        page = chapterM.pageCount - 1;
     }
     
-    return [self readPageViewWithChapter:_nextChpater page:_nextPage];
+    return [self readPageViewWithChapter:chapter page:page];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
@@ -250,36 +285,45 @@
 //        return backVC;//翻页背面,但效果没写好,先这样
 //    }
     
-    if (_page >= [_readerManager.chaptersArr[_chapter] pageCount] - 1) {
-        _nextPage = 0;
-        _nextChpater = _chapter + 1;
+    YReadPageViewController *pageVC = (YReadPageViewController *)viewController;
+    NSUInteger page = pageVC.page;
+    NSUInteger chapter = pageVC.chapter;
+    if (_isPageCurlStyle) {
+        page = _page;
+        chapter = _chapter;
+    }
+    if (page >= [_readerManager.chaptersArr[chapter] pageCount] - 1) {
+        page = 0;
+        chapter = chapter + 1;
     } else {
-        _nextPage = _page + 1;
-        _nextChpater = _chapter;
+        page = page + 1;
     }
     
-    return [self readPageViewWithChapter:_nextChpater page:_nextPage];
+    return [self readPageViewWithChapter:chapter page:page];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers {
     NSLog(@"%s",__func__);
-    if (_nextChpater > _chapter || (_nextChpater == _chapter && _nextPage > _page)) {
-        _isPageBefore = NO;
-    } else {
-        _isPageBefore = YES;
-    }
-    _chapter = _nextChpater;
-    _page = _nextPage;
     
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed {
     NSLog(@"%s  completed:%zi",__func__,completed);
+    
     if (!completed) {
         YReadPageViewController *readerPageVC = (YReadPageViewController *)previousViewControllers.firstObject;
         _page = readerPageVC.page;
         _chapter = readerPageVC.chapter;
     } else {
+        YReadPageViewController *previousPageVC = (YReadPageViewController *)previousViewControllers.firstObject;
+        YReadPageViewController *readPageVC = (YReadPageViewController *)pageViewController.viewControllers.firstObject;
+        if (readPageVC.chapter > previousPageVC.chapter || (readPageVC.chapter == previousPageVC.chapter && readPageVC.page > previousPageVC.page)) {
+            _isPageBefore = NO;
+        } else {
+            _isPageBefore = YES;;
+        }
+        _page = readPageVC.page;
+        _chapter = readPageVC.chapter;
         YChapterContentModel *chapterM = self.readerManager.chaptersArr[self.chapter];
         if (!chapterM.isLoad) {
             [self updateReaderChapter:self.chapter page:self.page];
@@ -298,6 +342,7 @@
         _directoryVC = [[YDirectoryViewController alloc] init];
         __weak typeof(self) wself = self;
         _directoryVC.selectChapter = ^(NSUInteger chapter) {
+            wself.isPageBefore = NO;
             [wself updateReaderChapter:chapter page:0];
         };
     }

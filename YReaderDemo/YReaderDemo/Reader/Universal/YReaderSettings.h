@@ -23,6 +23,7 @@
 @property (assign, nonatomic) CGFloat fontSize;
 
 @property (copy, nonatomic) void(^refreshReaderView)();
+@property (copy, nonatomic) void(^refreshPageStyle)();
 
 @property (strong, nonatomic, readonly) UIColor *textColor;
 @property (strong, nonatomic, readonly) UIColor *otherTextColor;//其他如标题,电池,时间等

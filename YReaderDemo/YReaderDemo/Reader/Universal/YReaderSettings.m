@@ -53,7 +53,7 @@
         _fontSize = 16.0;
         _font = [UIFont systemFontOfSize:_fontSize];
         _theme = YReaderThemeOne;
-        _pageStyle = YTurnPageStyleSimulated;
+        _pageStyle = YTurnPageStylePageCurl;
         _isNightMode = NO;
     }
     return self;
@@ -95,6 +95,15 @@
     }
 }
 
+- (void)setPageStyle:(YTurnPageStyle)pageStyle {
+    if (pageStyle != _pageStyle) {
+        _pageStyle = pageStyle;
+        [[YSQLiteManager shareManager].cache setObject:self forKey:kYReaderSettings];
+        if (self.refreshPageStyle) {
+            self.refreshPageStyle();
+        }
+    }
+}
 
 #pragma mark - get
 
