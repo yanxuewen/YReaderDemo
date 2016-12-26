@@ -62,6 +62,9 @@
         wself.view.userInteractionEnabled = YES;
         [wself setupPageViewController];
         [YProgressHUD hideLoadingHUD];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [wself.readerManager updateBookChaptersLink];
+        });
     } failure:^(NSString *msg) {
         DDLogWarn(@"updateReadingBook error msg %@",msg);
         [YProgressHUD showErrorHUDWith:msg];

@@ -213,6 +213,33 @@
     });
 }
 
+#pragma mark - 更新章节下载地址
+- (void)updateBookChaptersLink {
+    //现在每次只会更新一次，没有处理如果这里失败，下次怎么加载
+    __weak typeof(self) wself = self;
+    _chaptersLinkTask = [_netManager getWithAPIType:YAPITypeChaptersLink parameter:_selectSummary.idField success:^(id response) {
+        NSArray *arr = (NSArray *)response;
+        if (arr.count > wself.record.chaptersLink.count) {
+            
+            NSArray *moreLinkArr = [arr subarrayWithRange:NSMakeRange(wself.record.chaptersLink.count, arr.count - wself.record.chaptersLink.count)];
+            NSMutableArray *moreChapterArr = @[].mutableCopy;
+            for (YChaptersLinkModel *linkM in moreLinkArr) {
+                YChapterContentModel *chapterM = [YChapterContentModel chapterModelWith:linkM.title link:linkM.link load:linkM.isLoadCache];
+                [moreChapterArr addObject:chapterM];
+            }
+            wself.record.chaptersLink = [wself.record.chaptersLink arrayByAddingObjectsFromArray:moreLinkArr];
+            [wself.chaptersArr addObjectsFromArray:moreChapterArr];
+            wself.chaptersCount = wself.chaptersArr.count;
+        } else {
+            DDLogWarn(@"没有更新章节 %@",wself.selectSummary);
+        }
+    } failure:^(NSError *error) {
+        
+        DDLogWarn(@"get Book Chapters Link failure %@",wself.selectSummary);
+        
+    }];
+}
+
 - (void)getChapterContentWith:(NSUInteger)chapter autoLoad:(BOOL)isAutoLoad{
     if (self.cancelLoading) {
         [self cancelLoadCompletion];
