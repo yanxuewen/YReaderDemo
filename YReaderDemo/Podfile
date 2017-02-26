@@ -2,14 +2,14 @@ platform :ios, "8.0"
 
 target 'YReaderDemo' do
 #use_framework!
-pod 'AFNetworking'
-pod 'SDWebImage'
-pod 'YYCache'
-pod 'YYModel'
-pod 'YYCategories'
-pod 'CocoaLumberjack'
-pod 'MJRefresh'
-pod 'MBProgressHUD'
-
+pod 'AFNetworking', '~> 3.1.0'
+pod 'SDWebImage', '~> 4.0.0'
+pod 'YYCache', '~> 1.0.0'
+pod 'YYModel', '~> 1.0.0'
+pod 'YYCategories', '~> 1.0.0'
+pod 'CocoaLumberjack', '~> 3.1.0'
+pod 'MJRefresh', '~> 3.1.10'
+pod 'MBProgressHUD', '~> 1.0.0'
+pod 'BuglyHotfix', '~> 1.1.0'
 
 end
