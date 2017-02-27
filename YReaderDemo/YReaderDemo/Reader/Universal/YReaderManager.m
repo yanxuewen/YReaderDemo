@@ -40,6 +40,9 @@
 @property (strong, nonatomic) NSURLSessionTask *getChapterTask;
 @property (strong, nonatomic) YReaderSettings *settings;
 
+@property (assign, nonatomic) BOOL isUodateSummary;//是否换源
+@property (strong, nonatomic) YReaderRecord *lastRecord;//上次记录
+
 @end
 
 @implementation YReaderManager
@@ -106,6 +109,7 @@
     }
     self.updateCompletion = completion;
     self.updateFailure = failure;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (_readingBook.downloadM && _readingBook.loadStatus != YDownloadStatusCancel) {
             _readingBook.loadStatus = YDownloadStatusCancel;
@@ -115,6 +119,8 @@
             self.readingBook.hasLoadCompletion = NO;
             [self.sqliteM updateUserBooksStatus];
         }
+        self.isUodateSummary = YES;
+        self.lastRecord = self.record;
         self.record = nil;
         self.chaptersArr = nil;
         self.chaptersCount = 0;
@@ -177,12 +183,31 @@
         self.cache = [[YYDiskCache alloc] initWithPath:self.cachePath];
         self.record = (YReaderRecord *)[self.cache objectForKey:self.recordKey];
         if (self.record && self.record.chaptersLink.count > 0) {
+            //
+            if (self.isUodateSummary && self.lastRecord) {
+                if (self.lastRecord.readingChapter > self.record.readingChapter) {
+                    self.record.readingChapter = self.lastRecord.readingChapter;
+                    self.record.readingPage = self.lastRecord.readingPage;
+                }
+            }
+            self.isUodateSummary = NO;
+            self.lastRecord = nil;
             [self updateReadingBookChaptersContent];
             [self getChapterContentWith:self.record.readingChapter autoLoad:NO];
             return;
         } else {
             self.record = [[YReaderRecord alloc] init];
         }
+        //
+        if (self.isUodateSummary && self.lastRecord) {
+            if (self.lastRecord.readingChapter > self.record.readingChapter) {
+                self.record.readingChapter = self.lastRecord.readingChapter;
+                self.record.readingPage = self.lastRecord.readingPage;
+            }
+        }
+        self.isUodateSummary = NO;
+        self.lastRecord = nil;
+        
         __weak typeof(self) wself = self;
         _chaptersLinkTask = [_netManager getWithAPIType:YAPITypeChaptersLink parameter:_selectSummary.idField success:^(id response) {
             NSArray *arr = (NSArray *)response;
@@ -347,6 +372,8 @@
         }
         self.updateCompletion = nil;
         self.updateFailure = nil;
+        self.isUodateSummary = NO;
+        self.lastRecord = nil;
     });
 }
 
