@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 #import "YNetworkManager.h"
 
 @interface AppDelegate ()
@@ -17,15 +18,22 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [YNetworkManager shareManager];
+    [Bugly startWithAppId:@"1a48963dbe"     //别泄露我的ID
+#ifdef DEBUG
+        developmentDevice:YES
+#endif
+                   config:nil];
+    
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
 //    [DDLog addLogger:[DDASLLogger sharedInstance]];
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init]; // File Logger
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:fileLogger];
+    
     return YES;
 }
 

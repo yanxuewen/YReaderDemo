@@ -20,6 +20,8 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <AFNetworking/AFNetworking.h>
 #import <MJRefresh/MJRefresh.h>
+#import <BuglyHotfix/Bugly.h>
+
 
 #import "YProgressHUD.h"
 #import "YBaseViewController.h"
