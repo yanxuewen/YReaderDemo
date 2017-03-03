@@ -50,7 +50,6 @@
 		463F5B081DFE9CFB00999A0B /* YReadPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B061DFE9CFB00999A0B /* YReadPageViewController.m */; };
 		463F5B091DFE9CFB00999A0B /* YReadPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */; };
 		463F5B121DFEE52200999A0B /* YBatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B111DFEE52200999A0B /* YBatteryView.m */; };
-		464236F21E02AC8A0092F7A7 /* YDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 464236F11E02AC8A0092F7A7 /* YDownloadManager.m */; };
 		465D42CD1DF932DC00ED1D58 /* YCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42CB1DF932DC00ED1D58 /* YCenterViewController.m */; };
 		465D42CE1DF932DC00ED1D58 /* YCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 465D42CC1DF932DC00ED1D58 /* YCenterViewController.xib */; };
 		465D42D21DF932EE00ED1D58 /* YLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42D01DF932EE00ED1D58 /* YLeftViewController.m */; };
@@ -80,9 +79,6 @@
 		4696B11C1E04F187001DCC54 /* YMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4696B11B1E04F187001DCC54 /* YMenuViewController.xib */; };
 		4696B1201E054EA0001DCC54 /* YThemeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4696B11E1E054EA0001DCC54 /* YThemeViewCell.m */; };
 		4696B1211E054EA0001DCC54 /* YThemeViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4696B11F1E054EA0001DCC54 /* YThemeViewCell.xib */; };
-		46A48CB01DFF998900DB58A6 /* YReaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A48CAB1DFF998900DB58A6 /* YReaderManager.m */; };
-		46A48CB11DFF998900DB58A6 /* YReaderRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A48CAD1DFF998900DB58A6 /* YReaderRecord.m */; };
-		46A48CB21DFF998900DB58A6 /* YReaderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A48CAF1DFF998900DB58A6 /* YReaderSettings.m */; };
 		46B640B01E07988B0049E595 /* YRankingDetialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B640AF1E07988B0049E595 /* YRankingDetialModel.m */; };
 		46B640B41E07B4980049E595 /* YRankingDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B640B21E07B4980049E595 /* YRankingDetailController.m */; };
 		46B640B51E07B4980049E595 /* YRankingDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46B640B31E07B4980049E595 /* YRankingDetailController.xib */; };
@@ -94,6 +90,11 @@
 		46D5DB181DF82AC9009CC6AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D5DB161DF82AC9009CC6AB /* Main.storyboard */; };
 		46D5DB1A1DF82AC9009CC6AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46D5DB191DF82AC9009CC6AB /* Assets.xcassets */; };
 		46D5DB1D1DF82AC9009CC6AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D5DB1B1DF82AC9009CC6AB /* LaunchScreen.storyboard */; };
+		46E0AAC11E69AF830027E95B /* YSpeechManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AAB71E69AF830027E95B /* YSpeechManager.m */; };
+		46E0AAC21E69AF830027E95B /* YDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AAB91E69AF830027E95B /* YDownloadManager.m */; };
+		46E0AAC31E69AF830027E95B /* YReaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AABB1E69AF830027E95B /* YReaderManager.m */; };
+		46E0AAC41E69AF830027E95B /* YReaderRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AABD1E69AF830027E95B /* YReaderRecord.m */; };
+		46E0AAC51E69AF830027E95B /* YReaderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AABF1E69AF830027E95B /* YReaderSettings.m */; };
 		46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */; };
 		46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F9614C1E08210B004B6850 /* YPageBackViewController.m */; };
 /* End PBXBuildFile section */
@@ -171,8 +172,6 @@
 		463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YReadPageViewController.xib; sourceTree = "<group>"; };
 		463F5B101DFEE52200999A0B /* YBatteryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBatteryView.h; sourceTree = "<group>"; };
 		463F5B111DFEE52200999A0B /* YBatteryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBatteryView.m; sourceTree = "<group>"; };
-		464236F01E02AC8A0092F7A7 /* YDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YDownloadManager.h; sourceTree = "<group>"; };
-		464236F11E02AC8A0092F7A7 /* YDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YDownloadManager.m; sourceTree = "<group>"; };
 		465D42CA1DF932DC00ED1D58 /* YCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCenterViewController.h; sourceTree = "<group>"; };
 		465D42CB1DF932DC00ED1D58 /* YCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCenterViewController.m; sourceTree = "<group>"; };
 		465D42CC1DF932DC00ED1D58 /* YCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YCenterViewController.xib; sourceTree = "<group>"; };
@@ -219,12 +218,6 @@
 		4696B11D1E054EA0001DCC54 /* YThemeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YThemeViewCell.h; sourceTree = "<group>"; };
 		4696B11E1E054EA0001DCC54 /* YThemeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YThemeViewCell.m; sourceTree = "<group>"; };
 		4696B11F1E054EA0001DCC54 /* YThemeViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YThemeViewCell.xib; sourceTree = "<group>"; };
-		46A48CAA1DFF998900DB58A6 /* YReaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderManager.h; sourceTree = "<group>"; };
-		46A48CAB1DFF998900DB58A6 /* YReaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderManager.m; sourceTree = "<group>"; };
-		46A48CAC1DFF998900DB58A6 /* YReaderRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderRecord.h; sourceTree = "<group>"; };
-		46A48CAD1DFF998900DB58A6 /* YReaderRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderRecord.m; sourceTree = "<group>"; };
-		46A48CAE1DFF998900DB58A6 /* YReaderSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderSettings.h; sourceTree = "<group>"; };
-		46A48CAF1DFF998900DB58A6 /* YReaderSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderSettings.m; sourceTree = "<group>"; };
 		46B640AE1E07988B0049E595 /* YRankingDetialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRankingDetialModel.h; sourceTree = "<group>"; };
 		46B640AF1E07988B0049E595 /* YRankingDetialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRankingDetialModel.m; sourceTree = "<group>"; };
 		46B640B11E07B4980049E595 /* YRankingDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRankingDetailController.h; sourceTree = "<group>"; };
@@ -232,7 +225,6 @@
 		46B640B31E07B4980049E595 /* YRankingDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YRankingDetailController.xib; sourceTree = "<group>"; };
 		46BC8C491E00157500B33FA5 /* YMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMenuViewController.h; sourceTree = "<group>"; };
 		46BC8C4A1E00157500B33FA5 /* YMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMenuViewController.m; sourceTree = "<group>"; };
-		46BC8C4E1E00168B00B33FA5 /* YReaderUniversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderUniversal.h; sourceTree = "<group>"; };
 		46BC8C4F1E003B5F00B33FA5 /* YReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderView.h; sourceTree = "<group>"; };
 		46BC8C501E003B5F00B33FA5 /* YReaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderView.m; sourceTree = "<group>"; };
 		46D5DB0A1DF82AC9009CC6AB /* YReaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YReaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +238,17 @@
 		46D5DB1C1DF82AC9009CC6AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		46D5DB1E1DF82AC9009CC6AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46D5DB241DF84BB8009CC6AB /* YReaderDemo.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderDemo.pch; sourceTree = "<group>"; };
+		46E0AAB61E69AF830027E95B /* YSpeechManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSpeechManager.h; sourceTree = "<group>"; };
+		46E0AAB71E69AF830027E95B /* YSpeechManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSpeechManager.m; sourceTree = "<group>"; };
+		46E0AAB81E69AF830027E95B /* YDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YDownloadManager.h; sourceTree = "<group>"; };
+		46E0AAB91E69AF830027E95B /* YDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YDownloadManager.m; sourceTree = "<group>"; };
+		46E0AABA1E69AF830027E95B /* YReaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderManager.h; sourceTree = "<group>"; };
+		46E0AABB1E69AF830027E95B /* YReaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderManager.m; sourceTree = "<group>"; };
+		46E0AABC1E69AF830027E95B /* YReaderRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderRecord.h; sourceTree = "<group>"; };
+		46E0AABD1E69AF830027E95B /* YReaderRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderRecord.m; sourceTree = "<group>"; };
+		46E0AABE1E69AF830027E95B /* YReaderSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderSettings.h; sourceTree = "<group>"; };
+		46E0AABF1E69AF830027E95B /* YReaderSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderSettings.m; sourceTree = "<group>"; };
+		46E0AAC01E69AF830027E95B /* YReaderUniversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderUniversal.h; sourceTree = "<group>"; };
 		46EAEF851DFD668C0073AAB7 /* YReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderViewController.h; sourceTree = "<group>"; };
 		46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderViewController.m; sourceTree = "<group>"; };
 		46F9614B1E08210B004B6850 /* YPageBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPageBackViewController.h; sourceTree = "<group>"; };
@@ -564,22 +567,6 @@
 			name = view;
 			sourceTree = "<group>";
 		};
-		46A48CA91DFF998900DB58A6 /* Universal */ = {
-			isa = PBXGroup;
-			children = (
-				46A48CAA1DFF998900DB58A6 /* YReaderManager.h */,
-				46A48CAB1DFF998900DB58A6 /* YReaderManager.m */,
-				464236F01E02AC8A0092F7A7 /* YDownloadManager.h */,
-				464236F11E02AC8A0092F7A7 /* YDownloadManager.m */,
-				46A48CAC1DFF998900DB58A6 /* YReaderRecord.h */,
-				46A48CAD1DFF998900DB58A6 /* YReaderRecord.m */,
-				46A48CAE1DFF998900DB58A6 /* YReaderSettings.h */,
-				46A48CAF1DFF998900DB58A6 /* YReaderSettings.m */,
-				46BC8C4E1E00168B00B33FA5 /* YReaderUniversal.h */,
-			);
-			path = Universal;
-			sourceTree = "<group>";
-		};
 		46D5DB011DF82AC9009CC6AB = {
 			isa = PBXGroup;
 			children = (
@@ -609,6 +596,7 @@
 				465D42DE1DF95E1C00ED1D58 /* Search */,
 				46110D311DFBAC790012DAD1 /* BookDetail */,
 				46EAEF841DFD664D0073AAB7 /* Reader */,
+				46E0AAB41E69AF830027E95B /* ReaderManager */,
 				460D9CEA1E076B17009A608D /* Ranking */,
 				46110D1A1DFA35F40012DAD1 /* Network */,
 				46110D2D1DFB95A80012DAD1 /* Database */,
@@ -631,6 +619,33 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		46E0AAB41E69AF830027E95B /* ReaderManager */ = {
+			isa = PBXGroup;
+			children = (
+				46E0AAB51E69AF830027E95B /* Speech */,
+				46E0AAB81E69AF830027E95B /* YDownloadManager.h */,
+				46E0AAB91E69AF830027E95B /* YDownloadManager.m */,
+				46E0AABA1E69AF830027E95B /* YReaderManager.h */,
+				46E0AABB1E69AF830027E95B /* YReaderManager.m */,
+				46E0AABC1E69AF830027E95B /* YReaderRecord.h */,
+				46E0AABD1E69AF830027E95B /* YReaderRecord.m */,
+				46E0AABE1E69AF830027E95B /* YReaderSettings.h */,
+				46E0AABF1E69AF830027E95B /* YReaderSettings.m */,
+				46E0AAC01E69AF830027E95B /* YReaderUniversal.h */,
+			);
+			name = ReaderManager;
+			path = YReaderDemo/ReaderManager;
+			sourceTree = SOURCE_ROOT;
+		};
+		46E0AAB51E69AF830027E95B /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				46E0AAB61E69AF830027E95B /* YSpeechManager.h */,
+				46E0AAB71E69AF830027E95B /* YSpeechManager.m */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
 		46EAEF841DFD664D0073AAB7 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,7 +664,6 @@
 				46F9614C1E08210B004B6850 /* YPageBackViewController.m */,
 				4688CCD31E06C73400C88C01 /* Summary */,
 				4696B10F1E041E23001DCC54 /* Directory */,
-				46A48CA91DFF998900DB58A6 /* Universal */,
 				463F5AF81DFE549200999A0B /* View */,
 				463F5AF71DFE549200999A0B /* Model */,
 			);
@@ -823,14 +837,16 @@
 				46110D301DFB9FD20012DAD1 /* YSQLiteManager.m in Sources */,
 				4688CCD21E06AE9E00C88C01 /* YBookUpdateModel.m in Sources */,
 				460D9CF81E0789AE009A608D /* YRankingViewCell.m in Sources */,
-				46A48CB01DFF998900DB58A6 /* YReaderManager.m in Sources */,
+				46E0AAC31E69AF830027E95B /* YReaderManager.m in Sources */,
 				46110D3B1DFBB2B10012DAD1 /* YNavHeaderView.m in Sources */,
 				46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */,
 				463B22DB1E0F586E00B7B3DB /* YMoreSettingsCell.m in Sources */,
 				466537EB1E09058A00162F2F /* YProgressView.m in Sources */,
 				463F5B081DFE9CFB00999A0B /* YReadPageViewController.m in Sources */,
+				46E0AAC21E69AF830027E95B /* YDownloadManager.m in Sources */,
 				46110D351DFBACA60012DAD1 /* YBookDetailViewController.m in Sources */,
 				46B640B41E07B4980049E595 /* YRankingDetailController.m in Sources */,
+				46E0AAC11E69AF830027E95B /* YSpeechManager.m in Sources */,
 				46110D6E1DFC311B0012DAD1 /* YBookReviewModel.m in Sources */,
 				463B22D61E0F567000B7B3DB /* YMoreSettingsViewController.m in Sources */,
 				463F5B011DFE992A00999A0B /* YChaptersLinkModel.m in Sources */,
@@ -840,17 +856,16 @@
 				465D42E21DF95E3700ED1D58 /* YSearchViewController.m in Sources */,
 				463F5B121DFEE52200999A0B /* YBatteryView.m in Sources */,
 				46110D6B1DFC311B0012DAD1 /* YBookAuthorModel.m in Sources */,
-				46A48CB11DFF998900DB58A6 /* YReaderRecord.m in Sources */,
 				465D42D21DF932EE00ED1D58 /* YLeftViewController.m in Sources */,
 				46110D721DFC311B0012DAD1 /* YReviewTableViewCell.m in Sources */,
 				465D42E61DF9879A00ED1D58 /* YTableHeaderView.m in Sources */,
 				4696B1131E041E37001DCC54 /* YDirectoryViewController.m in Sources */,
 				460D9CEE1E076B61009A608D /* YRankingViewController.m in Sources */,
+				46E0AAC41E69AF830027E95B /* YReaderRecord.m in Sources */,
 				46D5DB151DF82AC9009CC6AB /* ViewController.m in Sources */,
 				465D42F21DF99E1D00ED1D58 /* YTagViewCell.m in Sources */,
 				46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */,
 				463F5AFE1DFE97C400999A0B /* YBookSummaryModel.m in Sources */,
-				464236F21E02AC8A0092F7A7 /* YDownloadManager.m in Sources */,
 				46B640B01E07988B0049E595 /* YRankingDetialModel.m in Sources */,
 				4688CCDD1E06CA1400C88C01 /* YSummaryViewCell.m in Sources */,
 				4696B1201E054EA0001DCC54 /* YThemeViewCell.m in Sources */,
@@ -871,7 +886,7 @@
 				46110D241DFA85EC0012DAD1 /* YBookDetailCell.m in Sources */,
 				46711E581E0121030051772F /* YBookViewCell.m in Sources */,
 				46110D6C1DFC311B0012DAD1 /* YBookDetailModel.m in Sources */,
-				46A48CB21DFF998900DB58A6 /* YReaderSettings.m in Sources */,
+				46E0AAC51E69AF830027E95B /* YReaderSettings.m in Sources */,
 				465D42CD1DF932DC00ED1D58 /* YCenterViewController.m in Sources */,
 				465D42D71DF932FD00ED1D58 /* YRightViewController.m in Sources */,
 			);
@@ -998,7 +1013,7 @@
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReaderDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1014,7 +1029,7 @@
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReaderDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
