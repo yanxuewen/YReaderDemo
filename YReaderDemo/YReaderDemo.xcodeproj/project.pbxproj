@@ -95,6 +95,8 @@
 		46E0AAC31E69AF830027E95B /* YReaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AABB1E69AF830027E95B /* YReaderManager.m */; };
 		46E0AAC41E69AF830027E95B /* YReaderRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AABD1E69AF830027E95B /* YReaderRecord.m */; };
 		46E0AAC51E69AF830027E95B /* YReaderSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AABF1E69AF830027E95B /* YReaderSettings.m */; };
+		46E0AACA1E6B0CF10027E95B /* YSpeechViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E0AAC81E6B0CF10027E95B /* YSpeechViewController.m */; };
+		46E0AACB1E6B0CF10027E95B /* YSpeechViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E0AAC91E6B0CF10027E95B /* YSpeechViewController.xib */; };
 		46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */; };
 		46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F9614C1E08210B004B6850 /* YPageBackViewController.m */; };
 /* End PBXBuildFile section */
@@ -249,6 +251,9 @@
 		46E0AABE1E69AF830027E95B /* YReaderSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderSettings.h; sourceTree = "<group>"; };
 		46E0AABF1E69AF830027E95B /* YReaderSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderSettings.m; sourceTree = "<group>"; };
 		46E0AAC01E69AF830027E95B /* YReaderUniversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderUniversal.h; sourceTree = "<group>"; };
+		46E0AAC71E6B0CF10027E95B /* YSpeechViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSpeechViewController.h; sourceTree = "<group>"; };
+		46E0AAC81E6B0CF10027E95B /* YSpeechViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSpeechViewController.m; sourceTree = "<group>"; };
+		46E0AAC91E6B0CF10027E95B /* YSpeechViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YSpeechViewController.xib; sourceTree = "<group>"; };
 		46EAEF851DFD668C0073AAB7 /* YReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YReaderViewController.h; sourceTree = "<group>"; };
 		46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderViewController.m; sourceTree = "<group>"; };
 		46F9614B1E08210B004B6850 /* YPageBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPageBackViewController.h; sourceTree = "<group>"; };
@@ -646,6 +651,16 @@
 			path = Speech;
 			sourceTree = "<group>";
 		};
+		46E0AAC61E6B0CD70027E95B /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				46E0AAC71E6B0CF10027E95B /* YSpeechViewController.h */,
+				46E0AAC81E6B0CF10027E95B /* YSpeechViewController.m */,
+				46E0AAC91E6B0CF10027E95B /* YSpeechViewController.xib */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
 		46EAEF841DFD664D0073AAB7 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +677,7 @@
 				463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */,
 				46F9614B1E08210B004B6850 /* YPageBackViewController.h */,
 				46F9614C1E08210B004B6850 /* YPageBackViewController.m */,
+				46E0AAC61E6B0CD70027E95B /* Speech */,
 				4688CCD31E06C73400C88C01 /* Summary */,
 				4696B10F1E041E23001DCC54 /* Directory */,
 				463F5AF81DFE549200999A0B /* View */,
@@ -756,6 +772,7 @@
 				46D5DB181DF82AC9009CC6AB /* Main.storyboard in Resources */,
 				463B22D11E0EAA1600B7B3DB /* simplified.txt in Resources */,
 				4688CCD81E06C75B00C88C01 /* YSummaryViewController.xib in Resources */,
+				46E0AACB1E6B0CF10027E95B /* YSpeechViewController.xib in Resources */,
 				46110D3D1DFBB2C70012DAD1 /* YNavHeaderView.xib in Resources */,
 				465D42F31DF99E1D00ED1D58 /* YTagViewCell.xib in Resources */,
 				460D9CEF1E076B61009A608D /* YRankingViewController.xib in Resources */,
@@ -874,6 +891,7 @@
 				460D9CF41E076E08009A608D /* YRankingModel.m in Sources */,
 				46110D771DFC43590012DAD1 /* YRecommendBookCell.m in Sources */,
 				46D5DB121DF82AC9009CC6AB /* AppDelegate.m in Sources */,
+				46E0AACA1E6B0CF10027E95B /* YSpeechViewController.m in Sources */,
 				465D42DD1DF94D7500ED1D58 /* YBaseViewController.m in Sources */,
 				46D5DB0F1DF82AC9009CC6AB /* main.m in Sources */,
 				46110D6F1DFC311B0012DAD1 /* YRecommendBookListModel.m in Sources */,
