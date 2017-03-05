@@ -10,6 +10,7 @@
 #import "YReadPageViewController.h"
 #import "YDirectoryViewController.h"
 #import "YPageBackViewController.h"
+#import "YSpeechViewController.h"
 #import "YMenuViewController.h"
 #import "YReaderManager.h"
 #import "YNetworkManager.h"
@@ -24,6 +25,7 @@
 @property (assign, nonatomic) NSUInteger chapter;
 @property (assign, nonatomic) NSUInteger page;
 @property (strong, nonatomic) YMenuViewController *menuView;
+@property (strong, nonatomic) YSpeechViewController *speechView;
 
 @property (strong, nonatomic) YDirectoryViewController *directoryVC;
 @property (strong, nonatomic) YSummaryViewController *summaryVC;
@@ -73,6 +75,8 @@
     }];
     
     [self setupMenuView];
+    [self setupSpeechView];
+    
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         
         [wself.menuView showMenuView];
@@ -109,7 +113,9 @@
             }
                 break;
             case 101:           //播放
-                
+                wself.speechView.page = wself.page;
+                wself.speechView.chapter = wself.chapter;
+                [wself.speechView showSpeechView];
                 break;
             case 102: {          //关闭
                 [wself dismissViewControllerAnimated:YES completion:^{
@@ -126,6 +132,13 @@
                 break;
         }
     };
+}
+
+- (void)setupSpeechView {
+    self.speechView = [[YSpeechViewController alloc] init];
+    self.speechView.view.frame = self.view.bounds;
+    [self.view addSubview:self.speechView.view];
+    self.speechView.view.hidden = YES;
 }
 
 - (void)setupPageViewController {

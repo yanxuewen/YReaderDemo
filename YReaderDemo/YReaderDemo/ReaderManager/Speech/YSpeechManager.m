@@ -36,9 +36,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+//        _speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
+//        _speechSynthesizer.delegate = self;
         _speechCount = 0;
-        _speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
-        _speechSynthesizer.delegate = self;
         _speechRate = AVSpeechUtteranceDefaultSpeechRate;
         _speechVolume = 1;
         _voiceType = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];
@@ -73,7 +73,7 @@
     speechUtterance.voice = _voiceType;
     speechUtterance.volume = _speechVolume;
     speechUtterance.rate = _speechRate;
-    [_speechSynthesizer speakUtterance:speechUtterance];
+    [self.speechSynthesizer speakUtterance:speechUtterance];
     
 }
 
@@ -87,6 +87,11 @@
 
 - (void)exitSpeech {
     [_speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    _speechSynthesizer.delegate = nil;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setActive:NO error:nil];
+    _speechSynthesizer = nil;
+    _state = YSpeechStateNone;
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance {
@@ -140,6 +145,15 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(speechManagerUpdateState:)]) {
         [self.delegate speechManagerUpdateState:state];
     }
+    self.state = state;
+}
+
+- (AVSpeechSynthesizer *)speechSynthesizer {
+    if (!_speechSynthesizer) {
+        _speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
+        _speechSynthesizer.delegate = self;
+    }
+    return _speechSynthesizer;
 }
 
 @end

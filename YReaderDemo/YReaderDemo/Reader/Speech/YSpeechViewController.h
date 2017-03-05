@@ -10,4 +10,8 @@
 
 @interface YSpeechViewController : YBaseViewController
 
+@property (assign, nonatomic) NSUInteger page;
+@property (assign, nonatomic) NSUInteger chapter;
+- (void)showSpeechView;
+
 @end

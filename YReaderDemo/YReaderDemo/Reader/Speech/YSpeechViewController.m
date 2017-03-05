@@ -7,8 +7,18 @@
 //
 
 #import "YSpeechViewController.h"
+#import "YSpeechManager.h"
+#import "YReaderManager.h"
 
 @interface YSpeechViewController ()
+
+@property (weak, nonatomic) IBOutlet UIView *backView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backViewBottom;
+@property (weak, nonatomic) IBOutlet UIButton *exitBtn;
+@property (weak, nonatomic) IBOutlet UIButton *playBtn;
+@property (weak, nonatomic) IBOutlet UIView *tapView;
+@property (strong, nonatomic) YSpeechManager *speechManager;
+@property (strong, nonatomic) YReaderManager *readerManager;
 
 @end
 
@@ -16,7 +26,101 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.exitBtn.layer.borderWidth = 1;
+    self.exitBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.exitBtn.layer.cornerRadius = 6;
+    
+    self.playBtn.layer.borderWidth = 1;
+    self.playBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.playBtn.layer.cornerRadius = 6;
+    __weak typeof(self) wself = self;
+    [self.tapView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+        if (wself.backViewBottom.constant == 0) {
+            [wself hideSpeechView];
+        } else {
+            [wself showSpeechView];
+        }
+        
+    }]];
+    [self.backView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+        
+    }]];
+}
+
+- (IBAction)timerBtnAction:(UIButton *)sender {
+    NSLog(@"%s tag:%zi",__func__,sender.tag);
+}
+
+- (IBAction)playBtnAction:(UIButton *)sender {
+    NSLog(@"%s tag:%zi",__func__,sender.tag);
+    if (sender.tag == 200) {        ///exit
+        [self hideSpeechView];
+        [self.speechManager exitSpeech];
+        self.view.hidden = YES;
+    } else if (sender.tag == 201) { /// play/pause
+        if ([sender.currentTitle isEqualToString:@"开始"]) {
+            [sender setTitle:@"暂停" forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"readAloud_pause"] forState:UIControlStateNormal];
+            [self.speechManager continueSpeech];
+        } else if ([sender.currentTitle isEqualToString:@"暂停"]) {
+            [sender setTitle:@"开始" forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"readAloud_play"] forState:UIControlStateNormal];
+            [self.speechManager pauseSpeech];
+        }
+    }
+}
+
+- (IBAction)speechRateSliderValueChanged:(UISlider *)sender {
+    NSLog(@"%s val:%.2f",__func__,sender.value);
+}
+
+- (void)showSpeechView {
+    self.view.hidden = false;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.backViewBottom.constant = 0;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [self startSpeechCurrentPageContent];
+    }];
+}
+
+- (void)hideSpeechView {
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.backViewBottom.constant = -self.backView.height;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)startSpeechCurrentPageContent {
+    if (self.speechManager.state == YSpeechStateNone) {
+        
+        if (_chapter < self.readerManager.chaptersArr.count) {
+            YChapterContentModel *chapterM = self.readerManager.chaptersArr[_chapter];
+            NSRange range = [chapterM getRangeWith:_page];
+            if (range.length > 0) {
+                NSString *str = [chapterM.body substringWithRange:range];
+                [self.speechManager startSpeechWith:str];
+            }
+        }
+    }
+}
+
+
+- (YSpeechManager *)speechManager {
+    if (!_speechManager) {
+        _speechManager = [YSpeechManager shareSpeechManager];
+    }
+    return _speechManager;
+}
+
+- (YReaderManager *)readerManager {
+    if (!_readerManager) {
+        _readerManager = [YReaderManager shareReaderManager];
+    }
+    return _readerManager;
 }
 
 - (void)didReceiveMemoryWarning {

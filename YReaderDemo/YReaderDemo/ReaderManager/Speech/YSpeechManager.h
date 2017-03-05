@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger,YSpeechState) {
 @interface YSpeechManager : NSObject
 
 @property (weak, nonatomic) id<YSpeechManagerDelegate> delegate;
+@property (assign, nonatomic) YSpeechState state;
 
 + (instancetype)shareSpeechManager;
 - (void)startSpeechWith:(NSString *)string;

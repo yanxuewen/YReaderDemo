@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSMutableArray *pageArr;
 @property (strong, nonatomic) NSMutableAttributedString *attributedString;
 
+
 @end
 
 @implementation YChapterContentModel
@@ -56,6 +57,14 @@
 }
 
 - (NSAttributedString *)getStringWith:(NSUInteger)page {
+    NSRange range = [self getRangeWith:page];
+    if (range.length > 0) {
+        return [_attributedString attributedSubstringFromRange:range];
+    }
+    return nil;
+}
+
+- (NSRange)getRangeWith:(NSUInteger)page {
     if (page < _pageArr.count) {
         NSUInteger loc = [_pageArr[page] integerValue];
         NSUInteger len = 0;
@@ -64,9 +73,9 @@
         } else {
             len = [_pageArr[page + 1] integerValue] - loc;
         }
-        return [_attributedString attributedSubstringFromRange:NSMakeRange(loc, len)];
+        return NSMakeRange(loc, len);
     }
-    return nil;
+    return NSMakeRange(0, 0);
 }
 
 + (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link load:(BOOL)isLoadCache{
