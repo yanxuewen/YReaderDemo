@@ -11,6 +11,8 @@
 @interface YReaderView : UIView
 
 @property (strong, nonatomic) NSAttributedString *content;
+@property (strong, nonatomic) NSAttributedString *sourceAttributedString;
 @property (assign, nonatomic) CTFrameRef contentFrame;
+- (void)updateSpeakString:(NSString *)string;
 
 @end

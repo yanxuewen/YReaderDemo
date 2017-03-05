@@ -8,10 +8,20 @@
 
 #import "YBaseViewController.h"
 
+@protocol YSpeechViewDelegate <NSObject>
+
+@optional;
+- (void)speechViewWillSpeakString:(NSString *)string pageFinished:(BOOL)isFinished;
+- (void)speechViewExitSpeak;
+
+@end
+
 @interface YSpeechViewController : YBaseViewController
 
+@property (weak, nonatomic) id<YSpeechViewDelegate> delegate;
 @property (assign, nonatomic) NSUInteger page;
 @property (assign, nonatomic) NSUInteger chapter;
 - (void)showSpeechView;
+- (void)updateSpeakChapter:(NSUInteger)chapter page:(NSUInteger)page;
 
 @end

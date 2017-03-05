@@ -10,7 +10,7 @@
 #import "YSpeechManager.h"
 #import "YReaderManager.h"
 
-@interface YSpeechViewController ()
+@interface YSpeechViewController ()<YSpeechManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *backView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backViewBottom;
@@ -56,6 +56,9 @@
     if (sender.tag == 200) {        ///exit
         [self hideSpeechView];
         [self.speechManager exitSpeech];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewExitSpeak)]) {
+            [self.delegate speechViewExitSpeak];
+        }
         self.view.hidden = YES;
     } else if (sender.tag == 201) { /// play/pause
         if ([sender.currentTitle isEqualToString:@"开始"]) {
@@ -80,7 +83,9 @@
         self.backViewBottom.constant = 0;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self startSpeechCurrentPageContent];
+        if (self.speechManager.state == YSpeechStateNone) {
+            [self startSpeechCurrentPageContent];
+        }
     }];
 }
 
@@ -95,23 +100,43 @@
 }
 
 - (void)startSpeechCurrentPageContent {
-    if (self.speechManager.state == YSpeechStateNone) {
-        
-        if (_chapter < self.readerManager.chaptersArr.count) {
-            YChapterContentModel *chapterM = self.readerManager.chaptersArr[_chapter];
-            NSRange range = [chapterM getRangeWith:_page];
-            if (range.length > 0) {
-                NSString *str = [chapterM.body substringWithRange:range];
-                [self.speechManager startSpeechWith:str];
-            }
+    
+    if (_chapter < self.readerManager.chaptersArr.count) {
+        YChapterContentModel *chapterM = self.readerManager.chaptersArr[_chapter];
+        NSRange range = [chapterM getRangeWith:_page];
+        if (range.length > 0) {
+            NSString *str = [chapterM.body substringWithRange:range];
+            [self.speechManager startSpeechWith:str];
+        }
+    }
+    
+}
+
+- (void)updateSpeakChapter:(NSUInteger)chapter page:(NSUInteger)page {
+    _chapter = chapter;
+    _page = page;
+    [self startSpeechCurrentPageContent];
+}
+
+#pragma mark - speech manager delegate
+- (void)speechManagerUpdateState:(YSpeechState)state {
+    if (state == YSpeechStateFinish) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
+            [self.delegate speechViewWillSpeakString:nil pageFinished:YES];
         }
     }
 }
 
+- (void)speechManagerWillChangeSection:(NSUInteger)section string:(NSString *)string {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
+        [self.delegate speechViewWillSpeakString:string pageFinished:NO];
+    }
+}
 
 - (YSpeechManager *)speechManager {
     if (!_speechManager) {
         _speechManager = [YSpeechManager shareSpeechManager];
+        _speechManager.delegate = self;
     }
     return _speechManager;
 }

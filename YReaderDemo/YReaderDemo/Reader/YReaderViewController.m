@@ -17,7 +17,7 @@
 #import "YReaderSettings.h"
 #import "YSummaryViewController.h"
 
-@interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource>
+@interface YReaderViewController ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,YSpeechViewDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) YReaderManager *readerManager;
@@ -32,6 +32,7 @@
 @property (assign, nonatomic) BOOL isPageBefore;//记录向前/后翻页,改变章节时用,
 @property (strong, nonatomic) YReaderSettings *settings;
 @property (assign, nonatomic) BOOL isPageCurlStyle;
+@property (strong, nonatomic) YReadPageViewController *currentReadPage;
 
 @end
 
@@ -137,6 +138,7 @@
 - (void)setupSpeechView {
     self.speechView = [[YSpeechViewController alloc] init];
     self.speechView.view.frame = self.view.bounds;
+    self.speechView.delegate = self;
     [self.view addSubview:self.speechView.view];
     self.speechView.view.hidden = YES;
 }
@@ -161,7 +163,8 @@
     _page = _readerManager.record.readingPage;
     _chapter = _readerManager.record.readingChapter;
     __weak typeof(self) wself = self;
-    [_pageViewController setViewControllers:@[[self readPageViewWithChapter:_chapter page:_page]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
+    _currentReadPage = [self readPageViewWithChapter:_chapter page:_page];
+    [_pageViewController setViewControllers:@[_currentReadPage] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
         if (finished && !wself.isPageCurlStyle) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [wself.pageViewController setViewControllers:@[[wself readPageViewWithChapter:wself.chapter page:wself.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -227,7 +230,8 @@
     self.chapter = chapter;
     self.page = page;
     __weak typeof(self) wself = self;
-    [self.pageViewController setViewControllers:@[[self readPageViewWithChapter:self.chapter page:self.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:^(BOOL finished) {
+    _currentReadPage = [self readPageViewWithChapter:self.chapter page:self.page];
+    [self.pageViewController setViewControllers:@[_currentReadPage] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:^(BOOL finished) {
         if (finished && !wself.isPageCurlStyle) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [wself.pageViewController setViewControllers:@[[wself readPageViewWithChapter:wself.chapter page:wself.page]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -339,6 +343,7 @@
         }
         _page = readPageVC.page;
         _chapter = readPageVC.chapter;
+        _currentReadPage = readPageVC;
         YChapterContentModel *chapterM = self.readerManager.chaptersArr[self.chapter];
         if (!chapterM.isLoad) {
             [self updateReaderChapter:self.chapter page:self.page];
@@ -346,9 +351,32 @@
     }
 }
 
-- (void)appDidEnterBackgroundNotification:(NSNotification *)noti {
-    NSLog(@"%s",__func__);
-    [self.readerManager updateReadingChapter:_chapter page:_page];
+#pragma mark - speech view delegate
+- (void)speechViewWillSpeakString:(NSString *)string pageFinished:(BOOL)isFinished {
+    if (isFinished) {
+        YReadPageViewController *pageVC = _currentReadPage;
+        NSUInteger page = pageVC.page;
+        NSUInteger chapter = pageVC.chapter;
+        if (_isPageCurlStyle) {
+            page = _page;
+            chapter = _chapter;
+        }
+        if (page >= [_readerManager.chaptersArr[chapter] pageCount] - 1) {
+            page = 0;
+            chapter = chapter + 1;
+        } else {
+            page = page + 1;
+        }
+
+        [self reloadReaderPageViewControllerWith:chapter page:page];
+        [self.speechView updateSpeakChapter:_chapter page:_page];
+    } else if (string) {
+        [_currentReadPage updateSpeakString:string];
+    }
+}
+
+- (void)speechViewExitSpeak {
+    [_currentReadPage exitSpeak];
 }
 
 #pragma mark - 选择章节页面
@@ -405,6 +433,11 @@
         [wself.readerManager closeReadingBook];
         [wself dismissViewControllerAnimated:YES completion:nil];
     }];
+}
+
+- (void)appDidEnterBackgroundNotification:(NSNotification *)noti {
+    NSLog(@"%s",__func__);
+    [self.readerManager updateReadingChapter:_chapter page:_page];
 }
 
 - (void)dealloc {

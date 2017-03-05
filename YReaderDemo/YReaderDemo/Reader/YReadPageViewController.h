@@ -16,4 +16,7 @@
 @property (assign, nonatomic) NSUInteger totalPage;
 @property (assign, nonatomic) NSUInteger chapter;
 
+- (void)updateSpeakString:(NSString *)string;
+- (void)exitSpeak;
+
 @end

@@ -50,6 +50,15 @@
     self.timeLabel.text = [[YDateModel shareDateModel] getTimeString];
     [self.batteryView setNeedsDisplay];
     self.readerView.content = self.pageContent;
+    self.readerView.sourceAttributedString = self.pageContent;
+}
+
+- (void)updateSpeakString:(NSString *)string {
+    [self.readerView updateSpeakString:string];
+}
+
+- (void)exitSpeak {
+    self.readerView.content = self.pageContent;
 }
 
 - (void)didReceiveMemoryWarning {

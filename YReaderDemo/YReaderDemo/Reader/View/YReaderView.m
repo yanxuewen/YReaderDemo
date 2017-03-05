@@ -8,6 +8,10 @@
 
 #import "YReaderView.h"
 
+@interface YReaderView ()
+
+@end
+
 @implementation YReaderView
 
 - (void)setContentFrame:(CTFrameRef)contentFrame {
@@ -36,6 +40,18 @@
         CFRelease(pathRef);
     }
     self.contentFrame = frameRef;
+}
+
+- (void)updateSpeakString:(NSString *)string {
+    if (!string) {
+        return;
+    }
+    NSRange range = [_sourceAttributedString.string rangeOfString:string];
+    if (range.location != NSNotFound && range.length > 0) {
+        NSMutableAttributedString *attStr = _sourceAttributedString.mutableCopy;
+        [attStr addAttributes:@{NSBackgroundColorAttributeName:YRGBColor(158, 191, 163)} range:range];
+        self.content = attStr;
+    }
 }
 
 - (void)drawRect:(CGRect)rect {

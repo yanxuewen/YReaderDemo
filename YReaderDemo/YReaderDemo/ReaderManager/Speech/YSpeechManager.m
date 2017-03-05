@@ -88,8 +88,6 @@
 - (void)exitSpeech {
     [_speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
     _speechSynthesizer.delegate = nil;
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setActive:NO error:nil];
     _speechSynthesizer = nil;
     _state = YSpeechStateNone;
 }
