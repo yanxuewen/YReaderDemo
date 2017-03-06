@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = true;
     [self setupUI];
     
     __weak typeof(self) wself = self;

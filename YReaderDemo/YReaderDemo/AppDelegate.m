@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "YNetworkManager.h"
+#import "YSignInViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,6 +34,17 @@
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     [DDLog addLogger:fileLogger];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.window makeKeyAndVisible];
+    
+    UIViewController *viewC = nil;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kYHasLogin"]) {
+        viewC = [[ViewController alloc] init];
+    } else {
+        viewC = [[YSignInViewController alloc] init];
+    }
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:viewC];
     
     return YES;
 }
