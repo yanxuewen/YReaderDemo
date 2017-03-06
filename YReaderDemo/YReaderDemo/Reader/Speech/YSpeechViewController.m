@@ -104,7 +104,8 @@
     if (_chapter < self.readerManager.chaptersArr.count) {
         YChapterContentModel *chapterM = self.readerManager.chaptersArr[_chapter];
         NSRange range = [chapterM getRangeWith:_page];
-        if (range.length > 0) {
+        if (range.location != NSNotFound && range.length > 0) {
+            range.length = chapterM.body.length  - range.location;
             NSString *str = [chapterM.body substringWithRange:range];
             [self.speechManager startSpeechWith:str];
         }

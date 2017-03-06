@@ -46,16 +46,22 @@
                                 <action selector="tapAction:" destination="-1" eventType="touchUpInside" id="zSe-6E-wfS"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zssq_image" translatesAutoresizingMaskIntoConstraints="NO" id="qhm-Yy-kal">
-                            <rect key="frame" x="147" y="31" width="81" height="22"/>
-                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="书荒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fvp-bt-PeP">
+                            <rect key="frame" x="166.5" y="20" width="41" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="Nbi-K5-lhK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.6470588235294118" green="0.054901960784313725" blue="0.082352941176470587" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="qhm-Yy-kal" firstAttribute="centerY" secondItem="uob-6a-Eb6" secondAttribute="centerY" id="CTG-i1-V1V"/>
+                        <constraint firstItem="Fvp-bt-PeP" firstAttribute="top" secondItem="tND-NQ-kSe" secondAttribute="top" constant="20" id="2av-PK-RXW"/>
                         <constraint firstAttribute="trailing" secondItem="0dI-Bl-Rx1" secondAttribute="trailing" id="GEq-HJ-yJ1"/>
-                        <constraint firstItem="qhm-Yy-kal" firstAttribute="centerX" secondItem="tND-NQ-kSe" secondAttribute="centerX" id="Hgx-XB-nVG"/>
                         <constraint firstItem="uob-6a-Eb6" firstAttribute="leading" secondItem="tND-NQ-kSe" secondAttribute="leading" id="Ofg-nP-vf3"/>
+                        <constraint firstItem="Fvp-bt-PeP" firstAttribute="centerX" secondItem="tND-NQ-kSe" secondAttribute="centerX" id="PzO-xI-zav"/>
                         <constraint firstAttribute="height" constant="64" id="c0e-wK-MDR"/>
                         <constraint firstItem="uob-6a-Eb6" firstAttribute="top" secondItem="tND-NQ-kSe" secondAttribute="top" constant="20" id="kiL-Uh-9A0"/>
                         <constraint firstItem="0dI-Bl-Rx1" firstAttribute="top" secondItem="tND-NQ-kSe" secondAttribute="top" constant="20" id="oKD-H4-mce"/>
@@ -87,6 +93,5 @@
         <image name="nav_add_book" width="49" height="44"/>
         <image name="nav_add_book_selected" width="49" height="44"/>
         <image name="nav_home_side_menu" width="49" height="44"/>
-        <image name="zssq_image" width="81" height="22"/>
     </resources>
 </document>

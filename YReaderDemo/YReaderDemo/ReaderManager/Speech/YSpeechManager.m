@@ -47,6 +47,10 @@
 }
 
 - (void)startSpeechWith:(NSString *)string {
+    if (![string isNotBlank]) {
+        [self p_speechUpdateState:YSpeechStateFinish];
+        return;
+    }
     _speechString = string;
     _speechArray = [string componentsSeparatedByString:@"\n"];
     _speechCount = 0;
