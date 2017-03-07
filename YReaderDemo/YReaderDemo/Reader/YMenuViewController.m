@@ -94,16 +94,22 @@
     } else {
         cell.selectImage.hidden = YES;
     }
+    __weak typeof(self) wself = self;
+    cell.themeSelect = ^{
+        wself.settings.theme = indexPath.row;
+        wself.selectTheme = indexPath.row;
+        [wself.themeCollectionView reloadData];
+    };
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%s %@",__func__,indexPath);
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    self.settings.theme = indexPath.row;
-    self.selectTheme = indexPath.row;
-    [collectionView reloadData];
-}
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"%s %@",__func__,indexPath);
+////    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+////    self.settings.theme = indexPath.row;
+////    self.selectTheme = indexPath.row;
+////    [collectionView reloadData];
+//}
 
 #pragma mark - download Chpaters
 - (void)downloadChpatersWith:(YDownloadType)type {

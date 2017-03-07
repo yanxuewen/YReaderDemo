@@ -107,6 +107,7 @@
         if (range.location != NSNotFound && range.length > 0) {
             range.length = chapterM.body.length  - range.location;
             NSString *str = [chapterM.body substringWithRange:range];
+            
             [self.speechManager startSpeechWith:str];
         }
     }

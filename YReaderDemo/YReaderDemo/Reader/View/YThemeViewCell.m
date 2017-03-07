@@ -12,7 +12,12 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-
+    __weak typeof(self) wself = self;
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+        if (wself.themeSelect) {
+            wself.themeSelect();
+        }
+    }]];
 }
 
 

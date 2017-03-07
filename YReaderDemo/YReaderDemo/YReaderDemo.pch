@@ -34,6 +34,7 @@
 static const int ddLogLevel = DDLogLevelVerbose;
 #else
 static const int ddLogLevel = DDLogLevelWarning;
+#define NSLog(FORMAT, ...) nil
 #endif
 
 #endif /* YReaderDemo_pch */
