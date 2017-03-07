@@ -17,7 +17,6 @@
 @property (assign, nonatomic) double speechRate;    // Values are pinned between AVSpeechUtteranceMinimumSpeechRate and AVSpeechUtteranceMaximumSpeechRate.
 @property (assign, nonatomic) double speechVolume;  // [0-1] Default = 1
 @property (strong, nonatomic) AVSpeechSynthesisVoice *voiceType;//zh-CN
-@property (strong, nonatomic) NSString *speechString;
 @property (assign, nonatomic) NSRange speechRange;
 
 @end
@@ -147,7 +146,7 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(speechManagerUpdateState:)]) {
         [self.delegate speechManagerUpdateState:state];
     }
-    self.state = state;
+    _state = state;
 }
 
 - (AVSpeechSynthesizer *)speechSynthesizer {
@@ -157,5 +156,6 @@
     }
     return _speechSynthesizer;
 }
+
 
 @end

@@ -370,6 +370,8 @@
 
         [self reloadReaderPageViewControllerWith:chapter page:page];
         [self.speechView updateSpeakChapter:_chapter page:_page];
+        [_currentReadPage updateSpeakString:string];
+        
     } else if (string) {
         [_currentReadPage updateSpeakString:string];
     }

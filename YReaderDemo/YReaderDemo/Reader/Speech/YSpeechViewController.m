@@ -19,7 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIView *tapView;
 @property (strong, nonatomic) YSpeechManager *speechManager;
 @property (strong, nonatomic) YReaderManager *readerManager;
-
+@property (strong, nonatomic) YChapterContentModel *speechChapterM;
+@property (assign, nonatomic) NSUInteger startSpeechCount;//开始阅读的位置
 @end
 
 @implementation YSpeechViewController
@@ -56,6 +57,8 @@
     if (sender.tag == 200) {        ///exit
         [self hideSpeechView];
         [self.speechManager exitSpeech];
+        _chapter = NSUIntegerMax;
+        _page = NSUIntegerMax;
         if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewExitSpeak)]) {
             [self.delegate speechViewExitSpeak];
         }
@@ -103,11 +106,12 @@
     
     if (_chapter < self.readerManager.chaptersArr.count) {
         YChapterContentModel *chapterM = self.readerManager.chaptersArr[_chapter];
+        _speechChapterM = chapterM;
         NSRange range = [chapterM getRangeWith:_page];
         if (range.location != NSNotFound && range.length > 0) {
             range.length = chapterM.body.length  - range.location;
             NSString *str = [chapterM.body substringWithRange:range];
-            
+            _startSpeechCount = range.location;
             [self.speechManager startSpeechWith:str];
         }
     }
@@ -115,9 +119,14 @@
 }
 
 - (void)updateSpeakChapter:(NSUInteger)chapter page:(NSUInteger)page {
-    _chapter = chapter;
-    _page = page;
-    [self startSpeechCurrentPageContent];
+    if (chapter != _chapter) {
+        _chapter = chapter;
+        _page = page;
+        [self startSpeechCurrentPageContent];
+    } else {
+        _chapter = chapter;
+        _page = page;
+    }
 }
 
 #pragma mark - speech manager delegate
@@ -131,9 +140,34 @@
 
 - (void)speechManagerWillChangeSection:(NSUInteger)section string:(NSString *)string {
     if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
-        [self.delegate speechViewWillSpeakString:string pageFinished:NO];
+        NSRange range = [_speechChapterM.body rangeOfString:string];
+        if (range.location != NSNotFound && range.length > 0) {
+            NSRange pageRange = [_speechChapterM getRangeWith:_page];
+            if (range.location < pageRange.location + pageRange.length) {
+                if (range.location + range.length > pageRange.location + pageRange.length) {
+                    string = [string substringToIndex:pageRange.location + pageRange.length- range.location];
+                }
+                [self.delegate speechViewWillSpeakString:string pageFinished:NO];
+            } else {
+                NSLog(@"分段是正好分页,这里不返回了");
+            }
+            
+        }
     }
 }
+
+- (void)speechManagerWillSpeakRange:(NSRange)range {
+    NSUInteger speechCount = _startSpeechCount + range.location;
+    NSRange pageRange = [_speechChapterM getRangeWith:_page];
+    if (speechCount > pageRange.location + pageRange.length) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
+            NSString *string = [_speechManager.speechString substringWithRange:NSMakeRange(range.location, _speechManager.speechString.length - range.location)];
+            
+            [self.delegate speechViewWillSpeakString:string pageFinished:YES];
+        }
+    }
+}
+
 
 - (YSpeechManager *)speechManager {
     if (!_speechManager) {

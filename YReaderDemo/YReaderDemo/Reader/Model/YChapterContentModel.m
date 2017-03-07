@@ -12,7 +12,7 @@
 
 @interface YChapterContentModel ()
 
-@property (strong, nonatomic) NSMutableArray *pageArr;
+
 @property (strong, nonatomic) NSMutableAttributedString *attributedString;
 
 
@@ -29,7 +29,7 @@
 }
 
 - (void)pagingWithBounds:(CGRect)bounds {
-    _pageArr = @[].mutableCopy;
+    NSMutableArray *rangeArr = @[].mutableCopy;
     YReaderSettings *settings = [YReaderSettings shareReaderSettings];
     NSString *content = settings.isTraditional ? self.traditionalStr : self.body;
     NSMutableAttributedString *attr = [[NSMutableAttributedString  alloc] initWithString:content attributes:settings.readerAttributes];
@@ -37,21 +37,26 @@
     CGPathRef path = CGPathCreateWithRect(bounds, NULL);
     CFRange range = CFRangeMake(0, 0);
     NSUInteger rangeOffset = 0;
+    
     do {
         CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(rangeOffset, 0), path, NULL);
         range = CTFrameGetVisibleStringRange(frame);
+        [rangeArr addObject:[NSValue valueWithRange:NSMakeRange(rangeOffset, range.length)]];
         rangeOffset += range.length;
-        [_pageArr addObject:@(range.location)];
         if (frame) {
             CFRelease(frame);
         }
     } while (range.location + range.length < attr.length);
+    
     if (path) {
         CFRelease(path);
     }
+    
     if (frameSetter) {
         CFRelease(frameSetter);
     }
+    
+    _pageArr = rangeArr;
     _pageCount = _pageArr.count;
     _attributedString = attr;
 }
@@ -66,16 +71,9 @@
 
 - (NSRange)getRangeWith:(NSUInteger)page {
     if (page < _pageArr.count) {
-        NSUInteger loc = [_pageArr[page] integerValue];
-        NSUInteger len = 0;
-        if (page == _pageArr.count - 1) {
-            len = _attributedString.length - loc;
-        } else {
-            len = [_pageArr[page + 1] integerValue] - loc;
-        }
-        return NSMakeRange(loc, len);
+        return [_pageArr[page] rangeValue];
     }
-    return NSMakeRange(0, 0);
+    return NSMakeRange(NSNotFound, 0);
 }
 
 + (instancetype)chapterModelWith:(NSString *)title link:(NSString *)link load:(BOOL)isLoadCache{

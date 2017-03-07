@@ -16,6 +16,7 @@
 @property (nonatomic, assign) BOOL isLoad;          //从本地加载到内存,为了速度,内存等
 @property (nonatomic, assign) BOOL isLoadCache;        //从网络下载到本地
 @property (nonatomic, assign) NSUInteger pageCount;
+@property (strong, nonatomic) NSMutableArray *pageArr;
 
 @property (strong, nonatomic) NSString *traditionalStr;//body对于繁体
 
