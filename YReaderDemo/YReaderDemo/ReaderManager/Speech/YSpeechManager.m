@@ -14,10 +14,12 @@
 @property (strong, nonatomic) AVSpeechSynthesizer *speechSynthesizer;
 @property (strong, nonatomic) NSArray *speechArray;
 @property (assign, nonatomic) NSUInteger speechCount;
-@property (assign, nonatomic) double speechRate;    // Values are pinned between AVSpeechUtteranceMinimumSpeechRate and AVSpeechUtteranceMaximumSpeechRate.
+@property (assign, nonatomic) double speechRate;    // Values are pinned between AVSpeechUtteranceMinimumSpeechRate:0 and AVSpeechUtteranceMaximumSpeechRate:1.
 @property (assign, nonatomic) double speechVolume;  // [0-1] Default = 1
 @property (strong, nonatomic) AVSpeechSynthesisVoice *voiceType;//zh-CN
 @property (assign, nonatomic) NSRange speechRange;
+@property (copy, nonatomic) NSString *sourceSpeechString;
+@property (strong, nonatomic) AVSpeechUtterance *speechUtterance;
 
 @end
 
@@ -38,7 +40,7 @@
 //        _speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
 //        _speechSynthesizer.delegate = self;
         _speechCount = 0;
-        _speechRate = AVSpeechUtteranceDefaultSpeechRate;
+        _speechRate = AVSpeechUtteranceDefaultSpeechRate + 0.2;
         _speechVolume = 1;
         _voiceType = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];
     }
@@ -50,7 +52,7 @@
         [self p_speechUpdateState:YSpeechStateFinish];
         return;
     }
-    _speechString = string;
+    _sourceSpeechString = string;
     _speechArray = [string componentsSeparatedByString:@"\n"];
     _speechCount = 0;
     if (!_speechArray) {
@@ -77,7 +79,7 @@
     speechUtterance.volume = _speechVolume;
     speechUtterance.rate = _speechRate;
     [self.speechSynthesizer speakUtterance:speechUtterance];
-    
+    _speechUtterance = speechUtterance;
 }
 
 - (void)continueSpeech {
@@ -107,7 +109,7 @@
     NSLog(@"%s",__func__);
     _speechCount++;
     if (_speechCount < _speechArray.count) {
-        NSRange range = [_speechString rangeOfString:_speechArray[_speechCount]];
+        NSRange range = [_sourceSpeechString rangeOfString:_speechArray[_speechCount]];
         if (range.location != NSNotFound && range.length > 0) {
             _speechRange.location = range.location - 1;
         }
@@ -135,7 +137,7 @@
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer willSpeakRangeOfSpeechString:(NSRange)characterRange utterance:(AVSpeechUtterance *)utterance {
     //    NSLog(@"%s",__func__);
-        NSLog(@"characterRange:%@",NSStringFromRange(characterRange));
+//        NSLog(@"characterRange:%@",NSStringFromRange(characterRange));
     _speechRange = NSMakeRange(_speechRange.location+characterRange.length, characterRange.length);
     if (self.delegate && [self.delegate respondsToSelector:@selector(speechManagerWillSpeakRange:)]) {
         [self.delegate speechManagerWillSpeakRange:_speechRange];
@@ -157,5 +159,16 @@
     return _speechSynthesizer;
 }
 
+- (NSString *)speakingString {
+    return _speechUtterance.speechString;
+}
+
+- (NSUInteger)sectionStringCount {
+    NSRange range = [_sourceSpeechString rangeOfString:_speechUtterance.speechString];
+    if (range.location != NSNotFound) {
+        return range.location;
+    }
+    return 0;
+}
 
 @end

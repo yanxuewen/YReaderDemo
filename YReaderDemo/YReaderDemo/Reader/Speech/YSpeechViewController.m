@@ -55,14 +55,7 @@
 - (IBAction)playBtnAction:(UIButton *)sender {
     NSLog(@"%s tag:%zi",__func__,sender.tag);
     if (sender.tag == 200) {        ///exit
-        [self hideSpeechView];
-        [self.speechManager exitSpeech];
-        _chapter = NSUIntegerMax;
-        _page = NSUIntegerMax;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewExitSpeak)]) {
-            [self.delegate speechViewExitSpeak];
-        }
-        self.view.hidden = YES;
+        [self exitSpeechString];
     } else if (sender.tag == 201) { /// play/pause
         if ([sender.currentTitle isEqualToString:@"开始"]) {
             [sender setTitle:@"暂停" forState:UIControlStateNormal];
@@ -157,17 +150,40 @@
 }
 
 - (void)speechManagerWillSpeakRange:(NSRange)range {
-    NSUInteger speechCount = _startSpeechCount + range.location;
+    NSUInteger speechCount = _startSpeechCount + range.location + (range.length - 1);
     NSRange pageRange = [_speechChapterM getRangeWith:_page];
-    if (speechCount > pageRange.location + pageRange.length) {
+    if (speechCount >= pageRange.location + pageRange.length) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
-            NSString *string = [_speechManager.speechString substringWithRange:NSMakeRange(range.location, _speechManager.speechString.length - range.location)];
             
-            [self.delegate speechViewWillSpeakString:string pageFinished:YES];
+            NSUInteger count = _speechManager.speakingString.length - (range.location - _speechManager.sectionStringCount);
+            if (range.length > 1) {
+                if (_startSpeechCount + range.location <= pageRange.location + pageRange.length) {
+                    count -= (range.length - 1);
+                }
+            }
+            if (_speechManager.speakingString.length >= count) {
+                NSString *string = [_speechManager.speakingString substringWithRange:NSMakeRange(_speechManager.speakingString.length - count, count)];
+                [self.delegate speechViewWillSpeakString:string pageFinished:YES];
+            } else {
+                DDLogError(@"speechManagerWillSpeakRange error _speechManager.speakingString.length:%zi < count:%zi   speakingString:%@",_speechManager.speakingString.length,count,_speechManager.speakingString);
+                [self exitSpeechString];
+            }
+            
         }
     }
 }
 
+
+- (void)exitSpeechString {
+    [self hideSpeechView];
+    [self.speechManager exitSpeech];
+    _chapter = NSUIntegerMax;
+    _page = NSUIntegerMax;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewExitSpeak)]) {
+        [self.delegate speechViewExitSpeak];
+    }
+    self.view.hidden = YES;
+}
 
 - (YSpeechManager *)speechManager {
     if (!_speechManager) {

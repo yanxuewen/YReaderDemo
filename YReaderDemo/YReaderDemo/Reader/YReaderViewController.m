@@ -361,15 +361,19 @@
             page = _page;
             chapter = _chapter;
         }
+        NSLog(@"chapter %zi  page:%zi",chapter,page);
         if (page >= [_readerManager.chaptersArr[chapter] pageCount] - 1) {
             page = 0;
             chapter = chapter + 1;
         } else {
             page = page + 1;
         }
-
+        
+        _isPageBefore = NO;
+        NSLog(@"chapter %zi  page:%zi",chapter,page);
         [self reloadReaderPageViewControllerWith:chapter page:page];
         [self.speechView updateSpeakChapter:_chapter page:_page];
+        NSLog(@"chapter %zi  page:%zi",_chapter,_page);
         [_currentReadPage updateSpeakString:string];
         
     } else if (string) {

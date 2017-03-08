@@ -29,7 +29,8 @@ typedef NS_ENUM(NSInteger,YSpeechState) {
 
 @property (weak, nonatomic) id<YSpeechManagerDelegate> delegate;
 @property (assign, nonatomic, readonly) YSpeechState state;
-@property (copy, nonatomic) NSString *speechString;
+@property (copy, nonatomic, readonly) NSString *speakingString;
+@property (assign, nonatomic, readonly) NSUInteger sectionStringCount;//正在读的该段,在整个string中位置
 
 + (instancetype)shareSpeechManager;
 - (void)startSpeechWith:(NSString *)string;
