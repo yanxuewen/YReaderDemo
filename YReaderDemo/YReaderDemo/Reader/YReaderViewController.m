@@ -370,6 +370,10 @@
         }
         
         _isPageBefore = NO;
+        if (chapter != _chapter) {
+            YChapterContentModel *chapterM = self.readerManager.chaptersArr[chapter];
+            [chapterM updateContentPaging];
+        }
         NSLog(@"chapter %zi  page:%zi",chapter,page);
         [self reloadReaderPageViewControllerWith:chapter page:page];
         [self.speechView updateSpeakChapter:_chapter page:_page];
