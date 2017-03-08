@@ -154,13 +154,12 @@
     NSRange pageRange = [_speechChapterM getRangeWith:_page];
     if (speechCount >= pageRange.location + pageRange.length) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
-            
-            NSUInteger count = _speechManager.speakingString.length - (range.location - _speechManager.sectionStringCount);
-            if (range.length > 1) {
-                if (_startSpeechCount + range.location <= pageRange.location + pageRange.length) {
-                    count -= (range.length - 1);
-                }
+
+            NSUInteger count = _speechManager.sectionStringCount + _startSpeechCount + _speechManager.speakingString.length - pageRange.location - pageRange.length;
+            if (_speechManager.sectionStringCount + _startSpeechCount > pageRange.location + pageRange.length) {
+                count = _speechManager.speakingString.length;
             }
+            
             if (_speechManager.speakingString.length >= count) {
                 NSString *string = [_speechManager.speakingString substringWithRange:NSMakeRange(_speechManager.speakingString.length - count, count)];
                 [self.delegate speechViewWillSpeakString:string pageFinished:YES];
@@ -168,7 +167,6 @@
                 DDLogError(@"speechManagerWillSpeakRange error _speechManager.speakingString.length:%zi < count:%zi   speakingString:%@",_speechManager.speakingString.length,count,_speechManager.speakingString);
                 [self exitSpeechString];
             }
-            
         }
     }
 }

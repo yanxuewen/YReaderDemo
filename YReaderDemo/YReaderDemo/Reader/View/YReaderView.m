@@ -47,7 +47,12 @@
         return;
     }
     NSRange range = [_sourceAttributedString.string rangeOfString:string];
+    if ([string hasPrefix:@"\t"]) {
+        range.location ++;
+        range.length --;
+    }
     if (range.location != NSNotFound && range.length > 0) {
+        
         NSMutableAttributedString *attStr = _sourceAttributedString.mutableCopy;
         [attStr addAttributes:@{NSBackgroundColorAttributeName:YRGBColor(158, 191, 163)} range:range];
         self.content = attStr;
