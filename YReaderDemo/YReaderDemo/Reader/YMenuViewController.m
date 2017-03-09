@@ -369,10 +369,10 @@
         NSLog(@"tapAction %zi",tag);
         switch (tag) {
             case 200:           //日/夜间模式切换
-                
+                [wself hideSettingView];
                 break;
             case 201:           //反馈
-                
+                [wself hideSettingView];
                 break;
             case 202: {          //目录
                 [wself hideMenuView];
