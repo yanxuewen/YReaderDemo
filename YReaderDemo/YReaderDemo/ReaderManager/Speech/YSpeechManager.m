@@ -40,7 +40,7 @@
 //        _speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
 //        _speechSynthesizer.delegate = self;
         _speechCount = 0;
-        _speechRate = AVSpeechUtteranceDefaultSpeechRate + 0.2;
+        _speechRate = AVSpeechUtteranceDefaultSpeechRate;
         _speechVolume = 1;
         _voiceType = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];
     }
@@ -95,6 +95,16 @@
     _speechSynthesizer.delegate = nil;
     _speechSynthesizer = nil;
     _state = YSpeechStateNone;
+}
+
+- (void)changeSpeechRate:(double)rate {
+    double newRate = (rate - 0.5) / 2.0 + 0.5;
+    if (newRate != _speechRate) {
+        _speechRate = newRate;
+        [_speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+        _speechRange = [_sourceSpeechString rangeOfString:self.speakingString];
+        [self p_startSpeechWith:_speechArray[_speechCount]];
+    }
 }
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance {

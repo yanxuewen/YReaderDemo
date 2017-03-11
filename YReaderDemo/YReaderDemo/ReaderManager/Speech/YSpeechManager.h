@@ -37,5 +37,6 @@ typedef NS_ENUM(NSInteger,YSpeechState) {
 - (void)continueSpeech;
 - (void)pauseSpeech;
 - (void)exitSpeech;
+- (void)changeSpeechRate:(double)rate;
 
 @end

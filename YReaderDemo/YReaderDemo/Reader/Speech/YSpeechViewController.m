@@ -70,7 +70,9 @@
 }
 
 - (IBAction)speechRateSliderValueChanged:(UISlider *)sender {
-    NSLog(@"%s val:%.2f",__func__,sender.value);
+//    NSLog(@"%s val:%.2f",__func__,sender.value);
+    NSInteger value = sender.value * 100;
+    [_speechManager changeSpeechRate: value / 100.0];
 }
 
 - (void)showSpeechView {
