@@ -8,6 +8,7 @@
 
 #import "YSignInViewController.h"
 #import "ViewController.h"
+#import "SMSSDKUI.h"
 
 @interface YSignInViewController ()<UITextFieldDelegate>
 
@@ -36,11 +37,7 @@
 
 - (IBAction)signInBtnAction:(id)sender {
     if ([_accountTextF.text.lowercaseString isEqualToString:@"test20171020"] && [_passwordTextF.text isEqualToString:@"abc12345678"]) {
-        ViewController *viewC = [[ViewController alloc] init];
-        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-        [window setRootViewController:[[UINavigationController alloc] initWithRootViewController:viewC]];
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"kYHasLogin"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self loginSuccess];
     } else {
         [self.view endEditing:true];
         [YProgressHUD showErrorHUDWith:@"请输入正确的密码和账号!"];
@@ -53,6 +50,32 @@
     } else {
         _signInBtn.enabled = false;
     }
+}
+
+- (IBAction)registeredBtnAction:(id)sender {
+    __weak typeof(self) wself = self;
+    
+    SMSUIVerificationCodeViewController *verificationCodeViewController = [[SMSUIVerificationCodeViewController alloc] initVerificationCodeViewWithMethod:SMSGetCodeMethodSMS];
+    
+    [verificationCodeViewController onVerificationCodeViewReslut:^(enum SMSUIResponseState state,NSString *phoneNumber,NSString *zone, NSError *error) {
+        if (state == SMSUIResponseStateSuccess) {
+            [wself loginSuccess];
+        }
+    }];
+    [verificationCodeViewController show];
+    
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:verificationCodeViewController.registerViewBySMS] animated:YES completion:nil];
+//    [self.navigationController pushViewController:verificationCodeViewController.registerViewBySMS animated:YES];
+}
+
+- (void)loginSuccess {
+    ViewController *viewC = [[ViewController alloc] init];
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+//    UINavigationController *navVC = (UINavigationController *)window.rootViewController;
+//    [navVC setViewControllers:@[viewC] animated:YES];
+    [window setRootViewController:[[UINavigationController alloc] initWithRootViewController:viewC]];
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"kYHasLogin"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)didReceiveMemoryWarning {

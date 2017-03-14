@@ -204,6 +204,16 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright © 2012-2015 mob</string>
+			<key>License</key>
+			<string>Copyright © 2012-2016 mob.com</string>
+			<key>Title</key>
+			<string>MOBFoundation_IDFA</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Copyright (c) 2016 Olivier Poitrey rs@dailymotion.com
  
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -229,6 +239,17 @@ THE SOFTWARE.
 			<string>MIT</string>
 			<key>Title</key>
 			<string>SDWebImage</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright © 2012-2016 mob
+</string>
+			<key>License</key>
+			<string>MIT</string>
+			<key>Title</key>
+			<string>ShareSDK3</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

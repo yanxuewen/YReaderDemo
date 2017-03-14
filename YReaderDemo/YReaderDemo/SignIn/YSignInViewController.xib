@@ -106,11 +106,23 @@
                         <outlet property="delegate" destination="-1" id="JaD-5I-60w"/>
                     </connections>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0B4-uy-n48">
+                    <rect key="frame" x="285" y="339" width="60" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="hbM-dP-CYu"/>
+                        <constraint firstAttribute="height" constant="35" id="ytO-Gf-6jn"/>
+                    </constraints>
+                    <state key="normal" title="注册&gt;"/>
+                    <connections>
+                        <action selector="registeredBtnAction:" destination="-1" eventType="touchUpInside" id="ngm-FT-irz"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.21029280150075824" green="0.4502029890281678" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Of1-Uy-Cwx" secondAttribute="trailing" constant="30" id="2tc-zO-lfe"/>
                 <constraint firstItem="hqf-aU-jv6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="4dL-hd-XDm"/>
+                <constraint firstAttribute="trailing" secondItem="0B4-uy-n48" secondAttribute="trailing" constant="30" id="7wn-9D-0GL"/>
                 <constraint firstItem="CAw-YA-Vq5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="A44-rD-DHX"/>
                 <constraint firstItem="TeV-9C-Ikv" firstAttribute="centerY" secondItem="pmq-gh-ne0" secondAttribute="centerY" id="Dij-0H-DaV"/>
                 <constraint firstAttribute="trailing" secondItem="ve5-dR-PRf" secondAttribute="trailing" id="HBW-hB-kS2"/>
@@ -121,6 +133,7 @@
                 <constraint firstItem="CAw-YA-Vq5" firstAttribute="top" secondItem="2bM-Ar-xEh" secondAttribute="bottom" constant="10" id="Sqj-eL-Qkg"/>
                 <constraint firstItem="Of1-Uy-Cwx" firstAttribute="top" secondItem="CAw-YA-Vq5" secondAttribute="bottom" constant="60" id="T6b-8i-G15"/>
                 <constraint firstAttribute="trailing" secondItem="CAw-YA-Vq5" secondAttribute="trailing" id="UbH-pG-vrn"/>
+                <constraint firstItem="0B4-uy-n48" firstAttribute="top" secondItem="CAw-YA-Vq5" secondAttribute="bottom" constant="5" id="Xq5-xc-Jpe"/>
                 <constraint firstItem="TeV-9C-Ikv" firstAttribute="leading" secondItem="pmq-gh-ne0" secondAttribute="trailing" constant="30" id="aSb-Rf-5Vz"/>
                 <constraint firstItem="ve5-dR-PRf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b15-Zi-nNg"/>
                 <constraint firstAttribute="bottom" secondItem="ve5-dR-PRf" secondAttribute="bottom" id="bD0-5v-1YT"/>

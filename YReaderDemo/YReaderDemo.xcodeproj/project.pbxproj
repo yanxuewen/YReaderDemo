@@ -50,6 +50,21 @@
 		463F5B081DFE9CFB00999A0B /* YReadPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B061DFE9CFB00999A0B /* YReadPageViewController.m */; };
 		463F5B091DFE9CFB00999A0B /* YReadPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */; };
 		463F5B121DFEE52200999A0B /* YBatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 463F5B111DFEE52200999A0B /* YBatteryView.m */; };
+		4645537A1E7825BD0000245E /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4645536A1E7825BD0000245E /* SMSSDKUI.bundle */; };
+		464553821E7826020000245E /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645537F1E7826020000245E /* MOBFoundation.framework */; };
+		464553831E7826020000245E /* MOBFoundationEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553801E7826020000245E /* MOBFoundationEx.framework */; };
+		464553841E7826020000245E /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553811E7826020000245E /* SMS_SDK.framework */; };
+		4645538C1E78268A0000245E /* libSMSSDUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645537D1E7825BD0000245E /* libSMSSDUI.a */; };
+		4645538E1E7826A10000245E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645538D1E7826A10000245E /* libz.tbd */; };
+		464553901E7826BC0000245E /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645538F1E7826BC0000245E /* libicucore.tbd */; };
+		464553921E7826C90000245E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553911E7826C90000245E /* MessageUI.framework */; };
+		464553941E7826D00000245E /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553931E7826D00000245E /* JavaScriptCore.framework */; };
+		464553961E7826D60000245E /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553951E7826D60000245E /* libstdc++.tbd */; };
+		464553981E7826E70000245E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553971E7826E70000245E /* SystemConfiguration.framework */; };
+		4645539A1E7826EE0000245E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553991E7826EE0000245E /* AdSupport.framework */; };
+		4645539C1E7826FB0000245E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645539B1E7826FB0000245E /* CoreTelephony.framework */; };
+		4645539F1E7828420000245E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645539D1E7828420000245E /* AddressBook.framework */; };
+		464553A01E7828420000245E /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4645539E1E7828420000245E /* AddressBookUI.framework */; };
 		465D42CD1DF932DC00ED1D58 /* YCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42CB1DF932DC00ED1D58 /* YCenterViewController.m */; };
 		465D42CE1DF932DC00ED1D58 /* YCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 465D42CC1DF932DC00ED1D58 /* YCenterViewController.xib */; };
 		465D42D21DF932EE00ED1D58 /* YLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465D42D01DF932EE00ED1D58 /* YLeftViewController.m */; };
@@ -102,6 +117,16 @@
 		46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */; };
 		46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F9614C1E08210B004B6850 /* YPageBackViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4645537C1E7825BD0000245E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4645536B1E7825BD0000245E /* SMSSDUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7B2A62491C4F66BE00A160C8;
+			remoteInfo = SMSSDUI;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		460D9CEB1E076B61009A608D /* YRankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRankingViewController.h; sourceTree = "<group>"; };
@@ -176,6 +201,21 @@
 		463F5B071DFE9CFB00999A0B /* YReadPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YReadPageViewController.xib; sourceTree = "<group>"; };
 		463F5B101DFEE52200999A0B /* YBatteryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBatteryView.h; sourceTree = "<group>"; };
 		463F5B111DFEE52200999A0B /* YBatteryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBatteryView.m; sourceTree = "<group>"; };
+		4645536A1E7825BD0000245E /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SMSSDKUI.bundle; sourceTree = "<group>"; };
+		4645536B1E7825BD0000245E /* SMSSDUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SMSSDUI.xcodeproj; sourceTree = "<group>"; };
+		4645537F1E7826020000245E /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		464553801E7826020000245E /* MOBFoundationEx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundationEx.framework; sourceTree = "<group>"; };
+		464553811E7826020000245E /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		4645538D1E7826A10000245E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		4645538F1E7826BC0000245E /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		464553911E7826C90000245E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		464553931E7826D00000245E /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		464553951E7826D60000245E /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		464553971E7826E70000245E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		464553991E7826EE0000245E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4645539B1E7826FB0000245E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4645539D1E7828420000245E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		4645539E1E7828420000245E /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		465D42CA1DF932DC00ED1D58 /* YCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCenterViewController.h; sourceTree = "<group>"; };
 		465D42CB1DF932DC00ED1D58 /* YCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCenterViewController.m; sourceTree = "<group>"; };
 		465D42CC1DF932DC00ED1D58 /* YCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YCenterViewController.xib; sourceTree = "<group>"; };
@@ -273,6 +313,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4645539F1E7828420000245E /* AddressBook.framework in Frameworks */,
+				464553A01E7828420000245E /* AddressBookUI.framework in Frameworks */,
+				464553821E7826020000245E /* MOBFoundation.framework in Frameworks */,
+				464553831E7826020000245E /* MOBFoundationEx.framework in Frameworks */,
+				464553841E7826020000245E /* SMS_SDK.framework in Frameworks */,
+				4645539C1E7826FB0000245E /* CoreTelephony.framework in Frameworks */,
+				4645539A1E7826EE0000245E /* AdSupport.framework in Frameworks */,
+				464553981E7826E70000245E /* SystemConfiguration.framework in Frameworks */,
+				464553961E7826D60000245E /* libstdc++.tbd in Frameworks */,
+				464553941E7826D00000245E /* JavaScriptCore.framework in Frameworks */,
+				464553921E7826C90000245E /* MessageUI.framework in Frameworks */,
+				464553901E7826BC0000245E /* libicucore.tbd in Frameworks */,
+				4645538E1E7826A10000245E /* libz.tbd in Frameworks */,
+				4645538C1E78268A0000245E /* libSMSSDUI.a in Frameworks */,
 				27BFA8B44DCF53BFCD36405F /* libPods-YReaderDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +499,34 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		4645534C1E7825BD0000245E /* SMSSDK */ = {
+			isa = PBXGroup;
+			children = (
+				4645537E1E7826020000245E /* SMS_SDK */,
+				4645536A1E7825BD0000245E /* SMSSDKUI.bundle */,
+				4645536B1E7825BD0000245E /* SMSSDUI.xcodeproj */,
+			);
+			path = SMSSDK;
+			sourceTree = "<group>";
+		};
+		4645536C1E7825BD0000245E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4645537D1E7825BD0000245E /* libSMSSDUI.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4645537E1E7826020000245E /* SMS_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				4645537F1E7826020000245E /* MOBFoundation.framework */,
+				464553801E7826020000245E /* MOBFoundationEx.framework */,
+				464553811E7826020000245E /* SMS_SDK.framework */,
+			);
+			path = SMS_SDK;
+			sourceTree = "<group>";
+		};
 		465D42C91DF9328C00ED1D58 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +684,7 @@
 				46D5DB111DF82AC9009CC6AB /* AppDelegate.m */,
 				46D5DB131DF82AC9009CC6AB /* ViewController.h */,
 				46D5DB141DF82AC9009CC6AB /* ViewController.m */,
+				4645534C1E7825BD0000245E /* SMSSDK */,
 				46E0AACC1E6D82ED0027E95B /* SignIn */,
 				465D42C91DF9328C00ED1D58 /* Main */,
 				465D42DE1DF95E1C00ED1D58 /* Search */,
@@ -706,6 +789,16 @@
 		492EEDD6A035773A253955B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4645539D1E7828420000245E /* AddressBook.framework */,
+				4645539E1E7828420000245E /* AddressBookUI.framework */,
+				4645539B1E7826FB0000245E /* CoreTelephony.framework */,
+				464553991E7826EE0000245E /* AdSupport.framework */,
+				464553971E7826E70000245E /* SystemConfiguration.framework */,
+				464553951E7826D60000245E /* libstdc++.tbd */,
+				464553931E7826D00000245E /* JavaScriptCore.framework */,
+				464553911E7826C90000245E /* MessageUI.framework */,
+				4645538F1E7826BC0000245E /* libicucore.tbd */,
+				4645538D1E7826A10000245E /* libz.tbd */,
 				CE093AAFAB12142A63E9A1BD /* libPods-YReaderDemo.a */,
 			);
 			name = Frameworks;
@@ -767,12 +860,28 @@
 			mainGroup = 46D5DB011DF82AC9009CC6AB;
 			productRefGroup = 46D5DB0B1DF82AC9009CC6AB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4645536C1E7825BD0000245E /* Products */;
+					ProjectRef = 4645536B1E7825BD0000245E /* SMSSDUI.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				46D5DB091DF82AC9009CC6AB /* YReaderDemo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4645537D1E7825BD0000245E /* libSMSSDUI.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSMSSDUI.a;
+			remoteRef = 4645537C1E7825BD0000245E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		46D5DB081DF82AC9009CC6AB /* Resources */ = {
@@ -789,6 +898,7 @@
 				46110D361DFBACA60012DAD1 /* YBookDetailViewController.xib in Resources */,
 				46711E591E0121030051772F /* YBookViewCell.xib in Resources */,
 				465D42E81DF987DA00ED1D58 /* YTableHeaderView.xib in Resources */,
+				4645537A1E7825BD0000245E /* SMSSDKUI.bundle in Resources */,
 				463B22DC1E0F586E00B7B3DB /* YMoreSettingsCell.xib in Resources */,
 				46D5DB181DF82AC9009CC6AB /* Main.storyboard in Resources */,
 				463B22D11E0EAA1600B7B3DB /* simplified.txt in Resources */,
@@ -1050,6 +1160,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = PFVP9EX2TR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YReaderDemo/SMSSDK/SMS_SDK",
+				);
 				GCC_PREFIX_HEADER = YReaderDemo/YReaderDemo.pch;
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1066,6 +1180,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = PFVP9EX2TR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/YReaderDemo/SMSSDK/SMS_SDK",
+				);
 				GCC_PREFIX_HEADER = YReaderDemo/YReaderDemo.pch;
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

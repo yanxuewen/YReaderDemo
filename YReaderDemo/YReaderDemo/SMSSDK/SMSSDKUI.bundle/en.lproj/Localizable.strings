@@ -1,0 +1,129 @@
+/* 
+  Localizable.strings
+  SMS_SDKDemo
+
+  Created by 掌淘科技 on 14-9-26.
+  Copyright (c) 2014年 掌淘科技. All rights reserved.
+*/
+"smssdk" = "SMSSDK";
+"welcome"="Click on the screen to continue...";
+"RegisterBySMS"="Register By SMS";
+"addressbookfriends"="AddressBook friends";
+"getUserinfo" = "Get User Info";
+"submitUserInfo" = "Submit User Info";
+"register"="Register";
+"RegisterByVoiceCall" = "Register By Voice Call";
+"back"="Back";
+"labelnotice"="Confirm your country code and enter your mobile number";
+"telfield"="Mobile number";
+"nextbtn"="Next";
+"countrylable"="Region";
+"countrychoose"="Choose the country";
+
+"notice"="Notice";
+"pleaseSettingContractKey" = "Please setting the key：NSContactsUsageDescription key in the info.plist";
+"errorphonenumber"="Phone number is invalid";
+"sure"="OK";
+
+"willsendthecodeto"="We will send a verification code to the following number";
+"surephonenumber"="Phone Number Confirmation";
+"cancel"="Cancel";
+
+"codesenderrormsg"="The code send fail try again later";
+"codesenderrtitle"="Send Fail";
+
+"maxcodemsg"="The code is up the max limit";
+"maxcode"="Up max limit";
+
+"codetoooftenmsg"="The request is too often";
+"Code" = "Code";
+"verifycode"="Enter Code";
+"verifylabel"="Verification code has been sent to:";
+"verifylabel"="Verification code has been sent to:";
+"timelabel"="Takes about 60 seconds";
+"repeatsms"="Can't get code？";
+"submit"="Submit";
+"sendingin"="Sending in...";
+"timelablemsg"="Getting the verification code almost need ";
+"second"=" seconds";
+
+"verifycoderightmsg"="Code is right";
+"verifycoderighttitle"="Success";
+"verifycodeerrormsg"="Code is invalid try again later";
+"verifycodeerrortitle"="Verify failure";
+
+"cannotgetsmsmsg"="We will re send verification code SMS to it";
+
+"codedelaymsg"="Messages may slightly delay is determined to return and start again";
+"wait"="Wait";
+
+"verifycodeformaterror"="Code format error please re-enter";
+
+"doesnotsupportarea"="Temporarily does not support the area";
+
+"addfriends"="Add";
+"invitefriends"="Invite";
+"hasjoined"="Has joined users";
+"toinvitefriends"="To invite friends";
+"phonecontacts"="Phone contacts";
+
+"loading"="Loading...";
+"authorizedcontact"="You may not be authorized to access contacts in settings authorization, you can see the contacts of friends";
+
+"addfriendstitle"="Add friends";
+"addfriendsmsg"="Has been sent to add friends information, please be patient friend reply";
+
+"sendinvite"="Send invite";
+"notjoined"="not joined";
+"phonecode"="Phone";
+"smsmessage"="Join SMS_SDK, for http://mob.com web site";
+"choosephonenumber"="Choose to send invitation number";
+"close" = "Close";
+"versionNotice" = "The iOS'version is too low,it's need iOS4.0 or later for sending sms";
+"deviceFoundation" = "This device had no this foundation for sending sms";
+
+"voiceCallMsgLabel" = "You can also try this:";
+"try voice call" = "Get verification code by voice call";
+
+"verificationByVoiceCallConfirm" = "We will call you after your comfirmation. Vocie verification code. Please use message verification code service if you don't want to be called.";
+
+"-1009description" = "The Internet connection appears to be offline";
+
+"252description" = "Sending messages more than limit";
+"253description" = "No permission to do this";
+"254description" = "No permission to get verificationcode";
+"255description" = "No permission to send domestic verificationcode";
+"256description" = "No permission to send verificationcode from Hong Kong, Macao and Taiwan";
+"257description" = "No permission verification code sent abroad";
+"258description" = "Action is too frequent";
+"259description" = "Unknown error";
+"260description" = "Unknown error";
+"261description" = "Data is error of the unknown reason";
+"262description" = "The Internet connection appears to be offline";
+"263description" = "Data is error of the unknown reason";
+"264description" = "Data is error of the unknown reason";
+"400description" = "Invalid request";
+"406description" = "Invalid appkey";
+"408description" = "Invalid parameter";
+"456description" = "Phone number is empty";
+"457description" = "Phone number is illegal";
+"458description" = "Phone number in the blacklist";
+"459description" = "Unable to obtain data";
+"460description" = "Permission denied";
+"461description" = "Do not support the region to send text messages";
+"462description" = "Sending messages limited per minute";
+"463description" = "Sending messages limited everyday";
+"464description" = "Sending text message hits limit";
+"465description" = "Invalid duid";
+"466description" = "The verification code is empty";
+"467description" = "Too frequently";
+"468description" = "Invalid validation code";
+"470description" = "Unable to obtain data";
+"472description" = "Unable to obtain data";
+"475description" = "No application information of appkey exists";
+"476description" = "The current appkey send messages over limit";
+"477description" = "The current phone number send messages over the limit";
+"478description" = "The current phone number in the current application sends messages over the limit";
+"479description" = "Please use the MOBFoundation.framework with idfa";
+"480description" = "SDK not submit aeskey in the interface of the access token";
+"500description" = "Server Error";

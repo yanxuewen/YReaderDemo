@@ -31,7 +31,5 @@ pod 'ShareSDK3/ShareSDKConfigurationFile',:git => ‘https://github.com/MobClub/
 # 扩展模块（非必需）
 pod 'ShareSDK3/ShareSDKExtension',:git => ‘https://github.com/MobClub/ShareSDK-for-iOS-Spec.git'
 
-#SMS短信验证
-pod 'SMSSDK'
 
 end

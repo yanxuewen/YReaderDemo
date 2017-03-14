@@ -1,0 +1,390 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		464553891E7826430000245E /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553861E7826430000245E /* MOBFoundation.framework */; };
+		4645538A1E7826430000245E /* MOBFoundationEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553871E7826430000245E /* MOBFoundationEx.framework */; };
+		4645538B1E7826430000245E /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464553881E7826430000245E /* SMS_SDK.framework */; };
+		7B4910E31C96A10C00EDD0D0 /* SMSSDKUI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A63011C4F711B00A160C8 /* SMSSDKUI.h */; };
+		7B4910E41C96A11100EDD0D0 /* SMSUIVerificationCodeViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B4910D71C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.h */; };
+		7B4910E51C96A11600EDD0D0 /* SMSUIVerificationCodeViewResultDef.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B4910D91C9668CF00EDD0D0 /* SMSUIVerificationCodeViewResultDef.h */; };
+		7B4910E91C96A41C00EDD0D0 /* SMS_HYZBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A62FC1C4F711B00A160C8 /* SMS_HYZBadgeView.m */; };
+		7B4910EA1C96A41D00EDD0D0 /* SMS_MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A62FE1C4F711B00A160C8 /* SMS_MBProgressHUD.m */; };
+		7B4910EB1C96A41D00EDD0D0 /* YJLocalCountryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63001C4F711B00A160C8 /* YJLocalCountryData.m */; };
+		7B4910EC1C96A41D00EDD0D0 /* SMSSDKUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63021C4F711B00A160C8 /* SMSSDKUI.m */; };
+		7B4910ED1C96A41D00EDD0D0 /* SMSUIVerificationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4910D81C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.m */; };
+		7B4910EE1C96A41D00EDD0D0 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63051C4F711B00A160C8 /* CustomCell.m */; };
+		7B4910EF1C96A41D00EDD0D0 /* InvitationViewControllerEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63071C4F711B00A160C8 /* InvitationViewControllerEx.m */; };
+		7B4910F01C96A41D00EDD0D0 /* RegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A630A1C4F711B00A160C8 /* RegViewController.m */; };
+		7B4910F11C96A41D00EDD0D0 /* VerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A630C1C4F711B00A160C8 /* VerifyViewController.m */; };
+		7B4910F21C96A41D00EDD0D0 /* SectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A630E1C4F711B00A160C8 /* SectionsViewController.m */; };
+		7B4910F31C96A41D00EDD0D0 /* SectionsViewControllerFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63101C4F711B00A160C8 /* SectionsViewControllerFriends.m */; };
+		7B80CB7C1C96A50A00B067C3 /* SMS_HYZBadgeView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A62FB1C4F711B00A160C8 /* SMS_HYZBadgeView.h */; };
+		7B80CB7F1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B80CB7E1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m */; };
+		7B80CB801C96AAD900B067C3 /* SMSUIContactsFriendsViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B80CB7D1C96A70100B067C3 /* SMSUIContactsFriendsViewController.h */; };
+		7B80CB811C96AF2500B067C3 /* YJLocalCountryData.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A62FF1C4F711B00A160C8 /* YJLocalCountryData.h */; };
+		7B80CB821C96AF3E00B067C3 /* SMS_MBProgressHUD.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A62FD1C4F711B00A160C8 /* SMS_MBProgressHUD.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7B2A62471C4F66BE00A160C8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = include;
+			dstSubfolderSpec = 16;
+			files = (
+				7B80CB821C96AF3E00B067C3 /* SMS_MBProgressHUD.h in CopyFiles */,
+				7B80CB811C96AF2500B067C3 /* YJLocalCountryData.h in CopyFiles */,
+				7B80CB801C96AAD900B067C3 /* SMSUIContactsFriendsViewController.h in CopyFiles */,
+				7B80CB7C1C96A50A00B067C3 /* SMS_HYZBadgeView.h in CopyFiles */,
+				7B4910E51C96A11600EDD0D0 /* SMSUIVerificationCodeViewResultDef.h in CopyFiles */,
+				7B4910E41C96A11100EDD0D0 /* SMSUIVerificationCodeViewController.h in CopyFiles */,
+				7B4910E31C96A10C00EDD0D0 /* SMSSDKUI.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		464553861E7826430000245E /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = SMS_SDK/MOBFoundation.framework; sourceTree = "<group>"; };
+		464553871E7826430000245E /* MOBFoundationEx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundationEx.framework; path = SMS_SDK/MOBFoundationEx.framework; sourceTree = "<group>"; };
+		464553881E7826430000245E /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = SMS_SDK/SMS_SDK.framework; sourceTree = "<group>"; };
+		7B2A62491C4F66BE00A160C8 /* libSMSSDUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSMSSDUI.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B2A62FB1C4F711B00A160C8 /* SMS_HYZBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMS_HYZBadgeView.h; sourceTree = "<group>"; };
+		7B2A62FC1C4F711B00A160C8 /* SMS_HYZBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMS_HYZBadgeView.m; sourceTree = "<group>"; };
+		7B2A62FD1C4F711B00A160C8 /* SMS_MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMS_MBProgressHUD.h; sourceTree = "<group>"; };
+		7B2A62FE1C4F711B00A160C8 /* SMS_MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMS_MBProgressHUD.m; sourceTree = "<group>"; };
+		7B2A62FF1C4F711B00A160C8 /* YJLocalCountryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLocalCountryData.h; sourceTree = "<group>"; };
+		7B2A63001C4F711B00A160C8 /* YJLocalCountryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJLocalCountryData.m; sourceTree = "<group>"; };
+		7B2A63011C4F711B00A160C8 /* SMSSDKUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSSDKUI.h; sourceTree = "<group>"; };
+		7B2A63021C4F711B00A160C8 /* SMSSDKUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSSDKUI.m; sourceTree = "<group>"; };
+		7B2A63041C4F711B00A160C8 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		7B2A63051C4F711B00A160C8 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		7B2A63061C4F711B00A160C8 /* InvitationViewControllerEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationViewControllerEx.h; sourceTree = "<group>"; };
+		7B2A63071C4F711B00A160C8 /* InvitationViewControllerEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationViewControllerEx.m; sourceTree = "<group>"; };
+		7B2A63091C4F711B00A160C8 /* RegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegViewController.h; sourceTree = "<group>"; };
+		7B2A630A1C4F711B00A160C8 /* RegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegViewController.m; sourceTree = "<group>"; };
+		7B2A630B1C4F711B00A160C8 /* VerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyViewController.h; sourceTree = "<group>"; };
+		7B2A630C1C4F711B00A160C8 /* VerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyViewController.m; sourceTree = "<group>"; };
+		7B2A630D1C4F711B00A160C8 /* SectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SectionsViewController.h; path = ../SectionsViewController.h; sourceTree = "<group>"; };
+		7B2A630E1C4F711B00A160C8 /* SectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewController.m; sourceTree = "<group>"; };
+		7B2A630F1C4F711B00A160C8 /* SectionsViewControllerFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionsViewControllerFriends.h; sourceTree = "<group>"; };
+		7B2A63101C4F711B00A160C8 /* SectionsViewControllerFriends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewControllerFriends.m; sourceTree = "<group>"; };
+		7B4910D71C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIVerificationCodeViewController.h; sourceTree = "<group>"; };
+		7B4910D81C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSUIVerificationCodeViewController.m; sourceTree = "<group>"; };
+		7B4910D91C9668CF00EDD0D0 /* SMSUIVerificationCodeViewResultDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIVerificationCodeViewResultDef.h; sourceTree = "<group>"; };
+		7B80CB7D1C96A70100B067C3 /* SMSUIContactsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIContactsFriendsViewController.h; sourceTree = "<group>"; };
+		7B80CB7E1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSUIContactsFriendsViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7B2A62461C4F66BE00A160C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				464553891E7826430000245E /* MOBFoundation.framework in Frameworks */,
+				4645538A1E7826430000245E /* MOBFoundationEx.framework in Frameworks */,
+				4645538B1E7826430000245E /* SMS_SDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		464553851E7826430000245E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				464553861E7826430000245E /* MOBFoundation.framework */,
+				464553871E7826430000245E /* MOBFoundationEx.framework */,
+				464553881E7826430000245E /* SMS_SDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7B2A62401C4F66BE00A160C8 = {
+			isa = PBXGroup;
+			children = (
+				7B2A62F91C4F711B00A160C8 /* SMSSDKUI */,
+				7B2A624A1C4F66BE00A160C8 /* Products */,
+				464553851E7826430000245E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7B2A624A1C4F66BE00A160C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7B2A62491C4F66BE00A160C8 /* libSMSSDUI.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7B2A62F91C4F711B00A160C8 /* SMSSDKUI */ = {
+			isa = PBXGroup;
+			children = (
+				7B2A62FA1C4F711B00A160C8 /* SMS_UILib */,
+				7B2A63011C4F711B00A160C8 /* SMSSDKUI.h */,
+				7B2A63021C4F711B00A160C8 /* SMSSDKUI.m */,
+				7B2A63031C4F711B00A160C8 /* UI */,
+			);
+			path = SMSSDKUI;
+			sourceTree = "<group>";
+		};
+		7B2A62FA1C4F711B00A160C8 /* SMS_UILib */ = {
+			isa = PBXGroup;
+			children = (
+				7B2A62FB1C4F711B00A160C8 /* SMS_HYZBadgeView.h */,
+				7B2A62FC1C4F711B00A160C8 /* SMS_HYZBadgeView.m */,
+				7B2A62FD1C4F711B00A160C8 /* SMS_MBProgressHUD.h */,
+				7B2A62FE1C4F711B00A160C8 /* SMS_MBProgressHUD.m */,
+				7B2A62FF1C4F711B00A160C8 /* YJLocalCountryData.h */,
+				7B2A63001C4F711B00A160C8 /* YJLocalCountryData.m */,
+			);
+			path = SMS_UILib;
+			sourceTree = "<group>";
+		};
+		7B2A63031C4F711B00A160C8 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				7B80CB7D1C96A70100B067C3 /* SMSUIContactsFriendsViewController.h */,
+				7B80CB7E1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m */,
+				7B4910D71C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.h */,
+				7B4910D81C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.m */,
+				7B4910D91C9668CF00EDD0D0 /* SMSUIVerificationCodeViewResultDef.h */,
+				7B2A63041C4F711B00A160C8 /* CustomCell.h */,
+				7B2A63051C4F711B00A160C8 /* CustomCell.m */,
+				7B2A63061C4F711B00A160C8 /* InvitationViewControllerEx.h */,
+				7B2A63071C4F711B00A160C8 /* InvitationViewControllerEx.m */,
+				7B2A63081C4F711B00A160C8 /* Rigister */,
+				7B2A630E1C4F711B00A160C8 /* SectionsViewController.m */,
+				7B2A630F1C4F711B00A160C8 /* SectionsViewControllerFriends.h */,
+				7B2A63101C4F711B00A160C8 /* SectionsViewControllerFriends.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		7B2A63081C4F711B00A160C8 /* Rigister */ = {
+			isa = PBXGroup;
+			children = (
+				7B2A63091C4F711B00A160C8 /* RegViewController.h */,
+				7B2A630A1C4F711B00A160C8 /* RegViewController.m */,
+				7B2A630B1C4F711B00A160C8 /* VerifyViewController.h */,
+				7B2A630C1C4F711B00A160C8 /* VerifyViewController.m */,
+				7B2A630D1C4F711B00A160C8 /* SectionsViewController.h */,
+			);
+			path = Rigister;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7B2A62481C4F66BE00A160C8 /* SMSSDUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7B2A62521C4F66BE00A160C8 /* Build configuration list for PBXNativeTarget "SMSSDUI" */;
+			buildPhases = (
+				7B2A62451C4F66BE00A160C8 /* Sources */,
+				7B2A62461C4F66BE00A160C8 /* Frameworks */,
+				7B2A62471C4F66BE00A160C8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SMSSDUI;
+			productName = SMSSDUI;
+			productReference = 7B2A62491C4F66BE00A160C8 /* libSMSSDUI.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7B2A62411C4F66BE00A160C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = liys;
+				TargetAttributes = {
+					7B2A62481C4F66BE00A160C8 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 7B2A62441C4F66BE00A160C8 /* Build configuration list for PBXProject "SMSSDUI" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7B2A62401C4F66BE00A160C8;
+			productRefGroup = 7B2A624A1C4F66BE00A160C8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7B2A62481C4F66BE00A160C8 /* SMSSDUI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7B2A62451C4F66BE00A160C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B4910E91C96A41C00EDD0D0 /* SMS_HYZBadgeView.m in Sources */,
+				7B80CB7F1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m in Sources */,
+				7B4910EA1C96A41D00EDD0D0 /* SMS_MBProgressHUD.m in Sources */,
+				7B4910EB1C96A41D00EDD0D0 /* YJLocalCountryData.m in Sources */,
+				7B4910EC1C96A41D00EDD0D0 /* SMSSDKUI.m in Sources */,
+				7B4910ED1C96A41D00EDD0D0 /* SMSUIVerificationCodeViewController.m in Sources */,
+				7B4910EE1C96A41D00EDD0D0 /* CustomCell.m in Sources */,
+				7B4910EF1C96A41D00EDD0D0 /* InvitationViewControllerEx.m in Sources */,
+				7B4910F01C96A41D00EDD0D0 /* RegViewController.m in Sources */,
+				7B4910F11C96A41D00EDD0D0 /* VerifyViewController.m in Sources */,
+				7B4910F21C96A41D00EDD0D0 /* SectionsViewController.m in Sources */,
+				7B4910F31C96A41D00EDD0D0 /* SectionsViewControllerFriends.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7B2A62501C4F66BE00A160C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7B2A62511C4F66BE00A160C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7B2A62531C4F66BE00A160C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../SMS_SDK",
+					"$(PROJECT_DIR)/SMS_SDK",
+				);
+				HEADER_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7B2A62541C4F66BE00A160C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../SMS_SDK",
+					"$(PROJECT_DIR)/SMS_SDK",
+				);
+				HEADER_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7B2A62441C4F66BE00A160C8 /* Build configuration list for PBXProject "SMSSDUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B2A62501C4F66BE00A160C8 /* Debug */,
+				7B2A62511C4F66BE00A160C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7B2A62521C4F66BE00A160C8 /* Build configuration list for PBXNativeTarget "SMSSDUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B2A62531C4F66BE00A160C8 /* Debug */,
+				7B2A62541C4F66BE00A160C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7B2A62411C4F66BE00A160C8 /* Project object */;
+}
