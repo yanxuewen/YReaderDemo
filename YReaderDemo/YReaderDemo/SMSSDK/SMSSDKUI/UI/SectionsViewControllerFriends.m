@@ -144,7 +144,7 @@
     
     search.delegate = self;
     _other = [NSMutableArray array];
-    _addressBookData = [SMSSDK addressBook];
+//    _addressBookData = [SMSSDK addressBook];
     
     
     NSLog(@"获取到了%zi条通讯录信息",_addressBookData.count);

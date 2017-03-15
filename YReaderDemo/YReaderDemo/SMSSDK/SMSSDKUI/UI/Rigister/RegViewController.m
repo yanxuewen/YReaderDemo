@@ -248,13 +248,13 @@
     //创建一个导航栏
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0 + statusBarHeight, self.view.frame.size.width, 44)];
     UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:@""];
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTableInBundle(@"back", @"Localizable", bundle, nil)
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"返回"
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(clickLeftButton)];
     self.navigationItem.leftBarButtonItem = leftButton;
-    
-    self.navigationItem.title = NSLocalizedStringFromTableInBundle(@"register", @"Localizable", bundle, nil);
+    NSLocalizedStringFromTableInBundle(@"register", @"Localizable", bundle, nil);
+    self.navigationItem.title = @"注册";//NSLocalizedStringFromTableInBundle(@"register", @"Localizable", bundle, nil);
     [navigationBar pushNavigationItem:navigationItem animated:NO];
     [self.view addSubview:navigationBar];
    
