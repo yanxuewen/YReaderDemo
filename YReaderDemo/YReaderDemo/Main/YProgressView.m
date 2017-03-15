@@ -39,6 +39,7 @@
         }
         
     }
+    [self setNeedsDisplay];
 }
 
 - (void)setProgress:(double)progress {

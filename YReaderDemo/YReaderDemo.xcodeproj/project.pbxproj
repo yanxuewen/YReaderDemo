@@ -840,7 +840,7 @@
 					46D5DB091DF82AC9009CC6AB = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = PFVP9EX2TR;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1159,6 +1159,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = PFVP9EX2TR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1170,6 +1171,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "fa14f2ec-5b6f-471e-8095-90b50a00e493";
+				PROVISIONING_PROFILE_SPECIFIER = iOSDevelopment201703152222;
 			};
 			name = Debug;
 		};
@@ -1179,6 +1182,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = PFVP9EX2TR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1190,6 +1194,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7c198583-43aa-4d38-b054-767267c8c945";
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: com.yxw.YReader";
 			};
 			name = Release;
 		};
