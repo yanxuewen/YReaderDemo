@@ -515,6 +515,7 @@
     _chapterTask = nil;
     _chaptersCount = 0;
     _isAutoLoading = NO;
+    _settings.themeImageArr = nil;
 }
 
 - (NSString *)cachePath {

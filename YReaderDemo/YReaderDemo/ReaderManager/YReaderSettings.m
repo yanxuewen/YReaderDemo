@@ -16,7 +16,6 @@
 @property (assign, nonatomic) BOOL needUpdateAttributes;
 @property (strong, nonatomic) NSDictionary *readerAttributes;
 @property (strong, nonatomic) UIImage *themeImage;
-@property (strong, nonatomic) NSArray *themeImageArr;
 
 @property (strong, nonatomic) NSString *simplifiedStr;
 @property (strong, nonatomic) NSString *traditionalStr;
@@ -199,10 +198,15 @@
 
 - (NSArray *)themeImageArr {
     if (!_themeImageArr) {
+        NSArray *imageArr = @[@"water_mode_bg",@"yellow_mode_bg",@"green_mode_bg",@"sheepskin_mode_bg",@"violet_mode_bg",@"pink_mode_bg",@"weekGreen_mode_bg",@"weekPink_mode_bg",@"coffee_mode_bg",@"blackGreen_mode_bg"];
         NSMutableArray *arr = @[].mutableCopy;
-        for (NSUInteger i = 0; i < 10; i++) {
-            [arr addObject:[self getThemeImageWith:i]];
+        
+        for (NSUInteger i = 0; i < imageArr.count; i++) {
+//            [arr addObject:[self getThemeImageWith:i]];
+            
+            [arr addObject:[YYImage imageNamed:imageArr[i]]];
         }
+        
         _themeImageArr = arr;
     }
     return _themeImageArr;

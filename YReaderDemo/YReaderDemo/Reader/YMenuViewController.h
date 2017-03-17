@@ -10,6 +10,7 @@
 
 @interface YMenuViewController : YBaseViewController
 
+@property (strong, nonatomic) NSArray *themeArr;
 @property (copy, nonatomic) void(^menuTapAction)(NSInteger);
 - (void)showMenuView;
 

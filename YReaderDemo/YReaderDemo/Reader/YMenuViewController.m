@@ -42,7 +42,7 @@
 @property (strong, nonatomic) YDownloadManager *downloadManager;
 @property (strong, nonatomic) YBookDetailModel *downloadBook;
 @property (strong, nonatomic) YReaderSettings *settings;
-@property (strong, nonatomic) NSArray *themeArr;
+
 @property (assign, nonatomic) YReaderTheme selectTheme;
 
 @end
@@ -56,9 +56,8 @@
     [self setupSettingViewUI];
     [self setupSettingButtonStatus];
     self.settingView.backgroundColor = YRGBAColor(0, 0, 0, 0.85);
-    self.themeArr = self.settings.themeImageArr;
     self.selectTheme = self.settings.theme;
-    
+    self.themeArr = self.settings.themeImageArr;
     
     [self.themeCollectionView registerNib:[UINib nibWithNibName:NSStringFromClass([YThemeViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([YThemeViewCell class])];
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.themeCollectionView.collectionViewLayout;
@@ -71,6 +70,10 @@
     [self.bgView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         [wself hideMenuView];
     }]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackgroundNotification) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActiveNotification) name:UIApplicationDidBecomeActiveNotification object:nil];
     
 }
 
@@ -302,6 +305,7 @@
 }
 
 - (void)hideMenuView {
+    
     [UIView animateWithDuration:0.25 animations:^{
         self.topViewTop.constant = -self.topView.height;
         self.bottomViewBottom.constant = -self.bottomView.height - self.downloadView.height;
@@ -418,9 +422,25 @@
     }
 }
 
+- (void)enterBackgroundNotification {
+    if (self.view.hidden) {
+        self.themeArr = nil;
+        self.settings.themeImageArr = nil;
+    }
+}
+
+- (void)becomeActiveNotification {
+    self.themeArr = self.settings.themeImageArr;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    NSLog(@"%s",__func__);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
