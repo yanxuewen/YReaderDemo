@@ -25,7 +25,7 @@
 @implementation YReaderSettings
 
 + (NSArray *)modelPropertyBlacklist {
-    return @[@"textColor",@"pageImage",@"readerAttributes",@"needUpdateAttributes",@"cover",@"idField"];
+    return @[@"textColor",@"pageImage",@"readerAttributes",@"needUpdateAttributes",@"cover",@"idField",@"themeImageArr",@"themeImage"];
 }
 
 + (instancetype)shareReaderSettings {
