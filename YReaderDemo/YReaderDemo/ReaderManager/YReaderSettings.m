@@ -202,9 +202,9 @@
         NSMutableArray *arr = @[].mutableCopy;
         
         for (NSUInteger i = 0; i < imageArr.count; i++) {
-//            [arr addObject:[self getThemeImageWith:i]];
+//            [arr addObject:[self getThemeImageWith:i]];//占内存,速度快,0.002s
             
-            [arr addObject:[YYImage imageNamed:imageArr[i]]];
+            [arr addObject:[YYImage imageNamed:imageArr[i]]]; //不占内存,耗CPU,0.12s
         }
         
         _themeImageArr = arr;
