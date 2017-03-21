@@ -92,7 +92,7 @@
     sender.layer.masksToBounds = true;
     
     __weak typeof(self) wself = self;
-    _closeTimer = [NSTimer timerWithTimeInterval:[sender.currentTitle integerValue] block:^(NSTimer * _Nonnull timer) {
+    _closeTimer = [NSTimer timerWithTimeInterval:[sender.currentTitle integerValue] * 60 block:^(NSTimer * _Nonnull timer) {
         __strong typeof(wself) strongSelf = wself;
         [strongSelf exitSpeechString];
     } repeats:false];
