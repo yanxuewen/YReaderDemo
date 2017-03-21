@@ -34,6 +34,7 @@
 - (void)cancelLoadReadingBook;
 - (void)getChapterContentWith:(NSUInteger)chapter completion:(void(^)())completion failure:(void (^)(NSString *msg))failure;
 - (void)cancelGetChapterContent;
+- (void)releaseChapterContentWith:(NSUInteger)chapter;
 @end
 
 

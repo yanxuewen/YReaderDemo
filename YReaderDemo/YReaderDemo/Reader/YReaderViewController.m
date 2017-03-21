@@ -258,6 +258,9 @@
         [chapterM updateContentPaging];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self.readerManager autoLoadNextChapters:chapter+1];
+            if (chapter > 1) {
+                [self.readerManager releaseChapterContentWith:chapter - 2];
+            }
         });
     }
     readPageVC.pageContent = [chapterM getStringWith:page];

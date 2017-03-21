@@ -442,6 +442,15 @@
     }
 }
 
+#pragma mark - release Chapter Content
+- (void)releaseChapterContentWith:(NSUInteger)chapter {
+    if (chapter < _chaptersArr.count) {
+        YChapterContentModel *chapterM = _chaptersArr[chapter];
+        chapterM.isLoad = false;
+        chapterM.body = @"\t正在为您加载...";
+    }
+}
+
 - (void)getChapterContentWith:(NSUInteger)chapter completion:(void (^)())completion failure:(void (^)(NSString *))failure {
     if (chapter >= self.chaptersArr.count) {
         failure(@"章节错误");
