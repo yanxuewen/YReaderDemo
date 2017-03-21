@@ -21,6 +21,15 @@
 @property (strong, nonatomic) YReaderManager *readerManager;
 @property (strong, nonatomic) YChapterContentModel *speechChapterM;
 @property (assign, nonatomic) NSUInteger startSpeechCount;//开始阅读的位置
+@property (strong, nonatomic) NSTimer *changeRateTimer;
+
+@property (weak, nonatomic) IBOutlet UIButton *timerBtn5;
+@property (weak, nonatomic) IBOutlet UIButton *timerBtn15;
+@property (weak, nonatomic) IBOutlet UIButton *timerBtn30;
+@property (weak, nonatomic) IBOutlet UIButton *timerBtn60;
+@property (strong, nonatomic) NSArray *timerBtnArray;
+@property (strong, nonatomic) NSTimer *closeTimer;
+
 @end
 
 @implementation YSpeechViewController
@@ -34,6 +43,7 @@
     self.playBtn.layer.borderWidth = 1;
     self.playBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     self.playBtn.layer.cornerRadius = 6;
+    
     __weak typeof(self) wself = self;
     [self.tapView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         if (wself.backViewBottom.constant == 0) {
@@ -43,13 +53,50 @@
         }
         
     }]];
+    
     [self.backView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
         
     }]];
+    
+    _timerBtnArray = @[_timerBtn5,_timerBtn15,_timerBtn30,_timerBtn60];
+//    for (UIButton *btn in _timerBtnArray) {
+//        [btn setBackgroundImage:[UIImage imageWithColor:YRGBColor(234, 55, 0)] forState:UIControlStateSelected];
+//        btn.layer.cornerRadius = 6;
+//        btn.layer.masksToBounds = true;
+//    }
+    
 }
 
 - (IBAction)timerBtnAction:(UIButton *)sender {
     NSLog(@"%s tag:%zi",__func__,sender.tag);
+    
+    if (_closeTimer) {
+        [_closeTimer invalidate];
+        _closeTimer = nil;
+    }
+    
+    if (sender.isSelected) {
+        sender.selected = false;
+        [sender setBackgroundColor:[UIColor clearColor]];
+        return;
+    }
+    
+    for (UIButton *btn in _timerBtnArray) {
+        btn.selected = false;
+        [btn setBackgroundColor:[UIColor clearColor]];
+    }
+    sender.selected = true;
+    [sender setBackgroundColor:YRGBColor(234, 55, 0)];
+    [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    sender.layer.cornerRadius = 6;
+    sender.layer.masksToBounds = true;
+    
+    __weak typeof(self) wself = self;
+    _closeTimer = [NSTimer timerWithTimeInterval:[sender.currentTitle integerValue] block:^(NSTimer * _Nonnull timer) {
+        __strong typeof(wself) strongSelf = wself;
+        [strongSelf exitSpeechString];
+    } repeats:false];
+    [[NSRunLoop mainRunLoop] addTimer:_closeTimer forMode:NSRunLoopCommonModes];
 }
 
 - (IBAction)playBtnAction:(UIButton *)sender {
@@ -71,8 +118,18 @@
 
 - (IBAction)speechRateSliderValueChanged:(UISlider *)sender {
 //    NSLog(@"%s val:%.2f",__func__,sender.value);
+    if (_changeRateTimer) {
+        [_changeRateTimer invalidate];
+        _changeRateTimer = nil;
+    }
     NSInteger value = sender.value * 100;
-    [_speechManager changeSpeechRate: value / 100.0];
+    __weak typeof(self) wself = self;
+    _changeRateTimer = [NSTimer timerWithTimeInterval:0.5 block:^(NSTimer * _Nonnull timer) {
+        __strong typeof(wself) strongSelf = wself;
+        [strongSelf.speechManager changeSpeechRate:value / 100.0];
+    } repeats:false];
+    [[NSRunLoop mainRunLoop] addTimer:_changeRateTimer forMode:NSRunLoopCommonModes];
+    
 }
 
 - (void)showSpeechView {
@@ -183,6 +240,20 @@
         [self.delegate speechViewExitSpeak];
     }
     self.view.hidden = YES;
+    
+    if (_changeRateTimer) {
+        [_changeRateTimer invalidate];
+        _changeRateTimer = nil;
+    }
+    
+    if (_closeTimer) {
+        [_closeTimer invalidate];
+        _closeTimer = nil;
+    }
+    for (UIButton *btn in _timerBtnArray) {
+        btn.selected = false;
+        [btn setBackgroundColor:[UIColor clearColor]];
+    }
 }
 
 - (YSpeechManager *)speechManager {

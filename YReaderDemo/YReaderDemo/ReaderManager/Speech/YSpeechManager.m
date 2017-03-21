@@ -91,7 +91,7 @@
 }
 
 - (void)exitSpeech {
-    [_speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    [_speechSynthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
     _speechSynthesizer.delegate = nil;
     _speechSynthesizer = nil;
     _state = YSpeechStateNone;

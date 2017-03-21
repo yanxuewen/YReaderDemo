@@ -16,6 +16,10 @@
                 <outlet property="exitBtn" destination="3bP-uf-keW" id="Vbw-uO-J4Z"/>
                 <outlet property="playBtn" destination="Gt3-js-U1k" id="IpA-as-i5U"/>
                 <outlet property="tapView" destination="9os-l3-aAD" id="2Ru-yB-pwG"/>
+                <outlet property="timerBtn15" destination="7Q4-nm-4Zh" id="6yU-tp-XiI"/>
+                <outlet property="timerBtn30" destination="ldP-X7-pry" id="Zvl-Rp-D2J"/>
+                <outlet property="timerBtn5" destination="Ic3-hv-xSu" id="y0E-2K-Cz3"/>
+                <outlet property="timerBtn60" destination="YVE-mH-hfv" id="CYb-aO-wgl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -64,8 +68,13 @@
                         </button>
                         <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Q4-nm-4Zh">
                             <rect key="frame" x="146.5" y="70.5" width="63.5" height="29"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="15分钟">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -74,7 +83,9 @@
                         </button>
                         <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldP-X7-pry">
                             <rect key="frame" x="210" y="70.5" width="64" height="29"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="30分钟">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -85,6 +96,7 @@
                         <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVE-mH-hfv">
                             <rect key="frame" x="274" y="70.5" width="63.5" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="60分钟">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -95,8 +107,10 @@
                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic3-hv-xSu">
                             <rect key="frame" x="82.5" y="70.5" width="64" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="5分钟">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="timerBtnAction:" destination="-1" eventType="touchUpInside" id="dpc-cY-wpF"/>
