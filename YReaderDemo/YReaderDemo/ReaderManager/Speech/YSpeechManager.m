@@ -58,6 +58,13 @@
     if (!_speechArray) {
         _speechArray = @[string];
     }
+    
+    [self checkSpeechStringValid];
+    if (_speechCount >= _speechArray.count) {
+        [self p_speechUpdateState:YSpeechStateFinish];
+        return;
+    }
+    
     NSError *error = NULL;
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:&error];
@@ -69,7 +76,10 @@
         // Do some error handling
     }
     
-    _speechRange = NSMakeRange(0, 0);
+    NSRange range = [_sourceSpeechString rangeOfString:_speechArray[_speechCount]];
+    if (range.location != NSNotFound && range.length > 0) {
+        _speechRange.location = range.location - 1;
+    }
     [self p_startSpeechWith:_speechArray[_speechCount]];
 }
 
@@ -118,6 +128,7 @@
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
     NSLog(@"%s",__func__);
     _speechCount++;
+    [self checkSpeechStringValid];
     if (_speechCount < _speechArray.count) {
         NSRange range = [_sourceSpeechString rangeOfString:_speechArray[_speechCount]];
         if (range.location != NSNotFound && range.length > 0) {
@@ -159,6 +170,18 @@
         [self.delegate speechManagerUpdateState:state];
     }
     _state = state;
+}
+
+#pragma mark - 检查下一个要读段落是否包含中文
+- (void)checkSpeechStringValid {
+    while (_speechCount < _speechArray.count) {
+        NSString *str = _speechArray[_speechCount];
+        NSRange range = [str rangeOfString:@"[\u4e00-\u9fff]" options:NSRegularExpressionSearch];
+        if (range.location != NSNotFound && range.length > 0) {
+            break;
+        }
+        _speechCount++;
+    }
 }
 
 - (AVSpeechSynthesizer *)speechSynthesizer {
