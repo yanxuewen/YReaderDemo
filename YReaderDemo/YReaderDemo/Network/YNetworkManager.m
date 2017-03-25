@@ -20,7 +20,7 @@
 
 @interface YNetworkManager ()
 
-@property (strong, nonatomic) AFURLSessionManager *manager;
+@property (strong, nonatomic) AFHTTPSessionManager *manager;
 @property (assign, nonatomic) AFNetworkReachabilityStatus networkStatus;
 
 @end
@@ -43,7 +43,7 @@
         NSURLSessionConfiguration *cfg = [NSURLSessionConfiguration defaultSessionConfiguration];
         cfg.timeoutIntervalForRequest = 15.0;
         cfg.timeoutIntervalForResource = 15.0;
-        self.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:cfg];
+        self.manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:cfg];
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         [self monitorNetWork];
         
@@ -55,7 +55,6 @@
     
     NSURL *url = [YURLManager getURLWith:type parameter:parameter];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15.0];
-    
     __weak typeof(self) wself = self;
     NSURLSessionTask *task = [self.manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (type != YAPITypeChapterContent) {

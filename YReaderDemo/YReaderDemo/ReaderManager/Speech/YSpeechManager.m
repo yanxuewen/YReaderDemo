@@ -105,6 +105,8 @@
     _speechSynthesizer.delegate = nil;
     _speechSynthesizer = nil;
     _state = YSpeechStateNone;
+    _sourceSpeechString = nil;
+    _speechArray = nil;
 }
 
 - (void)changeSpeechRate:(double)rate {

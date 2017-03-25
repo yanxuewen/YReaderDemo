@@ -59,11 +59,6 @@
     }]];
     
     _timerBtnArray = @[_timerBtn5,_timerBtn15,_timerBtn30,_timerBtn60];
-//    for (UIButton *btn in _timerBtnArray) {
-//        [btn setBackgroundImage:[UIImage imageWithColor:YRGBColor(234, 55, 0)] forState:UIControlStateSelected];
-//        btn.layer.cornerRadius = 6;
-//        btn.layer.masksToBounds = true;
-//    }
     
 }
 
