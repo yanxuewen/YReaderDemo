@@ -95,6 +95,13 @@
     return string;
 }
 
+- (void)releaseChapter {
+    _isLoad = false;
+    _body = @"\t正在为您加载...";
+    _attributedString = nil;
+    _pageArr = nil;
+}
+
 - (NSString *)traditionalStr {
     if (!_traditionalStr) {
         _traditionalStr = [[YReaderSettings shareReaderSettings] transformToTraditionalWith:_body];

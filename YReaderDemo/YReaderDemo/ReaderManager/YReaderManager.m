@@ -446,8 +446,7 @@
 - (void)releaseChapterContentWith:(NSUInteger)chapter {
     if (chapter < _chaptersArr.count) {
         YChapterContentModel *chapterM = _chaptersArr[chapter];
-        chapterM.isLoad = false;
-        chapterM.body = @"\t正在为您加载...";
+        [chapterM releaseChapter];
     }
 }
 
