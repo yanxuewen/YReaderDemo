@@ -179,14 +179,17 @@
 #pragma mark - speech manager delegate
 - (void)speechManagerUpdateState:(YSpeechState)state {
     if (state == YSpeechStateFinish) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
-            [self.delegate speechViewWillSpeakString:nil pageFinished:YES];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:chapterFinish:)]) {
+            BOOL result = [self.delegate speechViewWillSpeakString:nil pageFinished:NO chapterFinish:YES];
+            if (!result) {
+                [self exitSpeechString];
+            }
         }
     }
 }
 
 - (void)speechManagerWillChangeSection:(NSUInteger)section string:(NSString *)string {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:chapterFinish:)]) {
         NSRange range = [_speechChapterM.body rangeOfString:string];
         if (range.location != NSNotFound && range.length > 0) {
             NSRange pageRange = [_speechChapterM getRangeWith:_page];
@@ -194,7 +197,7 @@
                 if (range.location + range.length > pageRange.location + pageRange.length) {
                     string = [string substringToIndex:pageRange.location + pageRange.length- range.location];
                 }
-                [self.delegate speechViewWillSpeakString:string pageFinished:NO];
+                [self.delegate speechViewWillSpeakString:string pageFinished:NO chapterFinish:NO];
             } else {
                 NSLog(@"分段是正好分页,这里不返回了");
             }
@@ -207,7 +210,7 @@
     NSUInteger speechCount = _startSpeechCount + range.location + (range.length - 1);
     NSRange pageRange = [_speechChapterM getRangeWith:_page];
     if (speechCount >= pageRange.location + pageRange.length) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:)]) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(speechViewWillSpeakString:pageFinished:chapterFinish:)]) {
 
             NSUInteger count = _speechManager.sectionStringCount + _startSpeechCount + _speechManager.speakingString.length - pageRange.location - pageRange.length;
             if (_speechManager.sectionStringCount + _startSpeechCount > pageRange.location + pageRange.length) {
@@ -216,7 +219,7 @@
             
             if (_speechManager.speakingString.length >= count) {
                 NSString *string = [_speechManager.speakingString substringWithRange:NSMakeRange(_speechManager.speakingString.length - count, count)];
-                [self.delegate speechViewWillSpeakString:string pageFinished:YES];
+                [self.delegate speechViewWillSpeakString:string pageFinished:YES chapterFinish:NO];
             } else {
                 DDLogError(@"speechManagerWillSpeakRange error _speechManager.speakingString.length:%zi < count:%zi   speakingString:%@",_speechManager.speakingString.length,count,_speechManager.speakingString);
                 [self exitSpeechString];

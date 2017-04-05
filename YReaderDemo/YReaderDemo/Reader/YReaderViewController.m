@@ -360,8 +360,8 @@
 }
 
 #pragma mark - speech view delegate
-- (void)speechViewWillSpeakString:(NSString *)string pageFinished:(BOOL)isFinished {
-    if (isFinished) {
+- (BOOL)speechViewWillSpeakString:(NSString *)string pageFinished:(BOOL)isPageFinished chapterFinish:(BOOL)isChapterFinish {
+    if (isPageFinished || isChapterFinish) {
         YReadPageViewController *pageVC = _currentReadPage;
         NSUInteger page = pageVC.page;
         NSUInteger chapter = pageVC.chapter;
@@ -369,12 +369,21 @@
             page = _page;
             chapter = _chapter;
         }
-        NSLog(@"chapter %zi  page:%zi",chapter,page);
-        if (page >= [_readerManager.chaptersArr[chapter] pageCount] - 1) {
-            page = 0;
+        
+        if (isChapterFinish) {
             chapter = chapter + 1;
-        } else {
-            page = page + 1;
+            page = 0;
+        } else if (isPageFinished) {
+            if (page >= [_readerManager.chaptersArr[chapter] pageCount] - 1) {
+                page = 0;
+                chapter = chapter + 1;
+            } else {
+                page = page + 1;
+            }
+        }
+        
+        if (chapter > _readerManager.chaptersArr.count - 1) {
+            return NO;
         }
         
         _isPageBefore = NO;
@@ -382,15 +391,16 @@
             YChapterContentModel *chapterM = self.readerManager.chaptersArr[chapter];
             [chapterM updateContentPaging];
         }
-        NSLog(@"chapter %zi  page:%zi",chapter,page);
+        
         [self reloadReaderPageViewControllerWith:chapter page:page];
         [self.speechView updateSpeakChapter:_chapter page:_page];
-        NSLog(@"chapter %zi  page:%zi",_chapter,_page);
+        
         [_currentReadPage updateSpeakString:string];
         
     } else if (string) {
         [_currentReadPage updateSpeakString:string];
     }
+    return YES;
 }
 
 - (void)speechViewExitSpeak {

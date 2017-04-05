@@ -11,7 +11,7 @@
 @protocol YSpeechViewDelegate <NSObject>
 
 @optional;
-- (void)speechViewWillSpeakString:(NSString *)string pageFinished:(BOOL)isFinished;
+- (BOOL)speechViewWillSpeakString:(NSString *)string pageFinished:(BOOL)isPageFinished chapterFinish:(BOOL)isChapterFinish;
 - (void)speechViewExitSpeak;
 
 @end
