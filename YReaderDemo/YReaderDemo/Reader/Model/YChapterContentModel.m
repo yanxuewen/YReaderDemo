@@ -10,6 +10,8 @@
 #import "YReaderSettings.h"
 #import <CoreText/CoreText.h>
 
+#define kiOS10_3Later ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 10.3)
+
 @interface YChapterContentModel ()
 
 
@@ -32,6 +34,9 @@
     NSMutableArray *rangeArr = @[].mutableCopy;
     YReaderSettings *settings = [YReaderSettings shareReaderSettings];
     NSString *content = settings.isTraditional ? self.traditionalStr : self.body;
+    if (kiOS10_3Later) {
+        content = [content stringByReplacingOccurrencesOfString:@"\t" withString:@"      "];
+    }
     NSMutableAttributedString *attr = [[NSMutableAttributedString  alloc] initWithString:content attributes:settings.readerAttributes];
     CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attr);
     CGPathRef path = CGPathCreateWithRect(bounds, NULL);
