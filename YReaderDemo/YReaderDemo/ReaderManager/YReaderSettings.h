@@ -21,6 +21,7 @@
 @property (assign, nonatomic) YTurnPageStyle pageStyle;
 @property (assign, nonatomic) BOOL isNightMode;
 @property (assign, nonatomic) CGFloat fontSize;
+@property (strong, nonatomic) NSString *speechRate;//阅读速度
 
 @property (copy, nonatomic) void(^refreshReaderView)();
 @property (copy, nonatomic) void(^refreshPageStyle)();

@@ -35,6 +35,9 @@
         YYCache *cache = [YSQLiteManager shareManager].cache;
         if ([cache containsObjectForKey:kYReaderSettings]) {
             setting = (YReaderSettings *)[cache objectForKey:kYReaderSettings];
+            if (!setting.speechRate) {
+                setting.speechRate = @"0.5";
+            }
         } else {
             setting = [[self alloc] init];
             [cache setObject:setting forKey:kYReaderSettings];
@@ -46,6 +49,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _speechRate = @"0.5";
         _brightness = 0.7;
         _lineSpacing = kYLineSpacingNormal;
         _isTraditional = NO;
@@ -94,13 +98,15 @@
     }
 }
 
+- (void)setSpeechRate:(NSString *)speechRate {
+    _speechRate = speechRate;
+    [[YSQLiteManager shareManager].cache setObject:self forKey:kYReaderSettings];
+}
+
 - (void)setPageStyle:(YTurnPageStyle)pageStyle {
     if (pageStyle != _pageStyle) {
         _pageStyle = pageStyle;
-        [[YSQLiteManager shareManager].cache setObject:self forKey:kYReaderSettings];
-        if (self.refreshPageStyle) {
-            self.refreshPageStyle();
-        }
+        [self updateReaderSettings];
     }
 }
 

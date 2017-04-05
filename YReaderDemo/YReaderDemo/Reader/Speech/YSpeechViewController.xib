@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,6 +15,7 @@
                 <outlet property="backViewBottom" destination="RHR-eY-7zC" id="mrc-Nn-0CJ"/>
                 <outlet property="exitBtn" destination="3bP-uf-keW" id="Vbw-uO-J4Z"/>
                 <outlet property="playBtn" destination="Gt3-js-U1k" id="IpA-as-i5U"/>
+                <outlet property="speechRateSlider" destination="rzb-jt-zB3" id="3BI-ue-zR7"/>
                 <outlet property="tapView" destination="9os-l3-aAD" id="2Ru-yB-pwG"/>
                 <outlet property="timerBtn15" destination="7Q4-nm-4Zh" id="6yU-tp-XiI"/>
                 <outlet property="timerBtn30" destination="ldP-X7-pry" id="Zvl-Rp-D2J"/>

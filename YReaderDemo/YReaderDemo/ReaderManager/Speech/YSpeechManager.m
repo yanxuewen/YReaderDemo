@@ -47,7 +47,7 @@
     return self;
 }
 
-- (void)startSpeechWith:(NSString *)string {
+- (void)startSpeechWith:(NSString *)string speechRate:(double)speechRate{
     if (![string isNotBlank]) {
         [self p_speechUpdateState:YSpeechStateFinish];
         return;
@@ -80,6 +80,8 @@
     if (range.location != NSNotFound && range.length > 0) {
         _speechRange.location = range.location - 1;
     }
+    
+    _speechRate = (speechRate - 0.5) / 2.0 + 0.5;
     [self p_startSpeechWith:_speechArray[_speechCount]];
 }
 

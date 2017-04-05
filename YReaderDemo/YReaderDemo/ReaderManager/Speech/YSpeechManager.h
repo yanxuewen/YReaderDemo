@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger,YSpeechState) {
 @property (assign, nonatomic, readonly) NSUInteger sectionStringCount;//正在读的该段,在整个string中位置
 
 + (instancetype)shareSpeechManager;
-- (void)startSpeechWith:(NSString *)string;
+- (void)startSpeechWith:(NSString *)string speechRate:(double)speechRate;
 - (void)continueSpeech;
 - (void)pauseSpeech;
 - (void)exitSpeech;

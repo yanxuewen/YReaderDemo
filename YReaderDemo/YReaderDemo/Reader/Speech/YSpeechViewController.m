@@ -9,6 +9,7 @@
 #import "YSpeechViewController.h"
 #import "YSpeechManager.h"
 #import "YReaderManager.h"
+#import "YReaderSettings.h"
 
 @interface YSpeechViewController ()<YSpeechManagerDelegate>
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backViewBottom;
 @property (weak, nonatomic) IBOutlet UIButton *exitBtn;
 @property (weak, nonatomic) IBOutlet UIButton *playBtn;
+@property (weak, nonatomic) IBOutlet UISlider *speechRateSlider;
 @property (weak, nonatomic) IBOutlet UIView *tapView;
 @property (strong, nonatomic) YSpeechManager *speechManager;
 @property (strong, nonatomic) YReaderManager *readerManager;
@@ -29,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *timerBtn60;
 @property (strong, nonatomic) NSArray *timerBtnArray;
 @property (strong, nonatomic) NSTimer *closeTimer;
+@property (strong, nonatomic) YReaderSettings *readerSettings;
 
 @end
 
@@ -59,7 +62,8 @@
     }]];
     
     _timerBtnArray = @[_timerBtn5,_timerBtn15,_timerBtn30,_timerBtn60];
-    
+    _readerSettings = [YReaderSettings shareReaderSettings];
+    [_speechRateSlider setValue:[_readerSettings.speechRate doubleValue]];
 }
 
 - (IBAction)timerBtnAction:(UIButton *)sender {
@@ -122,6 +126,7 @@
     _changeRateTimer = [NSTimer timerWithTimeInterval:0.5 block:^(NSTimer * _Nonnull timer) {
         __strong typeof(wself) strongSelf = wself;
         [strongSelf.speechManager changeSpeechRate:value / 100.0];
+        strongSelf.readerSettings.speechRate = [NSString stringWithFormat:@"%.2f",value/100.0];
     } repeats:false];
     [[NSRunLoop mainRunLoop] addTimer:_changeRateTimer forMode:NSRunLoopCommonModes];
     
@@ -149,6 +154,7 @@
     }];
 }
 
+#pragma mark - 开始阅读
 - (void)startSpeechCurrentPageContent {
     
     if (_chapter < self.readerManager.chaptersArr.count) {
@@ -159,7 +165,7 @@
             range.length = chapterM.body.length  - range.location;
             NSString *str = [chapterM.body substringWithRange:range];
             _startSpeechCount = range.location;
-            [self.speechManager startSpeechWith:str];
+            [self.speechManager startSpeechWith:str speechRate:_speechRateSlider.value];
         }
     }
     
