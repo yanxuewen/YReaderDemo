@@ -34,9 +34,7 @@
     NSMutableArray *rangeArr = @[].mutableCopy;
     YReaderSettings *settings = [YReaderSettings shareReaderSettings];
     NSString *content = settings.isTraditional ? self.traditionalStr : self.body;
-    if (kiOS10_3Later) {
-        content = [content stringByReplacingOccurrencesOfString:@"\t" withString:@"      "];
-    }
+    
     NSMutableAttributedString *attr = [[NSMutableAttributedString  alloc] initWithString:content attributes:settings.readerAttributes];
     CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef) attr);
     CGPathRef path = CGPathCreateWithRect(bounds, NULL);
@@ -95,8 +93,10 @@
     if (!string) {
         return nil;
     }
-    string = [@"\t" stringByAppendingString:string];
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"\n\t"];
+    NSString *repStr = kiOS10_3Later ? @"      " : @"\t";
+    string = [repStr stringByAppendingString:string];
+    repStr = [NSString stringWithFormat:@"\n%@",repStr];
+    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:repStr];
     return string;
 }
 
@@ -112,6 +112,15 @@
         _traditionalStr = [[YReaderSettings shareReaderSettings] transformToTraditionalWith:_body];
     }
     return _traditionalStr;
+}
+
+- (NSString *)body {
+    if (_body) {
+        if (kiOS10_3Later && [_body hasPrefix:@"\t"]) {
+            _body = [_body stringByReplacingOccurrencesOfString:@"\t" withString:@"      "];
+        }
+    }
+    return _body;
 }
 
 @end

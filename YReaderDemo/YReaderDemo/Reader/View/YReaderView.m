@@ -43,14 +43,21 @@
 }
 
 - (void)updateSpeakString:(NSString *)string {
+    
+    if ([string hasPrefix:@"\t"]) {
+        string = [string substringFromIndex:1];
+    }
+    
+    if ([string hasPrefix:@"      "]) {
+        string = [string substringFromIndex:6];
+    }
+    
     if (!string) {
         return;
     }
+    
     NSRange range = [_sourceAttributedString.string rangeOfString:string];
-    if ([string hasPrefix:@"\t"]) {
-        range.location ++;
-        range.length --;
-    }
+    
     if (range.location != NSNotFound && range.length > 0) {
         
         NSMutableAttributedString *attStr = _sourceAttributedString.mutableCopy;
