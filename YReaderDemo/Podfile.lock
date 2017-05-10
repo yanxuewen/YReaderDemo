@@ -24,27 +24,9 @@ PODS:
   - IQKeyboardManager (4.0.8)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - MOBFoundation_IDFA (2.2.15)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - ShareSDK3 (3.6.1):
-    - MOBFoundation_IDFA
-    - ShareSDK3/ShareSDK (= 3.6.1)
-  - ShareSDK3/ShareSDK (3.6.1):
-    - MOBFoundation_IDFA
-  - ShareSDK3/ShareSDKConfigurationFile (3.6.1):
-    - MOBFoundation_IDFA
-  - ShareSDK3/ShareSDKExtension (3.6.1):
-    - MOBFoundation_IDFA
-  - ShareSDK3/ShareSDKPlatforms/QQ (3.6.1):
-    - MOBFoundation_IDFA
-  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (3.6.1):
-    - MOBFoundation_IDFA
-  - ShareSDK3/ShareSDKPlatforms/WeChat (3.6.1):
-    - MOBFoundation_IDFA
-  - ShareSDK3/ShareSDKUI (3.6.1):
-    - MOBFoundation_IDFA
   - YYCache (1.0.4)
   - YYCategories (1.0.4):
     - YYCategories/no-arc (= 1.0.4)
@@ -61,28 +43,11 @@ DEPENDENCIES:
   - IQKeyboardManager (~> 4.0.8)
   - MBProgressHUD (~> 1.0.0)
   - MJRefresh (~> 3.1.10)
-  - MOBFoundation_IDFA
   - SDWebImage (~> 3.8.0)
-  - ShareSDK3 (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
-  - ShareSDK3/ShareSDKConfigurationFile (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
-  - ShareSDK3/ShareSDKExtension (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
-  - ShareSDK3/ShareSDKPlatforms/QQ (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
-  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
-  - ShareSDK3/ShareSDKPlatforms/WeChat (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
-  - ShareSDK3/ShareSDKUI (from `https://github.com/MobClub/ShareSDK-for-iOS-Spec.git`)
   - YYCache (~> 1.0.0)
   - YYCategories (~> 1.0.0)
   - YYImage (~> 1.0.0)
   - YYModel (~> 1.0.0)
-
-EXTERNAL SOURCES:
-  ShareSDK3:
-    :git: https://github.com/MobClub/ShareSDK-for-iOS-Spec.git
-
-CHECKOUT OPTIONS:
-  ShareSDK3:
-    :commit: 6fe181e62b51eee5e6490d5ee46c39cfe8589a1f
-    :git: https://github.com/MobClub/ShareSDK-for-iOS-Spec.git
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -91,14 +56,12 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  MOBFoundation_IDFA: c5741d4cf9a08daa24203fe9e1f90ff1ab7403e5
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  ShareSDK3: 6dc53c95412cbd7a6672a77a02d92f18573c894c
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYCategories: 6bcd4314c6661a561410dce4a793379ebd306abd
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 5574d6bfd09e54574f3156c91c67767f18449d47
+PODFILE CHECKSUM: 02a0e8b0a8d41337a8347b106e7e2cb440d1dcd5
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

@@ -11,18 +11,18 @@
 #import "YNetworkManager.h"
 #import "YSignInViewController.h"
 
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
+//#import <ShareSDK/ShareSDK.h>
+//#import <ShareSDKConnector/ShareSDKConnector.h>
 
-//腾讯开放平台（对应QQ和QQ空间）SDK头文件
-#import <TencentOpenAPI/TencentOAuth.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-
-//微信SDK头文件
-#import "WXApi.h"
-
-//新浪微博SDK头文件
-#import "WeiboSDK.h"
+////腾讯开放平台（对应QQ和QQ空间）SDK头文件
+//#import <TencentOpenAPI/TencentOAuth.h>
+//#import <TencentOpenAPI/QQApiInterface.h>
+//
+////微信SDK头文件
+//#import "WXApi.h"
+//
+////新浪微博SDK头文件
+//#import "WeiboSDK.h"
 
 @interface AppDelegate ()
 
@@ -44,7 +44,7 @@
                    config:nil];
     
     //shareSDK
-    [self registerShareSDK];
+//    [self registerShareSDK];
     
     
     
@@ -59,71 +59,71 @@
     [self.window makeKeyAndVisible];
     
     UIViewController *viewC = nil;
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kYHasLogin"]) {
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"kYHasLogin"]) {
         viewC = [[ViewController alloc] init];
-    } else {
-        viewC = [[YSignInViewController alloc] init];
-    }
+//    } else {
+//        viewC = [[YSignInViewController alloc] init];
+//    }
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:viewC];
     
     return YES;
 }
 
-- (void)registerShareSDK {
-    //SMSSDK
-    [SMSSDK registerApp:@"1c0477c5159ca" withSecret:@"523609920bfcaa00583677de97b5bb10"];
-    
-    //shareSDK
-    [ShareSDK registerApp:@"1c047daf75787"
-     
-          activePlatforms:@[
-                            @(SSDKPlatformTypeSinaWeibo),
-                            @(SSDKPlatformTypeWechat),
-                            @(SSDKPlatformTypeQQ)]
-                 onImport:^(SSDKPlatformType platformType)
-     {
-         switch (platformType)
-         {
-             case SSDKPlatformTypeWechat:
-                 [ShareSDKConnector connectWeChat:[WXApi class]];
-                 break;
-             case SSDKPlatformTypeQQ:
-                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
-                 break;
-             case SSDKPlatformTypeSinaWeibo:
-                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
-                 break;
-             default:
-                 break;
-         }
-     }
-          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
-     {
-         
-         switch (platformType)
-         {
-             case SSDKPlatformTypeSinaWeibo:
-                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
-                 [appInfo SSDKSetupSinaWeiboByAppKey:@"568898243"
-                                           appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
-                                         redirectUri:@"http://www.sharesdk.cn"
-                                            authType:SSDKAuthTypeBoth];
-                 break;
-             case SSDKPlatformTypeWechat:
-                 [appInfo SSDKSetupWeChatByAppId:@"wx4868b35061f87885"
-                                       appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
-                 break;
-             case SSDKPlatformTypeQQ:
-                 [appInfo SSDKSetupQQByAppId:@"100371282"
-                                      appKey:@"aed9b0303e3ed1e27bae87c33761161d"
-                                    authType:SSDKAuthTypeBoth];
-                 break;
-             default:
-                 break;
-         }
-     }];
-    
-}
+//- (void)registerShareSDK {
+//    //SMSSDK
+//    [SMSSDK registerApp:@"1c0477c5159ca" withSecret:@"523609920bfcaa00583677de97b5bb10"];
+//    
+//    //shareSDK
+//    [ShareSDK registerApp:@"1c047daf75787"
+//     
+//          activePlatforms:@[
+//                            @(SSDKPlatformTypeSinaWeibo),
+//                            @(SSDKPlatformTypeWechat),
+//                            @(SSDKPlatformTypeQQ)]
+//                 onImport:^(SSDKPlatformType platformType)
+//     {
+//         switch (platformType)
+//         {
+//             case SSDKPlatformTypeWechat:
+//                 [ShareSDKConnector connectWeChat:[WXApi class]];
+//                 break;
+//             case SSDKPlatformTypeQQ:
+//                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+//                 break;
+//             case SSDKPlatformTypeSinaWeibo:
+//                 [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }
+//          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo)
+//     {
+//         
+//         switch (platformType)
+//         {
+//             case SSDKPlatformTypeSinaWeibo:
+//                 //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+//                 [appInfo SSDKSetupSinaWeiboByAppKey:@"568898243"
+//                                           appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
+//                                         redirectUri:@"http://www.sharesdk.cn"
+//                                            authType:SSDKAuthTypeBoth];
+//                 break;
+//             case SSDKPlatformTypeWechat:
+//                 [appInfo SSDKSetupWeChatByAppId:@"wx4868b35061f87885"
+//                                       appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
+//                 break;
+//             case SSDKPlatformTypeQQ:
+//                 [appInfo SSDKSetupQQByAppId:@"100371282"
+//                                      appKey:@"aed9b0303e3ed1e27bae87c33761161d"
+//                                    authType:SSDKAuthTypeBoth];
+//                 break;
+//             default:
+//                 break;
+//         }
+//     }];
+//    
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
