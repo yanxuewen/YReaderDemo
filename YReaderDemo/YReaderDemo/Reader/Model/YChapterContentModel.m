@@ -97,10 +97,11 @@
     if (!string) {
         return nil;
     }
-    NSString *repStr = kiOS10_3Later ? @"      " : @"\t";
-    string = [repStr stringByAppendingString:string];
-    repStr = [NSString stringWithFormat:@"\n%@",repStr];
-    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:repStr];
+//    NSString *repStr = kiOS10_3Later ? @"      " : @"\t";
+//    string = [repStr stringByAppendingString:string];
+//    repStr = [NSString stringWithFormat:@"\n%@",repStr];
+//    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:repStr];
+    string = [string stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
     return string;
 }
 
