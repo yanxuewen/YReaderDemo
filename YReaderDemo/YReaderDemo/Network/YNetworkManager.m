@@ -6,6 +6,9 @@
 //  Copyright © 2016年 yxw. All rights reserved.
 //
 
+#define kDeviceUUID @"kDeviceUUID"
+
+
 #import "YNetworkManager.h"
 #import "YBookModel.h"
 #import "YBookDetailModel.h"
@@ -17,6 +20,7 @@
 #import "YChapterContentModel.h"
 #import "YBookUpdateModel.h"
 #import "YRankingModel.h"
+#import "YKeychain.h"
 
 @interface YNetworkManager ()
 
@@ -41,8 +45,14 @@
     if (self) {
         self.networkStatus = AFNetworkReachabilityStatusNotReachable;
         NSURLSessionConfiguration *cfg = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSString *uuid = [YKeychain valueForKey:kDeviceUUID];
+        if (uuid.length == 0) {
+            uuid = [NSUUID UUID].UUIDString;
+            [YKeychain setValue:uuid forKey:kDeviceUUID];
+        }
         cfg.timeoutIntervalForRequest = 15.0;
         cfg.timeoutIntervalForResource = 15.0;
+        cfg.HTTPAdditionalHeaders = @{@"X-Device-Id":uuid,@"X-User-Agent":@"YouShaQi/2.29.14 (iPhone; iOS 12.1; Scale/3.00)",@"x-status-inreview":@"0",@"User-Agent":@"YouShaQi/2.29.14 (iPhone; iOS 12.1; Scale/3.00)"};
         self.manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:cfg];
         [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         [self monitorNetWork];

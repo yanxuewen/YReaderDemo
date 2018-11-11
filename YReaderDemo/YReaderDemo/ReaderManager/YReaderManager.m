@@ -141,10 +141,8 @@
         if (arr.count > 0) {
             YBookSummaryModel *selectSummary = nil;
             for (YBookSummaryModel *summary in arr) {
-                if (![summary.source isEqualToString:@"zhuishuvip"]) {
-                    selectSummary = summary;
-                    break;
-                }
+                selectSummary = summary;
+                break;
             }
             if (selectSummary) {
                 wself.selectSummary = selectSummary;

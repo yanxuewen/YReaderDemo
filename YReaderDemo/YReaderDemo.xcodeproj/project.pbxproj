@@ -131,6 +131,7 @@
 		46E0AAD11E6D82FC0027E95B /* YSignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E0AACF1E6D82FC0027E95B /* YSignInViewController.xib */; };
 		46EAEF881DFD668C0073AAB7 /* YReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */; };
 		46F9614D1E08210B004B6850 /* YPageBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F9614C1E08210B004B6850 /* YPageBackViewController.m */; };
+		B4B6C52F21980A2600D91468 /* YKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C52D21980A2500D91468 /* YKeychain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,6 +334,8 @@
 		46EAEF861DFD668C0073AAB7 /* YReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YReaderViewController.m; sourceTree = "<group>"; };
 		46F9614B1E08210B004B6850 /* YPageBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPageBackViewController.h; sourceTree = "<group>"; };
 		46F9614C1E08210B004B6850 /* YPageBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPageBackViewController.m; sourceTree = "<group>"; };
+		B4B6C52D21980A2500D91468 /* YKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKeychain.m; sourceTree = "<group>"; };
+		B4B6C52E21980A2600D91468 /* YKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKeychain.h; sourceTree = "<group>"; };
 		BCB6D624FDE7FC0EEDEEC3B4 /* Pods-YReaderDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YReaderDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		CE093AAFAB12142A63E9A1BD /* libPods-YReaderDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YReaderDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D787A029417B987058C4AECD /* Pods-YReaderDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YReaderDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -613,6 +616,8 @@
 				46110D421DFBE1210012DAD1 /* YDateModel.m */,
 				461548F51E061BC900E8251B /* YProgressHUD.h */,
 				461548F61E061BC900E8251B /* YProgressHUD.m */,
+				B4B6C52E21980A2600D91468 /* YKeychain.h */,
+				B4B6C52D21980A2500D91468 /* YKeychain.m */,
 			);
 			name = Other;
 			path = YReaderDemo/Other;
@@ -868,7 +873,6 @@
 				46D5DB061DF82AC9009CC6AB /* Sources */,
 				46D5DB071DF82AC9009CC6AB /* Frameworks */,
 				46D5DB081DF82AC9009CC6AB /* Resources */,
-				DC5E7474C292184D2B428354 /* [CP] Embed Pods Frameworks */,
 				67FF1E6B0198F9A2FF5D47E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -892,8 +896,8 @@
 				TargetAttributes = {
 					46D5DB091DF82AC9009CC6AB = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = PFVP9EX2TR;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = WVNBUP4CB4;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1000,13 +1004,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YReaderDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		67FF1E6B0198F9A2FF5D47E3 /* [CP] Copy Pods Resources */ = {
@@ -1015,28 +1022,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DC5E7474C292184D2B428354 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YReaderDemo/Pods-YReaderDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1087,6 +1084,7 @@
 				46B640B01E07988B0049E595 /* YRankingDetialModel.m in Sources */,
 				4688CCDD1E06CA1400C88C01 /* YSummaryViewCell.m in Sources */,
 				4696B1201E054EA0001DCC54 /* YThemeViewCell.m in Sources */,
+				B4B6C52F21980A2600D91468 /* YKeychain.m in Sources */,
 				46110D2C1DFA8BEA0012DAD1 /* YBookModel.m in Sources */,
 				4696B1191E04224A001DCC54 /* YDirectoryViewCell.m in Sources */,
 				460D9CF41E076E08009A608D /* YRankingModel.m in Sources */,
@@ -1227,9 +1225,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = PFVP9EX2TR;
+				DEVELOPMENT_TEAM = WVNBUP4CB4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YReaderDemo/SMSSDK/SMS_SDK",
@@ -1238,10 +1238,10 @@
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReaderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fa14f2ec-5b6f-471e-8095-90b50a00e493";
-				PROVISIONING_PROFILE_SPECIFIER = iOSDevelopment201703152222;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1251,9 +1251,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = PFVP9EX2TR;
+				DEVELOPMENT_TEAM = WVNBUP4CB4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YReaderDemo/SMSSDK/SMS_SDK",
@@ -1262,10 +1264,10 @@
 				INFOPLIST_FILE = YReaderDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yxw.YReaderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7c198583-43aa-4d38-b054-767267c8c945";
-				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: com.yxw.YReader";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -9,7 +9,7 @@
 #import "YURLManager.h"
 #import <CoreFoundation/CoreFoundation.h>
 
-#define kAPIBaseUrl @"http://api.zhuishushenqi.com/"
+#define kAPIBaseUrl @"https://api.zhuishushenqi.com/"
 
 @implementation YURLManager
 
@@ -47,11 +47,14 @@
             urlStr = [NSString stringWithFormat:@"%@book-list/%@/recommend?limit=3",kAPIBaseUrl,parameter];
             break;
         case YAPITypeBookSummary:
-            urlStr = [NSString stringWithFormat:@"%@atoc?view=summary&book=%@",kAPIBaseUrl,parameter];
+            urlStr = [NSString stringWithFormat:@"%@btoc?view=summary&book=%@",kAPIBaseUrl,parameter];
             break;
-        case YAPITypeChaptersLink:
-            urlStr = [NSString stringWithFormat:@"%@atoc/%@?view=chapters",kAPIBaseUrl,parameter];
+        case YAPITypeChaptersLink: {
+            NSTimeInterval timeInterval = [[NSDate new] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:0]];
+            urlStr = [NSString stringWithFormat:@"https://api.zhuishushenqi.com/btoc/%@?view=chapters&t=%.lf",parameter,timeInterval*1000.0];
+            
             break;
+        }
         case YAPITypeChapterContent: {
             parameter = [self encodeToPercentEscapeString:parameter];
             urlStr = [NSString stringWithFormat:@"http://chapter2.zhuishushenqi.com/chapter/%@",parameter];

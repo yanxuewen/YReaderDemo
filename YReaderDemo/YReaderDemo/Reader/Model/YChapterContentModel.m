@@ -26,6 +26,10 @@
     return @[@"title",@"body"];
 }
 
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{@"body" : @"cpContent"};
+}
+
 - (void)updateContentPaging {
     [self pagingWithBounds:CGRectMake(kYReaderLeftSpace, kYReaderTopSpace, kScreenWidth - kYReaderLeftSpace - kYReaderRightSpace, kScreenHeight - kYReaderTopSpace - kYReaderBottomSpace)];
 }
