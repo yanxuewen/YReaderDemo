@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -50,7 +51,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI8-IX-HLr">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="64"/>
                     <subviews>
                         <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lv2-Wb-XKk">
                             <rect key="frame" x="0.0" y="20" width="122" height="44"/>
@@ -109,7 +110,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssz-yz-Npj">
-                    <rect key="frame" x="0.0" y="64" width="375" height="1136"/>
+                    <rect key="frame" x="0.0" y="84" width="375" height="1116"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6F-Py-PCw" userLabel="bgView">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="1200"/>
@@ -392,7 +393,7 @@
                                     <rect key="frame" x="0.0" y="738" width="375" height="60"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jianxia" translatesAutoresizingMaskIntoConstraints="NO" id="bdU-uf-ULh">
-                                            <rect key="frame" x="20" y="13" width="35" height="35"/>
+                                            <rect key="frame" x="20" y="12.5" width="35" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="44P-PQ-szK"/>
                                                 <constraint firstAttribute="width" constant="35" id="O1C-vf-UXF"/>
@@ -404,13 +405,13 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剑侠情缘" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdm-hX-wB3">
-                                            <rect key="frame" x="70" y="13" width="61.5" height="18"/>
+                                            <rect key="frame" x="70" y="12.5" width="61.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <color key="textColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剑侠情缘手游等你来江湖情缘！" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNj-hr-uSx">
-                                            <rect key="frame" x="70" y="34.5" width="157.5" height="13.5"/>
+                                            <rect key="frame" x="70" y="34" width="157.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -557,11 +558,12 @@
                 <constraint firstItem="ssz-yz-Npj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pmv-O7-TJX"/>
                 <constraint firstAttribute="bottom" secondItem="ssz-yz-Npj" secondAttribute="bottom" id="VMO-TU-ENi"/>
                 <constraint firstItem="ssz-yz-Npj" firstAttribute="top" secondItem="oI8-IX-HLr" secondAttribute="bottom" id="aao-Tu-IpT"/>
-                <constraint firstItem="oI8-IX-HLr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fll-lZ-bsn"/>
+                <constraint firstItem="oI8-IX-HLr" firstAttribute="top" secondItem="kXg-iP-YDA" secondAttribute="top" id="fll-lZ-bsn"/>
                 <constraint firstItem="oI8-IX-HLr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="icN-4i-Hko"/>
                 <constraint firstAttribute="trailing" secondItem="oI8-IX-HLr" secondAttribute="trailing" id="nfC-NL-oSU"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="kXg-iP-YDA"/>
             <point key="canvasLocation" x="18.5" y="88"/>
         </view>
     </objects>

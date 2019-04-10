@@ -59,7 +59,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,6 +79,9 @@
     self.rightVC.view.frame = self.view.bounds;
     [self.centerView addSubview:self.centerVC.view];
     [self.view addSubview:self.centerView];
+    [self addChildViewController:self.centerVC];
+    [self addChildViewController:self.leftVC];
+    [self addChildViewController:self.rightVC];
 }
 
 - (void)moveToVCWith:(YShowState)state {
