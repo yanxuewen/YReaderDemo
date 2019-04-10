@@ -23,11 +23,6 @@
 #import <MJRefresh/MJRefresh.h>
 #import <Bugly/Bugly.h>
 
-//#import <ShareSDK/ShareSDK.h>
-//#import <ShareSDKUI/ShareSDKUI.h>
-//#import <ShareSDKConnector/ShareSDKConnector.h>
-#import <SMS_SDK/SMSSDK.h>
-
 #import "YProgressHUD.h"
 #import "YBaseViewController.h"
 #import "YUniversal.h"
